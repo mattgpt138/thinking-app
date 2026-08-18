@@ -63,7 +63,8 @@
 <!-- ══════════════════════════ SESSION ══════════════════════════ -->
 <section class="view" id="view-session" aria-label="Session in progress" hidden>
 
-  <div class="timer" id="timer">
+  <div class="timerbar">
+   <div class="timer" id="timer">
     <svg class="arc" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
       <circle class="arc-track" cx="60" cy="60" r="54"></circle>
       <circle class="arc-fill"  cx="60" cy="60" r="54" id="arc-fill"></circle>
@@ -73,6 +74,7 @@
       <span class="arc-readout" id="timer-readout" hidden>60</span>
     </div>
     <p class="visually-hidden" id="timer-sr" role="status" aria-live="polite"></p>
+   </div>
   </div>
 
   <!-- ARGUMENT -->
@@ -205,10 +207,7 @@
 <section class="view" id="view-review" aria-label="Review" hidden>
   <div class="plate">
     <p class="overline">past sessions</p>
-    <p class="lede">
-      Everything you have written is kept, finished or not. Open any session to
-      read it back, or to keep pressing on it with no clock running.
-    </p>
+    <p class="lede">Every session is kept. Open one to read it back, or to keep pressing with no clock running.</p>
   </div>
   <div id="review-list"></div>
 </section>
@@ -253,7 +252,7 @@
   <div class="plate">
     <p class="overline">position file</p>
     <p class="lede">Convictions in your own words. Every revision is kept.</p>
-    <button class="btn btn-primary" id="btn-pos-new">Write a new position</button>
+    <button class="btn btn-primary btn-block" id="btn-pos-new">Write a new position</button>
   </div>
 
   <div class="plate" id="pos-editor" hidden>

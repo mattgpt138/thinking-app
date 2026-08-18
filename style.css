@@ -37,7 +37,8 @@ body {
   font-size: 15px;
   line-height: 1.6;
   font-variant-ligatures: none;
-  padding-bottom: env(safe-area-inset-bottom);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
 }
 
 /* ── accessibility ───────────────────────────────────────────── */
@@ -63,52 +64,71 @@ body {
 /* ── layout ──────────────────────────────────────────────────── */
 
 .topbar {
-  padding: 1rem 1rem .5rem;
+  padding: .625rem 1rem;
+  padding-top: calc(.625rem + env(safe-area-inset-top));
   border-bottom: 1px solid var(--rule);
   background: var(--paper);
   position: sticky; top: 0; z-index: 5;
-  padding-top: calc(1rem + env(safe-area-inset-top));
 }
 
 .wordmark {
-  margin: 0 0 .75rem;
+  margin: 0;
   font-family: var(--mono);
-  font-size: .8125rem;
+  font-size: .75rem;
   font-weight: 500;
   letter-spacing: .28em;
   text-transform: lowercase;
   color: var(--ink-soft);
 }
 
+/* ── navigation ──────────────────────────────────────────────────────
+   On a phone the nav sits at the bottom, within reach of a thumb, and
+   divides the width evenly so it cannot wrap however many sections
+   there are. Wrapping was the old failure: five labels in a row fit at
+   414px and broke at 390px. Above 40rem it returns to the top, where a
+   pointer expects it.
+   ──────────────────────────────────────────────────────────────────── */
+
 .tabs {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 20;
   display: flex;
-  gap: 1.25rem;
-  flex-wrap: wrap;
+  background: var(--raised);
+  border-top: 1px solid var(--rule);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .tab {
   appearance: none;
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: .8rem .125rem;
   background: none;
   border: 0;
-  border-bottom: 1px solid transparent;
-  padding: 0 0 .35rem;
-  margin: 0;
+  border-top: 2px solid transparent;
   font: inherit;
-  font-size: .8125rem;
-  letter-spacing: .08em;
+  font-size: .6875rem;
+  letter-spacing: .02em;
   color: var(--ink-soft);
   cursor: pointer;
+  min-height: 52px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tab:hover { color: var(--ink); }
 .tab[aria-current="page"] {
   color: var(--ink);
-  border-bottom-color: var(--brass);
+  border-top-color: var(--brass);
 }
 
 main {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: var(--gap) 1rem 5rem;
+  /* clear the fixed nav, plus the home indicator underneath it */
+  padding: var(--gap) 1rem calc(5.5rem + env(safe-area-inset-bottom));
 }
 
 .view { display: block; }
@@ -150,7 +170,7 @@ main {
 
 .fineprint {
   margin: .75rem 0 0;
-  font-size: .75rem;
+  font-size: .8125rem;
   color: var(--ink-soft);
   line-height: 1.5;
 }
@@ -225,11 +245,18 @@ main {
 .btn-danger { border-color: var(--oxblood); color: var(--oxblood); }
 .btn-danger:hover { background: rgba(107,74,74,.08); }
 
-.btn-small { font-size: .75rem; padding: .5rem .8rem; min-height: 0; }
+/* Smaller type, but never a smaller target: 44px is the floor for a thumb. */
+.btn-small { font-size: .75rem; padding: .5rem .8rem; min-height: 44px; }
+
+@media (min-width: 40rem) {
+  .btn-small { min-height: 0; }
+}
 
 .btn-choice { flex: 1; }
+.btn-block { width: 100%; }
 
 .row { display: flex; gap: .625rem; flex-wrap: wrap; margin-top: 1rem; }
+.row > .btn:not(.btn-small) { flex: 1 1 auto; min-width: 8rem; }
 .row-split { display: flex; gap: .625rem; }
 
 /* ── fields ──────────────────────────────────────────────────── */
@@ -265,11 +292,30 @@ input:focus, textarea:focus { border-color: var(--brass); }
    visible countdown.
    ═══════════════════════════════════════════════════════════════ */
 
+/* The arc stays on screen while you scroll a passage several screens deep:
+   it is the only sign that time is passing. It rides in a full-bleed bar so
+   the text scrolls under the bar rather than around the circle. */
+.timerbar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  margin: calc(var(--gap) * -1) -1rem 1.25rem;
+  padding: .5rem 1rem .625rem;
+}
+
 .timer {
   position: relative;
-  width: 132px;
-  height: 132px;
-  margin: 0 auto 1.5rem;
+  width: 96px;
+  height: 96px;
+}
+
+@media (min-width: 40rem) {
+  .timerbar { margin-top: -2rem; padding-top: 1rem; }
+  .timer { width: 124px; height: 124px; }
 }
 
 .arc { width: 100%; height: 100%; transform: rotate(-90deg); }
@@ -309,14 +355,14 @@ input:focus, textarea:focus { border-color: var(--brass); }
 }
 
 .arc-label {
-  font-size: .6875rem;
+  font-size: .625rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
 
 .arc-readout {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-variant-numeric: tabular-nums;
   color: var(--oxblood);
   line-height: 1;
@@ -413,7 +459,6 @@ input:focus, textarea:focus { border-color: var(--brass); }
   line-height: 1.72;
   color: var(--ink);
   margin-bottom: 1rem;
-  hyphens: auto;
 }
 .passage p { margin: 0 0 1.1em; }
 .passage p:last-child { margin-bottom: 0; }
@@ -554,14 +599,19 @@ input:focus, textarea:focus { border-color: var(--brass); }
 .chart { margin: .5rem 0 .75rem; }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .chart .axis { stroke: var(--rule); stroke-width: 1; }
-.chart .ideal { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
-.chart .series { fill: none; stroke: var(--brass); stroke-width: 1.5; }
+.chart .grid { stroke: var(--rule); stroke-width: .5; opacity: .7; }
+.chart .ideal { stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 3 3; opacity: .5; }
+.chart .series { fill: none; stroke: var(--brass); stroke-width: 1.75; }
 .chart .dot { fill: var(--brass); }
 .chart .tick {
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 9px;
   fill: var(--ink-soft);
 }
+.chart .tick-y   { text-anchor: end; }
+.chart .tick-mid { text-anchor: middle; }
+.chart .tick-end { text-anchor: end; }
+.chart .axis-label { font-size: 8px; letter-spacing: .06em; }
 .chart-empty {
   font-size: .8125rem;
   color: var(--ink-soft);
@@ -604,6 +654,8 @@ input:focus, textarea:focus { border-color: var(--brass); }
   color: var(--ink-soft);
 }
 .tbl th:first-child, .tbl td:first-child { text-align: left; }
+.tbl tr.empty td { opacity: .45; }
+.tbl tr.over td { color: var(--oxblood); }
 
 /* ── motion ──────────────────────────────────────────────────── */
 
@@ -620,8 +672,39 @@ input:focus, textarea:focus { border-color: var(--brass); }
 
 @media (min-width: 40rem) {
   body { font-size: 16px; }
-  main { padding-top: 2rem; }
+  main { padding: 2rem 1rem 4rem; }
   .plate { padding: 1.5rem; }
+
+  .topbar { padding: 1rem 0 0; }
+  .wordmark,
+  .tabs {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .wordmark { margin-bottom: .75rem; font-size: .8125rem; }
+
+  .tabs {
+    position: static;
+    background: none;
+    border-top: 0;
+    padding-bottom: 0;
+    gap: 1.5rem;
+  }
+  .tab {
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 0 0 .35rem;
+    border-top: 0;
+    border-bottom: 1px solid transparent;
+    font-size: .8125rem;
+    letter-spacing: .08em;
+  }
+  .tab[aria-current="page"] {
+    border-top-color: transparent;
+    border-bottom-color: var(--brass);
+  }
 }
 
 /* ── drill stage: shared by logic, causal, numbers, calibration ─────── */

@@ -276,8 +276,15 @@ function mmss(totalSeconds) {
 
 function stamp(ts) {
   const d = new Date(ts);
-  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) +
-         ' ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  const opts = { month: 'short', day: 'numeric' };
+  if (d.getFullYear() !== new Date().getFullYear()) opts.year = 'numeric';
+  return d.toLocaleDateString(undefined, opts);
+}
+
+/* Full stamp, for the one place a time of day is worth showing. */
+function stampLong(ts) {
+  const d = new Date(ts);
+  return stamp(ts) + ', ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 }
 
 function setText(el, s) { if (el) el.textContent = s; }
@@ -2334,7 +2341,7 @@ async function openSessionDetail(ts) {
   openSessionTs = ts;
 
   setText($('#detail-type'), s.type + (s.completed ? '' : ' · unfinished'));
-  setText($('#detail-when'), stamp(s.ts) + ' · ' + mmss(s.actualS) + ' held');
+  setText($('#detail-when'), stampLong(s.ts) + ' · ' + mmss(s.actualS) + ' held');
 
   const isArg = s.type === 'argument';
   $('#detail-passage-plate').hidden = !isArg;
@@ -2678,21 +2685,31 @@ function renderLengthChart() {
     return;
   }
 
-  const W = 300, H = 120, padL = 26, padB = 18, padT = 8, padR = 6;
+  const W = 320, H = 140, padL = 34, padR = 10, padT = 12, padB = 22;
   const vals = done.map(s => s.actualS / 60);
   const maxV = Math.max.apply(null, vals.concat([10]));
+  const top = Math.ceil(maxV / 5) * 5;                       // round the scale to 5 minutes
   const x = i => padL + (W - padL - padR) * (done.length === 1 ? 0.5 : i / (done.length - 1));
-  const y = v => padT + (H - padT - padB) * (1 - v / maxV);
+  const y = v => padT + (H - padT - padB) * (1 - v / top);
 
   const path = vals.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
-  const dots = vals.map((v, i) => '<circle class="dot" cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="1.8"/>').join('');
+  const dots = vals.map((v, i) =>
+    '<circle class="dot" cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="2"/>').join('');
 
-  const inner =
-    '<line class="axis" x1="' + padL + '" y1="' + (H - padB) + '" x2="' + (W - padR) + '" y2="' + (H - padB) + '"/>' +
+  // Gridlines carry the labels, so nothing sits on top of an axis.
+  let grid = '';
+  [0, top / 2, top].forEach(v => {
+    grid += '<line class="grid" x1="' + padL + '" y1="' + y(v).toFixed(1) +
+            '" x2="' + (W - padR) + '" y2="' + y(v).toFixed(1) + '"/>' +
+            '<text class="tick tick-y" x="' + (padL - 6) + '" y="' + (y(v) + 3).toFixed(1) + '">' +
+            Math.round(v) + 'm</text>';
+  });
+
+  const inner = grid +
     '<line class="axis" x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (H - padB) + '"/>' +
-    '<text class="tick" x="2" y="' + (padT + 4) + '">' + Math.round(maxV) + 'm</text>' +
-    '<text class="tick" x="2" y="' + (H - padB) + '">0</text>' +
-    '<path class="series" d="' + path + '"/>' + dots;
+    '<path class="series" d="' + path + '"/>' + dots +
+    '<text class="tick" x="' + padL + '" y="' + (H - padB + 15) + '">oldest</text>' +
+    '<text class="tick tick-end" x="' + (W - padR) + '" y="' + (H - padB + 15) + '">latest</text>';
 
   host.innerHTML = svgWrap(inner, W, H);
   setText($('#metrics-length-note'),
@@ -2722,24 +2739,31 @@ function renderCalibration() {
     return k + ' ' + m.toFixed(3) + ' (' + rows.length + ')';
   }).join('  ·  '));
 
-  const levels = [50, 60, 70, 80, 90, 95];
-  const buckets = levels.map(L => {
+  const buckets = CONF_LEVELS.map(L => {
     const rows = cal.filter(c => c.conf === L);
     return { conf: L, n: rows.length, hit: rows.length ? rows.filter(c => c.correct).length / rows.length : null };
   });
 
-  const W = 300, H = 200, pad = 30;
-  const px = p => pad + (W - pad * 2) * ((p - 50) / 50);
-  const py = p => (H - pad) - (H - pad * 2) * ((p - 50) / 50);
+  const W = 320, H = 250, padL = 38, padR = 12, padT = 12, padB = 40;
+  // x spans the confidence levels you can state. y spans the full range,
+  // because how often you were actually right can be anything at all.
+  const px = p => padL + (W - padL - padR) * ((p - 50) / 50);
+  const py = p => (H - padB) - (H - padT - padB) * (p / 100);
 
-  let inner =
-    '<line class="axis" x1="' + pad + '" y1="' + (H - pad) + '" x2="' + (W - pad) + '" y2="' + (H - pad) + '"/>' +
-    '<line class="axis" x1="' + pad + '" y1="' + pad + '" x2="' + pad + '" y2="' + (H - pad) + '"/>' +
-    '<line class="ideal" x1="' + px(50) + '" y1="' + py(50) + '" x2="' + px(100) + '" y2="' + py(100) + '"/>' +
-    '<text class="tick" x="' + pad + '" y="' + (H - pad + 12) + '">50%</text>' +
-    '<text class="tick" x="' + (W - pad - 14) + '" y="' + (H - pad + 12) + '">100%</text>' +
-    '<text class="tick" x="4" y="' + (H - pad) + '">50%</text>' +
-    '<text class="tick" x="4" y="' + (pad + 4) + '">100%</text>';
+  let inner = '';
+  [0, 25, 50, 75, 100].forEach(v => {
+    inner += '<line class="grid" x1="' + padL + '" y1="' + py(v).toFixed(1) +
+             '" x2="' + (W - padR) + '" y2="' + py(v).toFixed(1) + '"/>' +
+             '<text class="tick tick-y" x="' + (padL - 6) + '" y="' + (py(v) + 3).toFixed(1) + '">' + v + '</text>';
+  });
+  [50, 60, 70, 80, 90, 100].forEach(v => {
+    inner += '<text class="tick tick-mid" x="' + px(v).toFixed(1) + '" y="' + (H - padB + 14) + '">' + v + '</text>';
+  });
+
+  inner += '<line class="axis" x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (H - padB) + '"/>' +
+           '<line class="ideal" x1="' + px(50) + '" y1="' + py(50) + '" x2="' + px(100) + '" y2="' + py(100) + '"/>' +
+           '<text class="tick tick-mid axis-label" x="' + ((padL + W - padR) / 2) + '" y="' + (H - 6) + '">how sure you said you were</text>' +
+           '<text class="tick axis-label" transform="rotate(-90 10 ' + ((padT + H - padB) / 2) + ')" x="10" y="' + ((padT + H - padB) / 2) + '">% actually right</text>';
 
   const plotted = buckets.filter(b => b.n > 0);
   if (plotted.length > 1) {
@@ -2748,18 +2772,19 @@ function renderCalibration() {
       '"/>';
   }
   plotted.forEach(b => {
-    inner += '<circle class="dot" cx="' + px(b.conf).toFixed(1) + '" cy="' + py(b.hit * 100).toFixed(1) + '" r="2.5"/>';
+    inner += '<circle class="dot" cx="' + px(b.conf).toFixed(1) + '" cy="' + py(b.hit * 100).toFixed(1) + '" r="3"/>';
   });
 
   $('#chart-calibration').innerHTML = svgWrap(inner, W, H);
 
   $('#cal-table').innerHTML =
-    '<thead><tr><th>said</th><th>n</th><th>correct</th><th>gap</th></tr></thead><tbody>' +
+    '<thead><tr><th>said</th><th>n</th><th>right</th><th>gap</th></tr></thead><tbody>' +
     buckets.map(b => {
-      if (!b.n) return '<tr><td>' + b.conf + '%</td><td>0</td><td>&mdash;</td><td>&mdash;</td></tr>';
+      if (!b.n) return '<tr class="empty"><td>' + b.conf + '%</td><td>0</td><td>&mdash;</td><td>&mdash;</td></tr>';
       const hit = b.hit * 100;
       const gap = hit - b.conf;
-      return '<tr><td>' + b.conf + '%</td><td>' + b.n + '</td><td>' + hit.toFixed(0) + '%</td><td>' +
+      const cls = gap < -10 ? ' class="over"' : '';
+      return '<tr' + cls + '><td>' + b.conf + '%</td><td>' + b.n + '</td><td>' + hit.toFixed(0) + '%</td><td>' +
              (gap > 0 ? '+' : '') + gap.toFixed(0) + '</td></tr>';
     }).join('') + '</tbody>';
 }
@@ -3002,10 +3027,18 @@ function boot() {
   go('home');
   prefetchData();
 
-  if ('serviceWorker' in navigator) {
+  // The service worker is skipped on localhost. Offline caching is the point
+  // in production, but during local work it serves yesterday's files and you
+  // spend an afternoon debugging code the browser is not running.
+  const isLocal = ['localhost', '127.0.0.1', '::1'].indexOf(location.hostname) !== -1;
+  if ('serviceWorker' in navigator && !isLocal) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(err => console.warn('sw registration failed', err));
     });
+  } else if (isLocal && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations()
+      .then(rs => rs.forEach(r => r.unregister()))
+      .catch(() => {});
   }
 }
 

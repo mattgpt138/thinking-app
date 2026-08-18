@@ -1,0 +1,56 @@
+- generic [active] [ref=f13e1]:
+  - link "Skip to content" [ref=f13e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f13e3]:
+    - heading "thinking" [level=1] [ref=f13e4]
+    - navigation "Sections" [ref=f13e5]:
+      - button "today" [ref=f13e6] [cursor=pointer]
+      - button "review" [ref=f13e7] [cursor=pointer]
+      - button "positions" [ref=f13e8] [cursor=pointer]
+      - button "record" [ref=f13e9] [cursor=pointer]
+      - button "settings" [ref=f13e10] [cursor=pointer]
+  - main [ref=f13e11]:
+    - region "Today" [ref=f13e12]:
+      - generic [ref=f13e13]:
+        - paragraph [ref=f13e14]: cycle 10
+        - heading "steelman" [level=2] [ref=f13e15]
+        - paragraph [ref=f13e16]: Build the strongest case for a position, whatever you privately think of it. Then find out whether you built the strong version or the convenient one.
+        - generic [ref=f13e17]:
+          - generic [ref=f13e18]:
+            - term [ref=f13e19]: duration
+            - definition [ref=f13e20]: 11:00
+          - generic [ref=f13e21]:
+            - term [ref=f13e22]: completed
+            - definition [ref=f13e23]: "9"
+          - generic [ref=f13e24]:
+            - term [ref=f13e25]: next ramp
+            - definition [ref=f13e26]: 3 sessions
+        - button "Begin" [ref=f13e28] [cursor=pointer]
+        - paragraph [ref=f13e29]: "No API key: written presses only."
+      - generic [ref=f13e30]:
+        - paragraph [ref=f13e31]: recent
+        - list [ref=f13e32]:
+          - listitem [ref=f13e33]:
+            - generic [ref=f13e34]: Aug 17, 2026 04:25 PM · logic
+            - generic [ref=f13e35]: 15:20
+          - listitem [ref=f13e36]:
+            - generic [ref=f13e37]: Aug 16, 2026 04:25 PM · argument
+            - generic [ref=f13e38]: 14:40
+          - listitem [ref=f13e39]:
+            - generic [ref=f13e40]: Aug 15, 2026 04:25 PM · calibration
+            - generic [ref=f13e41]: 14:00
+          - listitem [ref=f13e42]:
+            - generic [ref=f13e43]: Aug 14, 2026 04:25 PM · numbers
+            - generic [ref=f13e44]: 13:20
+          - listitem [ref=f13e45]:
+            - generic [ref=f13e46]: Aug 13, 2026 04:25 PM · causal
+            - generic [ref=f13e47]: abandoned
+          - listitem [ref=f13e48]:
+            - generic [ref=f13e49]: Aug 12, 2026 04:25 PM · math
+            - generic [ref=f13e50]: 12:00
+          - listitem [ref=f13e51]:
+            - generic [ref=f13e52]: Aug 11, 2026 04:25 PM · steelman
+            - generic [ref=f13e53]: 11:20
+          - listitem [ref=f13e54]:
+            - generic [ref=f13e55]: Aug 10, 2026 04:25 PM · logic
+            - generic [ref=f13e56]: 10:40

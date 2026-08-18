@@ -1,0 +1,29 @@
+- generic [active] [ref=f12e1]:
+  - link "Skip to content" [ref=f12e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f12e3]:
+    - heading "thinking" [level=1] [ref=f12e4]
+    - navigation "Sections" [ref=f12e5]:
+      - button "today" [ref=f12e6] [cursor=pointer]
+      - button "review" [ref=f12e7] [cursor=pointer]
+      - button "positions" [ref=f12e8] [cursor=pointer]
+      - button "record" [ref=f12e9] [cursor=pointer]
+      - button "settings" [ref=f12e10] [cursor=pointer]
+  - main [ref=f12e11]:
+    - region "Today" [ref=f12e12]:
+      - generic [ref=f12e13]:
+        - paragraph [ref=f12e14]: cycle 1
+        - heading "argument" [level=2] [ref=f12e15]
+        - paragraph [ref=f12e16]: Read one passage closely. Then answer for it. The questions are not comprehension checks; they are attempts to find where your reading gives way.
+        - generic [ref=f12e17]:
+          - generic [ref=f12e18]:
+            - term [ref=f12e19]: duration
+            - definition [ref=f12e20]: 10:00
+          - generic [ref=f12e21]:
+            - term [ref=f12e22]: completed
+            - definition [ref=f12e23]: "0"
+          - generic [ref=f12e24]:
+            - term [ref=f12e25]: next ramp
+            - definition [ref=f12e26]: 6 sessions
+        - button "Begin" [ref=f12e28] [cursor=pointer]
+        - paragraph [ref=f12e29]: "No API key: bundled questions only."

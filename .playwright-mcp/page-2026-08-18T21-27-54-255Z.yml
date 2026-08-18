@@ -1,0 +1,56 @@
+- generic [active] [ref=f14e1]:
+  - link "Skip to content" [ref=f14e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f14e3]:
+    - heading "thinking" [level=1] [ref=f14e4]
+    - navigation "Sections" [ref=f14e5]:
+      - button "today" [ref=f14e6] [cursor=pointer]
+      - button "review" [ref=f14e7] [cursor=pointer]
+      - button "positions" [ref=f14e8] [cursor=pointer]
+      - button "record" [ref=f14e9] [cursor=pointer]
+      - button "settings" [ref=f14e10] [cursor=pointer]
+  - main [ref=f14e11]:
+    - region "Today" [ref=f14e12]:
+      - generic [ref=f14e13]:
+        - paragraph [ref=f14e14]: cycle 10
+        - heading "steelman" [level=2] [ref=f14e15]
+        - paragraph [ref=f14e16]: Build the strongest case for a position, whatever you privately think of it. Then find out whether you built the strong version or the convenient one.
+        - generic [ref=f14e17]:
+          - generic [ref=f14e18]:
+            - term [ref=f14e19]: duration
+            - definition [ref=f14e20]: 11:00
+          - generic [ref=f14e21]:
+            - term [ref=f14e22]: completed
+            - definition [ref=f14e23]: "9"
+          - generic [ref=f14e24]:
+            - term [ref=f14e25]: next ramp
+            - definition [ref=f14e26]: 3 sessions
+        - button "Begin" [ref=f14e28] [cursor=pointer]
+        - paragraph [ref=f14e29]: "No API key: written presses only."
+      - generic [ref=f14e30]:
+        - paragraph [ref=f14e31]: recent
+        - list [ref=f14e32]:
+          - listitem [ref=f14e33]:
+            - generic [ref=f14e34]: Aug 17 · logic
+            - generic [ref=f14e35]: 19:20
+          - listitem [ref=f14e36]:
+            - generic [ref=f14e37]: Aug 16 · argument
+            - generic [ref=f14e38]: 18:10
+          - listitem [ref=f14e39]:
+            - generic [ref=f14e40]: Aug 15 · calibration
+            - generic [ref=f14e41]: 17:00
+          - listitem [ref=f14e42]:
+            - generic [ref=f14e43]: Aug 14 · numbers
+            - generic [ref=f14e44]: 15:50
+          - listitem [ref=f14e45]:
+            - generic [ref=f14e46]: Aug 13 · causal
+            - generic [ref=f14e47]: abandoned
+          - listitem [ref=f14e48]:
+            - generic [ref=f14e49]: Aug 12 · math
+            - generic [ref=f14e50]: 13:30
+          - listitem [ref=f14e51]:
+            - generic [ref=f14e52]: Aug 11 · steelman
+            - generic [ref=f14e53]: 12:20
+          - listitem [ref=f14e54]:
+            - generic [ref=f14e55]: Aug 10 · logic
+            - generic [ref=f14e56]: 11:10

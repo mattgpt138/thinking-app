@@ -396,5 +396,15 @@ passages and questions, **IBM Plex Mono** for all chrome, labels, and the timer.
 Chrome reads as instrument; content reads as book. Both fall back to system
 fonts if Google Fonts is unreachable.
 
-Mobile-first and portrait. Keyboard focus is always visible, and
-`prefers-reduced-motion` is respected.
+Mobile-first and portrait.
+
+- Navigation sits at the **bottom** on phones, where a thumb reaches and
+  where five labels cannot wrap; it returns to the top above 40rem. The old
+  top row fit at 414px and broke at 390px, which is most phones.
+- Every tap target is at least 44px.
+- The timer rides in a sticky bar so the arc stays on screen while you scroll
+  a passage several screens deep. It is the only sign that time is passing.
+- Safe-area insets are respected at the top and under the home indicator.
+- Keyboard focus is always visible, and `prefers-reduced-motion` is respected.
+- The service worker does not register on localhost, so local edits are never
+  masked by yesterday's cache.
