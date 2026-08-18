@@ -13,9 +13,8 @@ _Snapshot: 2026-08-18_
 
 ### Known issues
 
-- The sharpened interrogation prompt has only been tested against mocked API
-  responses. Its real behaviour on Sonnet 5 is unverified.
-- Calibration bank (395 statements) cycles after roughly 33 weekly sessions.
+- Interrogation prompt tested only against mocked API responses; unverified live.
+- Calibration bank (395) cycles after roughly 33 weekly sessions.
 - No automated test suite; verification is ad-hoc, in-browser.
 
 ## Last completed phase
@@ -34,9 +33,9 @@ longer consumed and nothing written is lost.
 
 ## Pending user actions
 
-- None blocking. The user was mid-testing the seven day types on device.
-- Reminder: **Export JSON** occasionally. iOS clears storage for web apps left
-  unused, and sessions/positions live only on the phone.
+- None blocking. User was mid-testing the seven day types on device.
+- Reminder: **Export JSON** occasionally. iOS clears storage for unused web
+  apps, and sessions/positions live only on the phone.
 
 ## Files modified this session
 
@@ -49,4 +48,4 @@ longer consumed and nothing written is lost.
 - `data/corpus.json`
 - `data/reasoning.json`
 - `data/propositions.json`
-- `icons/` (icon.svg, icon-192, icon-512, icon-maskable-512, apple-touch-icon)
+- `icons/` (svg, 192, 512, maskable-512, apple-touch-icon)
