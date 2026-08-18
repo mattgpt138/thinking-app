@@ -1,0 +1,191 @@
+================================================================================
+thinking-app — PLANNING LOG
+Last Updated: 2026-08-18
+================================================================================
+
+RECENT CHANGES (2026-08-18)
+  - Phase 7: a session now survives a reload; nothing written is lost
+  - Phase 6: interface reworked for phones; bottom nav; calibration chart fixed
+  - Phase 5: rotation rebuilt from 3 day types to 7 around critical thinking
+  - Phase 4: interrogation made genuinely conversational; today tab corrected
+  - Phase 3: hard timer replaced with a soft limit; review view added
+  - Phase 2: deployed live to GitHub Pages as an installable PWA
+  - Phase 1: initial build
+
+NOTE ON THIS FILE
+  planning.txt did not exist until the end of 2026-08-18. Phases 1 to 7 below
+  were RECONSTRUCTED from the git history and the files on disk at that point,
+  not logged as the work happened. Commit hashes are given so each entry can be
+  checked against the real record. Everything from Phase 8 onward is logged as
+  it is done.
+
+--------------------------------------------------------------------------------
+PHASE 1 — Initial build                                        [8bc08b2] DONE
+--------------------------------------------------------------------------------
+  Static PWA, vanilla JS, no build step, no framework, no npm.
+
+  - Even 3-day rotation (argument, math, reasoning) driven by a cycle index
+    that increments only on COMPLETED sessions, so skipping a day does not
+    skip a type.
+  - Session length ramps: 600s base, +60s every 6 completed sessions, cap 2400s.
+  - SIGNATURE: the timer withholds its numeric readout until the final 60
+    seconds and fills a thin arc instead. Deliberate. Not to be "fixed".
+  - data/corpus.json: 53 passages, 24 works, 24 authors, fetched VERBATIM from
+    Project Gutenberg via a scripted extraction harness (never transcribed by
+    hand). 400-787 words each. Pre-1930 publication; pre-1930 translations only
+    (Marriott, Cole, Long, Jowett, Burnet, Moore). 111 hand-written
+    interrogation questions.
+  - data/reasoning.json: 70 calibration statements (35 true / 35 false),
+    17 Fermi prompts with reference decompositions.
+  - Math: 8 locally generated levels, adaptive on a rolling window of 10.
+  - Reasoning: calibration (Brier), Fermi, procedural base-rate problems.
+  - Position file with full revision history.
+  - Optional Anthropic API with an explicitly adversarial system prompt kept in
+    one clearly marked, editable block. Degrades to bundled content; never
+    blocks a session on the network.
+  - localStorage only. Export/import JSON. Offline via service worker.
+
+  Bugs found and fixed during build: parseMagnitude returned 0 for junk input;
+  startReasoning was not awaited (race); an API-failure notice was written then
+  immediately wiped.
+
+--------------------------------------------------------------------------------
+PHASE 2 — Live deployment and PWA install              [0c79a4c, 0e402d0] DONE
+--------------------------------------------------------------------------------
+  - Public repo github.com/mattgpt138/thinking-app, GitHub Pages, HTTPS.
+  - Live at https://mattgpt138.github.io/thinking-app/
+  - Added a 180px apple-touch-icon (iOS was rescaling the 192px PWA icon) and
+    the standard mobile-web-app-capable meta.
+  - BUG FIXED: cache.addAll() honours the browser HTTP cache, so a version bump
+    could bake a stale index.html into a new shell cache. The site was correct
+    while an installed client was not. Precache requests now use cache:'reload'.
+  - Default model set to claude-sonnet-5 following the user's choice.
+
+--------------------------------------------------------------------------------
+PHASE 3 — Soft time limit and the review view                  [9c2a374] DONE
+--------------------------------------------------------------------------------
+  Reported: the session closed while the user was still typing, and there was
+  no way back to anything written.
+
+  - The limit is now SOFT. Time running out completes the arc, shows one quiet
+    line, and swaps the foot button from Abandon to Close. It does not close
+    the session, move focus, or touch the text being typed. A session counts as
+    completed once the time has elapsed, however long you write past it.
+  - New review tab: every session, finished or not. Opening an argument session
+    restores the passage, every question and every answer, and offers to keep
+    pressing with no clock on it.
+  - Abandoning now keeps the transcript. It only means the session does not
+    count towards the rotation.
+
+--------------------------------------------------------------------------------
+PHASE 4 — Conversational interrogation, correct today tab      [fb1b036] DONE
+--------------------------------------------------------------------------------
+  Reported: the interrogation was not two-way; it generated a new prompt with
+  no engagement. Also, the today tab showed tomorrow's assignment.
+
+  Two causes for the first, both self-inflicted:
+  - The PROMPT banned opening praise so hard it also banned engagement. It
+    forbade characterising the response, summarising it back, and resolving
+    anything, leaving a bare question. Replies must now ENGAGE with what was
+    written, COUNTER with a real argument, and only then PRESS. Anti-flattery
+    bans kept and sharpened. Engaging with a point is not complimenting it.
+  - The FLOW skipped the API whenever the previous question came from the
+    model, so every second turn was a canned bundled question. Bundled
+    questions are now an opening move and a fallback pool; with a key, every
+    answer gets a reply. The position challenge is held separately and given
+    priority after the first exchange so a running conversation cannot crowd
+    it out.
+  - Requests now send a real alternating user/assistant thread rather than one
+    flattened block.
+  - Today tab: detects a completion on the current calendar day and shows that
+    day's work as done, names what is next, and offers to reopen it.
+
+--------------------------------------------------------------------------------
+PHASE 5 — Seven day types                                      [3306ef1] DONE
+--------------------------------------------------------------------------------
+  User removed the artificial constraint on rotation length and asked for more
+  critical-thinking coverage. Nesting was the problem: a reasoning sub-mode
+  came round only every nine days.
+
+  Rotation: argument -> logic -> steelman -> math -> causal -> numbers ->
+  calibration. Nothing nested. Weekly cycle.
+
+  - LOGIC (new, generated, offline, 6 adaptive levels): conditional forms,
+    contrapositive/converse/inverse, quantifier negation, categorical
+    syllogisms, necessary vs sufficient, validity vs soundness and the Wason
+    selection task. Terms drawn at random; predicates carry both verb forms.
+  - CAUSAL (new, generated): confounding, selection effects, reverse causation,
+    regression to the mean, Simpson's paradox with figures that work out.
+    Scored choice plus a written follow-up whose reference stays shut until
+    you commit.
+  - NUMBERS (new, generated): relative vs absolute risk, points vs percentages,
+    denominators, mean vs median, direction of a conditional, small samples.
+    Absorbed the base-rate generators and Fermi prompts.
+  - STEELMAN (new, written): build the strongest case FOR a proposition, with
+    the lazy version named up front. data/propositions.json, 40 contested
+    propositions. Third steelman day argues against the user's own position
+    file. Third system prompt judges the construction, not the conclusion.
+  - CALIBRATION: bank grown 70 -> 395 statements across 8 categories, split
+    207/188 true to false. Drawn least-recently-seen first; unseen count shown.
+  - Confidence now asked on logic and causal too, all feeding ONE curve tagged
+    by source.
+  - Logic/causal/numbers/calibration share one drill stage.
+  - Old save files load unchanged.
+
+  Bug found and fixed: first draft of the logic generators gave plural subjects
+  singular verbs ("No glaziers signs the register"). Swept 4,800 items after
+  fixing.
+
+--------------------------------------------------------------------------------
+PHASE 6 — Interface reworked for phones                        [a82e047] DONE
+--------------------------------------------------------------------------------
+  Reported with a screenshot: the nav wrapped to two lines. It fit at 414px and
+  broke at 390px, which is most phones.
+
+  - Nav moved to the BOTTOM on phones: thumb reach, even division so it cannot
+    wrap however many sections exist. Returns to the top above 40rem.
+  - Tap targets 27px -> 52px. Header 133px -> 40px.
+  - BUG FIXED: the calibration chart's y-axis ran 50-100%, so any confidence
+    bucket where the user was right less than half the time was drawn OUTSIDE
+    the plot. Exactly the buckets worth seeing. Now spans the full range, both
+    charts label axes clear of the lines, overconfident rows marked.
+  - BUG FIXED: position-card buttons were 37px, under the 44px minimum.
+  - Timer rides in a sticky full-bleed bar so the arc stays visible while
+    scrolling a passage.
+  - Short timestamps, full-width primary actions, 13px secondary text,
+    auto-hyphenation off.
+  - Service worker no longer registers on localhost.
+
+--------------------------------------------------------------------------------
+PHASE 7 — A session survives a reload                          [7f9be52] DONE
+--------------------------------------------------------------------------------
+  Reported: refreshing while on a session backed out to today and then produced
+  a different passage.
+
+  Worse than reported: the passage had already been marked as seen, so it was
+  consumed, and everything written in that session was lost. Pull-to-refresh is
+  easy to hit on a phone and iOS discards backgrounded tabs on its own.
+
+  - A session in progress is written to its own key (thinking-app:live) on
+    every meaningful change, including the half-typed contents of the box.
+  - On load it resumes: same passage, same question, same unfinished sentence,
+    same reading or writing phase, timer measured from the original start with
+    the arc still proportional to the whole session.
+  - Drill days resume on a fresh item, since anything answered was already
+    banked and re-showing it would count twice.
+  - Cleared on close, abandon, import and erase. Ignored after 12 hours.
+    Corrupt data falls back to a normal start rather than failing to boot.
+
+--------------------------------------------------------------------------------
+BACKLOG — not started
+--------------------------------------------------------------------------------
+  - Verify the sharpened interrogation prompt against real Sonnet 5 output over
+    several argument days. It has only been tested against mocked responses.
+  - Update rate metric: how often a position revision reverses rather than
+    elaborates. Discussed in Phase 5 planning, not built.
+  - Corpus expansion beyond 53 passages; schema and rules are documented in
+    README so this is additive work.
+  - Calibration bank cycles after roughly 33 weekly sessions. Grow it before
+    then, keeping the true/false split near even.
+  - No automated test suite. All verification so far has been ad-hoc harnesses
+    driven through the browser in-session.
