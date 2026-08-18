@@ -253,9 +253,9 @@ function writeNow() {
     console.error('could not save', e);
   }
 }
-window.addEventListener('pagehide', writeNow);
+window.addEventListener('pagehide', () => { writeNow(); writeLive(); });
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') writeNow();
+  if (document.visibilityState === 'hidden') { writeNow(); writeLive(); }
 });
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -480,8 +480,10 @@ const timer = {
   announced: false,
   elapsed: false,
 
-  start(seconds, onElapsed) {
-    this.total = seconds;
+  start(seconds, onElapsed, opts) {
+    // `total` may differ from `seconds` when resuming: the arc must show the
+    // whole session, not just what is left of it.
+    this.total = (opts && opts.total) || seconds;
     this.endAt = Date.now() + seconds * 1000;
     this.onElapsed = onElapsed;
     this.announced = false;
@@ -534,6 +536,141 @@ const timer = {
 
 /* ═══════════════════════════════════════════════════════════════════════
    8.  SESSION CONTROLLER
+
+   A session in progress is written to its own key on every meaningful
+   change, including what is half-typed in the box. A reload, an accidental
+   pull-to-refresh, or iOS discarding the tab under memory pressure all used
+   to throw the session away: the passage was already marked as seen, so you
+   came back to a different one and everything written was gone.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const LIVE_KEY = 'thinking-app:live';
+const LIVE_MAX_AGE = 12 * 3600 * 1000;   // older than this and it is not resumable
+
+let liveTimer = null;
+
+function saveLive() {
+  if (!session.running) return;
+  clearTimeout(liveTimer);
+  liveTimer = setTimeout(writeLive, 300);
+}
+
+function writeLive() {
+  clearTimeout(liveTimer);
+  if (!session.running) return;
+  try {
+    localStorage.setItem(LIVE_KEY, JSON.stringify({
+      v: 1,
+      type: session.type,
+      planned: session.planned,
+      startedAt: session.startedAt,
+      timeUp: session.timeUp,
+      transcript: session.transcript,
+      scratch: session.scratch,
+      drafts: session.drafts || {}
+    }));
+  } catch (e) {
+    console.warn('could not save the session in progress', e);
+  }
+}
+
+function clearLive() {
+  clearTimeout(liveTimer);
+  try { localStorage.removeItem(LIVE_KEY); } catch (e) { /* nothing to do */ }
+}
+
+/* Anything half-written is kept as you type, so a reload costs you nothing. */
+const DRAFT_FIELDS = ['arg-answer', 'steel-answer', 'drill-work', 'drill-followup-answer'];
+
+function watchDrafts() {
+  DRAFT_FIELDS.forEach(id => {
+    const el = $('#' + id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+      session.drafts = session.drafts || {};
+      session.drafts[id] = el.value;
+      saveLive();
+    });
+  });
+}
+
+function draftFor(id) {
+  return (session.drafts && session.drafts[id]) || '';
+}
+
+function clearDraft(id) {
+  if (session.drafts) session.drafts[id] = '';
+}
+
+function restoreLive() {
+  let live = null;
+  try { live = JSON.parse(localStorage.getItem(LIVE_KEY) || 'null'); } catch (e) { live = null; }
+  if (!live || !live.type || !live.startedAt) return false;
+  if (Date.now() - live.startedAt > LIVE_MAX_AGE) { clearLive(); return false; }
+
+  session.running = true;
+  session.type = live.type;
+  session.planned = live.planned;
+  session.startedAt = live.startedAt;
+  session.timeUp = !!live.timeUp;
+  session.transcript = live.transcript || [];
+  session.scratch = live.scratch || {};
+  session.drafts = live.drafts || {};
+
+  setText($('#timer-label'), session.type);
+  const DRILL_DAYS = ['logic', 'causal', 'numbers', 'calibration'];
+  $('#stage-argument').hidden = session.type !== 'argument';
+  $('#stage-math').hidden     = session.type !== 'math';
+  $('#stage-steelman').hidden = session.type !== 'steelman';
+  $('#stage-drill').hidden    = DRILL_DAYS.indexOf(session.type) === -1;
+  $('#time-up-note').hidden   = !session.timeUp;
+  updateFootButton();
+
+  go('session');
+
+  const left = session.planned - (Date.now() - session.startedAt) / 1000;
+  timer.start(Math.max(0.001, left), onTimeElapsed, { total: session.planned });
+
+  if (session.type === 'argument') restoreArgument();
+  else if (session.type === 'math') nextMathProblem();
+  else if (session.type === 'steelman') restoreSteelman();
+  else nextDrill();      // a fresh item: anything already answered was logged
+
+  return true;
+}
+
+function restoreArgument() {
+  const p = session.scratch.passage;
+  if (p) {
+    setText($('#arg-attrib'), p.author + ' — ' + p.work + ', ' + p.year);
+    $('#arg-passage').innerHTML = passageHTML(p.text);
+    $('#arg-source').href = p.source_url;
+  }
+  const working = session.scratch.phase === 'work' && session.scratch.current;
+  $('#arg-read').hidden = !!working;
+  $('#arg-work').hidden = !working;
+  if (working) showArgQuestion();
+}
+
+function restoreSteelman() {
+  const item = session.scratch.prop;
+  if (!item) return;
+  setText($('#steel-domain'), item.own ? 'you wrote this — now argue against it' : item.domain);
+  $('#steel-proposition').textContent = item.proposition;
+  setText($('#steel-task'), item.own
+    ? 'Build the strongest case against this. Not a qualification, not a partial retreat: the argument that would actually defeat it.'
+    : 'Build the strongest case FOR this, whatever you think of it. Not the version you could knock down: the one you would have trouble answering.');
+  setText($('#steel-cheap'), 'Do not give me this version: ' + item.cheap);
+  $('#steel-build').hidden = false;
+  $('#steel-answer').value = draftFor('steel-answer');
+  const last = session.transcript.filter(t => t.kind === 'steelman').pop();
+  if (session.scratch.turn > 0 && last) {
+    $('#btn-steel-submit').textContent = 'Rebuild and submit';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   8b.  RUNNING A SESSION
    ═══════════════════════════════════════════════════════════════════════ */
 
 let corpus = null;
@@ -557,6 +694,7 @@ async function beginSession() {
   session.startedAt = Date.now();
   session.transcript = [];
   session.scratch = {};
+  session.drafts = {};
 
   setText($('#timer-label'), type);
   const DRILL_DAYS = ['logic', 'causal', 'numbers', 'calibration'];
@@ -576,6 +714,8 @@ async function beginSession() {
   else if (type === 'math') startMath();
   else if (type === 'steelman') await startSteelman();
   else await startDrill(type);
+
+  writeLive();
 }
 
 /* Time is up. Change nothing the user is touching: no modal, no focus
@@ -585,6 +725,7 @@ function onTimeElapsed() {
   session.timeUp = true;
   $('#time-up-note').hidden = false;
   updateFootButton();
+  writeLive();
 }
 
 function updateFootButton() {
@@ -641,6 +782,7 @@ function endSession() {
   state.sessions.push(record);
   state.completedSessions += 1;
   state.cycleIndex += 1;
+  clearLive();
   writeNow();
 
   showEnd(record);
@@ -679,6 +821,7 @@ function abandonSession() {
   if (session.transcript.length) record.transcript = session.transcript;
 
   state.sessions.push(record);
+  clearLive();
   writeNow();
 }
 
@@ -788,6 +931,7 @@ async function startArgument() {
 
   session.scratch.current = session.scratch.pool[0] || null;
   session.scratch.poolAt = 1;
+  session.scratch.phase = 'read';
 
   $('#arg-read').hidden = false;
   $('#arg-work').hidden = true;
@@ -811,9 +955,11 @@ function pickPositionForChallenge() {
 }
 
 $('#btn-arg-done-reading').addEventListener('click', () => {
+  session.scratch.phase = 'work';
   $('#arg-read').hidden = true;
   $('#arg-work').hidden = false;
   showArgQuestion();
+  writeLive();
 });
 
 $('#btn-arg-reread').addEventListener('click', () => {
@@ -833,7 +979,7 @@ function showArgQuestion() {
   setText($('#arg-progress'), label);
   $('#arg-question').textContent = q.text;
   const ta = $('#arg-answer');
-  ta.value = '';
+  ta.value = draftFor('arg-answer');
   ta.disabled = false;
   $('#btn-arg-submit').disabled = false;
   setText($('#arg-status'), '');
@@ -850,6 +996,8 @@ $('#btn-arg-submit').addEventListener('click', async () => {
   let notice = '';
 
   session.transcript.push({ kind: q.kind, question: q.text, answer: answer, ts: Date.now() });
+  clearDraft('arg-answer');
+  writeLive();
 
   if (q.kind === 'position') {
     const pos = state.positions.find(p => p.id === q.positionId);
@@ -893,7 +1041,9 @@ $('#btn-arg-submit').addEventListener('click', async () => {
   if (!next) next = nextOfflineItem();
 
   session.scratch.current = next;
+  clearDraft('arg-answer');
   showArgQuestion();
+  writeLive();
   if (notice) setText($('#arg-status'), notice);   // set after render, which clears it
 });
 
@@ -1059,6 +1209,7 @@ $('#math-form').addEventListener('submit', e => {
 
   adaptLevel();
   save();
+  writeLive();
   nextMathProblem();
 });
 
@@ -1945,7 +2096,7 @@ function nextDrill() {
   $('#drill-entry').hidden = item.kind === 'choice';
   $('#drill-workspace').hidden = !item.workspace;
   if (item.workspace) {
-    $('#drill-work').value = '';
+    $('#drill-work').value = draftFor('drill-work');
     $('#drill-work').placeholder = item.workspace;
   }
 
@@ -2086,6 +2237,7 @@ function resolveDrill(confidence) {
   $('#drill-conf').hidden = true;
   $('#drill-reveal').hidden = false;
   $('#btn-drill-next').focus();
+  writeLive();
 }
 
 /* The written follow-up is never scored. Committing to an answer before
@@ -2114,7 +2266,10 @@ $('#btn-drill-next').addEventListener('click', () => {
   $('#drill-number').disabled = false;
   $('#drill-entry-submit').disabled = false;
   setText($('#drill-followup-status'), '');
+  clearDraft('drill-work');
+  clearDraft('drill-followup-answer');
   nextDrill();
+  writeLive();
 });
 
 /* Logic is the only drill day with levels. Same rolling-window rule as
@@ -2205,7 +2360,7 @@ async function startSteelman() {
   setText($('#steel-cheap'), 'Do not give me this version: ' + item.cheap);
 
   $('#steel-build').hidden = false;
-  $('#steel-answer').value = '';
+  $('#steel-answer').value = draftFor('steel-answer');
   $('#steel-answer').disabled = false;
   $('#btn-steel-submit').disabled = false;
   setText($('#steel-status'), '');
@@ -2228,6 +2383,8 @@ $('#btn-steel-submit').addEventListener('click', async () => {
 
   session.transcript.push({ kind: 'steelman', question: asked, answer: written, ts: Date.now() });
   session.scratch.turn += 1;
+  clearDraft('steel-answer');
+  writeLive();
 
   if (item.own) {
     const pos = state.positions.find(p => p.id === item.positionId);
@@ -2898,6 +3055,8 @@ $('#file-import').addEventListener('change', async e => {
       return;
     }
     state = migrate(parsed);
+    clearLive();                 // a session in progress belongs to the old data
+    session.running = false;
     writeNow();
     s.className = 'status';
     s.textContent = 'Imported. ' + state.sessions.length + ' sessions, ' + state.positions.length + ' positions.';
@@ -2913,6 +3072,8 @@ $('#btn-reset').addEventListener('click', () => {
   if (!confirm('Erase every session, position and setting in this browser?')) return;
   if (!confirm('Last check. This cannot be undone. Erase everything?')) return;
   localStorage.removeItem(STORE_KEY);
+  clearLive();
+  session.running = false;
   state = blankState();
   writeNow();
   go('home');
@@ -3024,7 +3185,9 @@ function prefetchData() {
 
 function boot() {
   load();
-  go('home');
+  watchDrafts();
+  // A session interrupted by a reload picks up exactly where it was.
+  if (!restoreLive()) go('home');
   prefetchData();
 
   // The service worker is skipped on localhost. Offline caching is the point

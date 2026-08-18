@@ -45,6 +45,22 @@ yourself. Once the time has elapsed the session counts as completed however long
 you carry on past it, and the extra time is recorded honestly in the session
 length. Before the time is up the same button abandons instead.
 
+### A session survives a reload
+
+A session in progress is written to its own localStorage key
+(`thinking-app:live`) on every meaningful change, including whatever is
+half-typed in the box. Reload, pull-to-refresh, or iOS discarding the tab
+under memory pressure all resume exactly where you were: same passage, same
+question, same unfinished sentence, and a timer still measured from when you
+actually started.
+
+Before this, a refresh dropped you back to **today**, and because the passage
+had already been marked as seen you were given a different one. Everything
+written in that session was gone.
+
+The saved session is cleared when the session closes or is abandoned, is
+ignored if it is more than 12 hours old, and is discarded on import or erase.
+
 ### Review
 
 Every session is kept, finished or not, and can be reopened from the **review**

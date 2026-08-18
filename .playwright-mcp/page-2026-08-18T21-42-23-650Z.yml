@@ -1,0 +1,20 @@
+- generic [ref=f18e1]:
+  - link "Skip to content" [ref=f18e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=f18e3]:
+    - region "Session in progress" [ref=f18e4]:
+      - generic [ref=f18e6]:
+        - generic [ref=f18e10]: argument
+        - status [ref=f18e12]
+      - generic [ref=f18e14]:
+        - paragraph [ref=f18e15]: question 2
+        - blockquote [ref=f18e16]: He says a right of conquest confers no right over the conquered. What is his argument, and does it depend on a premise a defender of conquest would ever grant?
+        - generic [ref=f18e17]: Your response
+        - textbox "Your response" [active] [ref=f18e18]:
+          - /placeholder: Write your response.
+          - text: I was halfway through writing this when my thumb hit refresh.
+        - generic [ref=f18e19]:
+          - button "Submit" [ref=f18e20] [cursor=pointer]
+          - button "Re-read passage" [ref=f18e21] [cursor=pointer]
+        - status [ref=f18e22]
+      - button "Abandon session" [ref=f18e24] [cursor=pointer]
