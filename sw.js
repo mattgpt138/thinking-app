@@ -10,7 +10,7 @@
    Bump CACHE_VERSION whenever a shell file or a data file changes.
    ═══════════════════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'thinking-app-v2';
+const CACHE_VERSION = 'thinking-app-v3';
 const SHELL_CACHE   = CACHE_VERSION + '-shell';
 const FONT_CACHE    = CACHE_VERSION + '-fonts';
 
@@ -34,7 +34,10 @@ const SHELL = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
-      .then(cache => cache.addAll(SHELL))
+      // cache: 'reload' bypasses the browser's own HTTP cache. Without it a
+      // version bump can bake a stale copy of index.html into the new shell,
+      // because GitHub Pages serves HTML with a max-age the browser honours.
+      .then(cache => cache.addAll(SHELL.map(url => new Request(url, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
   );
 });

@@ -123,9 +123,9 @@ is kept in this browser's `localStorage` and sent only to `api.anthropic.com`.
 Browser calls include the `anthropic-dangerous-direct-browser-access: true`
 header.
 
-The default model is `claude-haiku-4-5`, chosen because it is the cheapest current
-model and the interrogation task is short. Swapping the box to `claude-sonnet-5`
-or `claude-opus-5` costs more per session and presses harder.
+The default model is `claude-sonnet-5`, at roughly 3p per argument day. Only
+argument days ever call the API. `claude-haiku-4-5` costs about a third as much
+and presses more softly; `claude-opus-5` costs more and presses hardest.
 
 **Nothing blocks on the network.** Every API call has a 25-second timeout and
 every call site falls back to bundled content on failure. A session with no key,

@@ -109,7 +109,7 @@ const READOUT_AT  = 60;     // reveal the numeric readout at this many seconds l
 const ARC_LENGTH  = 2 * Math.PI * 54;
 const API_TIMEOUT = 25000;  // ms; a session never waits longer than this
 
-const DEFAULT_MODEL = 'claude-haiku-4-5';
+const DEFAULT_MODEL = 'claude-sonnet-5';
 
 const BLURB = {
   argument:  'Read one passage closely. Then answer for it. The questions are not comprehension checks; they are attempts to find where your reading gives way.',
