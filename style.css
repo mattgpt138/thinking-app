@@ -1,0 +1,545 @@
+/* ═══════════════════════════════════════════════════════════════
+   thinking-app
+   A deliberately non-stimulating interface. Nothing here should
+   reward you for looking at it. The chrome is an instrument; the
+   passage is a book. That split is the whole design.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --paper:    #E2E5DE;
+  --raised:   #EDEFE9;
+  --ink:      #1C211F;
+  --ink-soft: #4A534E;
+  --rule:     #C3C9C0;
+  --brass:    #8A6E3C;
+  --oxblood:  #6B4A4A;
+
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+
+  --gap: 1.25rem;
+  --measure: 34rem;
+  --radius: 2px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.6;
+  font-variant-ligatures: none;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── accessibility ───────────────────────────────────────────── */
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 10;
+  background: var(--ink); color: var(--paper);
+  padding: .6rem 1rem; text-decoration: none;
+}
+.skip:focus { left: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* ── layout ──────────────────────────────────────────────────── */
+
+.topbar {
+  padding: 1rem 1rem .5rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 5;
+  padding-top: calc(1rem + env(safe-area-inset-top));
+}
+
+.wordmark {
+  margin: 0 0 .75rem;
+  font-family: var(--mono);
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: .28em;
+  text-transform: lowercase;
+  color: var(--ink-soft);
+}
+
+.tabs {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 0 0 .35rem;
+  margin: 0;
+  font: inherit;
+  font-size: .8125rem;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--brass);
+}
+
+main {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: var(--gap) 1rem 5rem;
+}
+
+.view { display: block; }
+[hidden] { display: none !important; }
+
+/* ── plates ──────────────────────────────────────────────────── */
+
+.plate {
+  background: var(--raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: var(--gap);
+}
+.plate-quiet { background: none; }
+
+.overline {
+  margin: 0 0 .5rem;
+  font-size: .6875rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.display {
+  margin: 0 0 .5rem;
+  font-family: var(--mono);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  line-height: 1.1;
+}
+
+.lede {
+  margin: 0 0 1rem;
+  color: var(--ink-soft);
+  font-size: .875rem;
+}
+
+.fineprint {
+  margin: .75rem 0 0;
+  font-size: .75rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.fineprint a { color: var(--brass); }
+
+.note {
+  margin: .5rem 0 1rem;
+  font-size: .8125rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.status {
+  margin: .75rem 0 0;
+  min-height: 1.2em;
+  font-size: .75rem;
+  color: var(--brass);
+}
+.status.err { color: var(--oxblood); }
+
+/* ── spec sheet ──────────────────────────────────────────────── */
+
+.specsheet {
+  margin: 0 0 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.specsheet > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.specsheet dt {
+  font-size: .6875rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.specsheet dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: .9375rem;
+}
+
+/* ── buttons ─────────────────────────────────────────────────── */
+
+.btn {
+  appearance: none;
+  font: inherit;
+  font-size: .8125rem;
+  letter-spacing: .06em;
+  padding: .7rem 1.1rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  min-height: 44px;
+}
+.btn:hover { background: rgba(28,33,31,.05); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: #2b322f; }
+
+.btn-ghost { border-color: var(--rule); color: var(--ink-soft); }
+.btn-ghost:hover { color: var(--ink); }
+
+.btn-danger { border-color: var(--oxblood); color: var(--oxblood); }
+.btn-danger:hover { background: rgba(107,74,74,.08); }
+
+.btn-small { font-size: .75rem; padding: .5rem .8rem; min-height: 0; }
+
+.btn-choice { flex: 1; }
+
+.row { display: flex; gap: .625rem; flex-wrap: wrap; margin-top: 1rem; }
+.row-split { display: flex; gap: .625rem; }
+
+/* ── fields ──────────────────────────────────────────────────── */
+
+.lbl {
+  display: block;
+  margin: 1rem 0 .375rem;
+  font-size: .6875rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+input[type="text"], input[type="password"], textarea {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: .7rem .8rem;
+}
+textarea { resize: vertical; min-height: 8rem; }
+input:focus, textarea:focus { border-color: var(--brass); }
+::placeholder { color: var(--ink-soft); opacity: .55; }
+
+/* ═══════════════════════════════════════════════════════════════
+   THE TIMER
+   The numeric readout is withheld until the final minute. This is
+   deliberate. Clock-watching is the enemy of focus. Do not add a
+   visible countdown.
+   ═══════════════════════════════════════════════════════════════ */
+
+.timer {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 1.5rem;
+}
+
+.arc { width: 100%; height: 100%; transform: rotate(-90deg); }
+
+.arc-track {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1.5;
+}
+
+.arc-fill {
+  fill: none;
+  stroke: var(--brass);
+  stroke-width: 1.5;
+  stroke-linecap: butt;
+  stroke-dasharray: 339.292;
+  stroke-dashoffset: 339.292;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.timer.final .arc-fill { stroke: var(--oxblood); }
+
+.arc-centre {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  text-align: center;
+}
+
+.arc-label {
+  font-size: .6875rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.arc-readout {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--oxblood);
+  line-height: 1;
+}
+
+/* ── stages ──────────────────────────────────────────────────── */
+
+.stage { margin-bottom: 1.5rem; }
+
+.stage-foot {
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+  text-align: center;
+}
+
+/* passage: this is the one place that reads as a book */
+.passage {
+  font-family: var(--serif);
+  font-size: 1.1875rem;
+  line-height: 1.72;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  hyphens: auto;
+}
+.passage p { margin: 0 0 1.1em; }
+.passage p:last-child { margin-bottom: 0; }
+.passage em { font-style: italic; }
+
+.prompt {
+  margin: 0 0 1rem;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid var(--brass);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.problem {
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+  margin: 1.5rem 0;
+  text-align: center;
+  line-height: 1.3;
+}
+
+#math-form { display: flex; gap: .625rem; }
+#math-form input { text-align: center; font-size: 1.25rem; }
+
+.verdict {
+  margin: 1rem 0 .25rem;
+  font-size: .875rem;
+  min-height: 1.4em;
+}
+.verdict.right { color: var(--brass); }
+.verdict.wrong { color: var(--oxblood); }
+
+.reveal { border-top: 1px solid var(--rule); margin-top: 1.25rem; padding-top: 1.25rem; }
+
+.steps {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  font-size: .8125rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.steps li { margin-bottom: .4rem; }
+
+#cal-conf { margin-top: 1.5rem; }
+
+.confgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+}
+
+/* ── logs and lists ──────────────────────────────────────────── */
+
+.loglist { list-style: none; margin: 0; padding: 0; }
+.loglist li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .4rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: .75rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.loglist li:last-child { border-bottom: 0; }
+
+.pos-card { border-left: 2px solid var(--rule); }
+.pos-title {
+  margin: 0 0 .5rem;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.pos-body {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  margin-bottom: 1rem;
+}
+.pos-meta {
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 .75rem;
+}
+
+.history {
+  border-top: 1px solid var(--rule);
+  margin-top: 1rem;
+  padding-top: .75rem;
+}
+.history summary {
+  cursor: pointer;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.history-entry {
+  border-left: 1px solid var(--rule);
+  padding-left: .875rem;
+  margin-top: .875rem;
+  font-family: var(--serif);
+  font-size: .9375rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--ink-soft);
+}
+.history-stamp {
+  display: block;
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+  color: var(--ink-soft);
+  white-space: normal;
+}
+
+.challenge {
+  margin-top: 1rem;
+  padding: .875rem;
+  border: 1px solid var(--oxblood);
+  border-radius: var(--radius);
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ── charts ──────────────────────────────────────────────────── */
+
+.chart { margin: .5rem 0 .75rem; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart .axis { stroke: var(--rule); stroke-width: 1; }
+.chart .ideal { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 3 3; }
+.chart .series { fill: none; stroke: var(--brass); stroke-width: 1.5; }
+.chart .dot { fill: var(--brass); }
+.chart .tick {
+  font-family: var(--mono);
+  font-size: 8px;
+  fill: var(--ink-soft);
+}
+.chart-empty {
+  font-size: .8125rem;
+  color: var(--ink-soft);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.bigstat {
+  margin: .25rem 0 1rem;
+  font-size: 2.25rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.bigstat small {
+  display: block;
+  font-size: .6875rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: .5rem;
+}
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+  margin-top: .75rem;
+}
+.tbl th, .tbl td {
+  text-align: right;
+  padding: .35rem .4rem;
+  border-bottom: 1px solid var(--rule);
+}
+.tbl th {
+  font-weight: 500;
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.tbl th:first-child, .tbl td:first-child { text-align: left; }
+
+/* ── motion ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── wider screens: still narrow, this is a reading tool ─────── */
+
+@media (min-width: 40rem) {
+  body { font-size: 16px; }
+  main { padding-top: 2rem; }
+  .plate { padding: 1.5rem; }
+}

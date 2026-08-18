@@ -1,0 +1,747 @@
+{
+ "calibration": [
+  {
+   "id": "c-pacific",
+   "category": "geography",
+   "statement": "The Pacific Ocean covers a greater surface area than all of Earth's land combined.",
+   "answer": true,
+   "note": "Pacific surface is about 165 million km2; total land is about 149 million km2."
+  },
+  {
+   "id": "c-everest",
+   "category": "geography",
+   "statement": "The summit of Mount Everest is the point on Earth's surface farthest from the planet's centre.",
+   "answer": false,
+   "note": "Chimborazo in Ecuador is farther out, because the Earth bulges at the equator."
+  },
+  {
+   "id": "c-alaska",
+   "category": "geography",
+   "statement": "Alaska has more coastline than all other US states combined.",
+   "answer": true,
+   "note": "Alaska's tidal shoreline is roughly 54,000 km, more than the rest of the country together."
+  },
+  {
+   "id": "c-sahara",
+   "category": "geography",
+   "statement": "The Sahara is the largest hot desert in the world.",
+   "answer": true,
+   "note": "About 9.2 million km2. Antarctica is a larger desert overall, but it is a cold one."
+  },
+  {
+   "id": "c-kilimanjaro",
+   "category": "geography",
+   "statement": "Mount Kilimanjaro is located in Kenya.",
+   "answer": false,
+   "note": "It is in Tanzania, close to the Kenyan border."
+  },
+  {
+   "id": "c-reno",
+   "category": "geography",
+   "statement": "Reno, Nevada lies farther west than Los Angeles, California.",
+   "answer": true,
+   "note": "Reno is near 119.8 degrees west; Los Angeles is near 118.2 degrees west."
+  },
+  {
+   "id": "c-istanbul",
+   "category": "geography",
+   "statement": "Istanbul lies on two continents.",
+   "answer": true,
+   "note": "The Bosphorus divides its European and Asian sides."
+  },
+  {
+   "id": "c-africa-hemi",
+   "category": "geography",
+   "statement": "The whole of Africa lies within the Eastern Hemisphere.",
+   "answer": false,
+   "note": "The prime meridian crosses West Africa, so parts of Ghana, Mali and others sit west of it."
+  },
+  {
+   "id": "c-russia-nk",
+   "category": "geography",
+   "statement": "Russia shares a land border with North Korea.",
+   "answer": true,
+   "note": "A short border of about 17 km along the Tumen River."
+  },
+  {
+   "id": "c-deadsea",
+   "category": "geography",
+   "statement": "The shore of the Dead Sea is the lowest exposed land elevation on Earth.",
+   "answer": true,
+   "note": "More than 400 metres below sea level."
+  },
+  {
+   "id": "c-vatican",
+   "category": "geography",
+   "statement": "Vatican City is the smallest sovereign state in the world by area.",
+   "answer": true,
+   "note": "About 0.49 km2."
+  },
+  {
+   "id": "c-iceland-malta",
+   "category": "geography",
+   "statement": "Iceland has a larger population than Malta.",
+   "answer": false,
+   "note": "Iceland is around 390,000 people; Malta is over 500,000 in a far smaller area."
+  },
+  {
+   "id": "c-tokyo",
+   "category": "geography",
+   "statement": "More people live in the Tokyo metropolitan area than in the whole of Australia.",
+   "answer": true,
+   "note": "Greater Tokyo is around 37 million; Australia is around 26 million."
+  },
+  {
+   "id": "c-australia-width",
+   "category": "geography",
+   "statement": "Australia is wider from east to west than the contiguous United States.",
+   "answer": false,
+   "note": "Australia spans roughly 4,000 km; the contiguous US spans roughly 4,300 km."
+  },
+  {
+   "id": "c-moonlight",
+   "category": "physics",
+   "statement": "Light takes more than one second to travel from the Moon to the Earth.",
+   "answer": true,
+   "note": "About 1.28 seconds at the mean distance."
+  },
+  {
+   "id": "c-venus-hot",
+   "category": "physics",
+   "statement": "Venus is the hottest planet in the Solar System.",
+   "answer": true,
+   "note": "Surface near 465 C, hotter than Mercury despite being farther from the Sun."
+  },
+  {
+   "id": "c-venus-day",
+   "category": "physics",
+   "statement": "A day on Venus is longer than a year on Venus.",
+   "answer": true,
+   "note": "It rotates in about 243 Earth days and orbits in about 225."
+  },
+  {
+   "id": "c-rings",
+   "category": "physics",
+   "statement": "Saturn is the only planet in the Solar System with a ring system.",
+   "answer": false,
+   "note": "Jupiter, Uranus and Neptune all have rings, they are simply much fainter."
+  },
+  {
+   "id": "c-helium",
+   "category": "physics",
+   "statement": "Helium was detected on the Sun before it was found on Earth.",
+   "answer": true,
+   "note": "Identified in the solar spectrum in 1868, isolated on Earth in 1895."
+  },
+  {
+   "id": "c-purewater",
+   "category": "physics",
+   "statement": "Pure water is a good conductor of electricity.",
+   "answer": false,
+   "note": "Pure water is a poor conductor. Dissolved ions do the conducting in ordinary water."
+  },
+  {
+   "id": "c-sound-water",
+   "category": "physics",
+   "statement": "Sound travels faster through water than through air.",
+   "answer": true,
+   "note": "About 1,480 m/s in water against about 343 m/s in air."
+  },
+  {
+   "id": "c-glass",
+   "category": "physics",
+   "statement": "Window glass is a liquid that slowly flows at room temperature.",
+   "answer": false,
+   "note": "It is an amorphous solid. Old uneven panes come from the way they were made."
+  },
+  {
+   "id": "c-lightning",
+   "category": "physics",
+   "statement": "Lightning never strikes the same place twice.",
+   "answer": false,
+   "note": "Tall structures are struck repeatedly. The Empire State Building is hit many times a year."
+  },
+  {
+   "id": "c-coriolis",
+   "category": "physics",
+   "statement": "The Coriolis effect determines the direction water swirls when a household sink drains.",
+   "answer": false,
+   "note": "At that scale basin shape and initial motion dominate completely."
+  },
+  {
+   "id": "c-oxygen-crust",
+   "category": "physics",
+   "statement": "Oxygen is the most abundant element by mass in the Earth's crust.",
+   "answer": true,
+   "note": "Roughly 46 percent, mostly locked in silicate and oxide minerals."
+  },
+  {
+   "id": "c-diamond",
+   "category": "physics",
+   "statement": "Diamond is the hardest naturally occurring material known.",
+   "answer": true,
+   "note": "It sits at the top of the Mohs scale."
+  },
+  {
+   "id": "c-chromosomes",
+   "category": "biology",
+   "statement": "Human beings normally have more than 23 pairs of chromosomes.",
+   "answer": false,
+   "note": "Exactly 23 pairs, 46 chromosomes in total."
+  },
+  {
+   "id": "c-banana",
+   "category": "biology",
+   "statement": "Bananas are measurably radioactive.",
+   "answer": true,
+   "note": "They contain potassium, and a fixed fraction of natural potassium is potassium-40."
+  },
+  {
+   "id": "c-bats",
+   "category": "biology",
+   "statement": "Bats are blind.",
+   "answer": false,
+   "note": "All bat species can see. Many also use echolocation."
+  },
+  {
+   "id": "c-sharks-trees",
+   "category": "biology",
+   "statement": "Sharks existed before trees did.",
+   "answer": true,
+   "note": "Sharks appear around 450 million years ago; the first trees around 390 million."
+  },
+  {
+   "id": "c-octopus",
+   "category": "biology",
+   "statement": "An octopus has three hearts.",
+   "answer": true,
+   "note": "Two branchial hearts serve the gills and one systemic heart serves the body."
+  },
+  {
+   "id": "c-blueblood",
+   "category": "biology",
+   "statement": "Human blood is blue inside the body and turns red on contact with air.",
+   "answer": false,
+   "note": "Human blood is always red. Deoxygenated blood is a darker red."
+  },
+  {
+   "id": "c-goldfish",
+   "category": "biology",
+   "statement": "Goldfish have a memory span of only a few seconds.",
+   "answer": false,
+   "note": "They can be trained on tasks and retain them for months."
+  },
+  {
+   "id": "c-antibiotics",
+   "category": "biology",
+   "statement": "Antibiotics are effective treatments for viral infections such as the common cold.",
+   "answer": false,
+   "note": "Antibiotics act on bacteria. They do nothing to viruses."
+  },
+  {
+   "id": "c-microbiome",
+   "category": "biology",
+   "statement": "A human body contains at least as many bacterial cells as human cells.",
+   "answer": true,
+   "note": "Current estimates put the ratio near one to one, slightly favouring bacteria."
+  },
+  {
+   "id": "c-brain-energy",
+   "category": "biology",
+   "statement": "The human brain accounts for roughly a fifth of the body's resting energy use.",
+   "answer": true,
+   "note": "About 20 percent, from roughly 2 percent of body mass."
+  },
+  {
+   "id": "c-tenpercent",
+   "category": "biology",
+   "statement": "Humans use only about ten percent of their brains.",
+   "answer": false,
+   "note": "Imaging shows activity throughout the brain. The claim has no basis."
+  },
+  {
+   "id": "c-bulls",
+   "category": "biology",
+   "statement": "Bulls become enraged by the colour red.",
+   "answer": false,
+   "note": "Cattle are red-green colour blind. It is the movement of the cape that provokes them."
+  },
+  {
+   "id": "c-cleopatra",
+   "category": "history",
+   "statement": "Cleopatra lived closer in time to the first Moon landing than to the building of the Great Pyramid of Giza.",
+   "answer": true,
+   "note": "The Great Pyramid is around 2560 BC; Cleopatra died in 30 BC; the landing was 1969."
+  },
+  {
+   "id": "c-oxford",
+   "category": "history",
+   "statement": "The Western Roman Empire fell before teaching began at Oxford.",
+   "answer": true,
+   "note": "476 AD against evidence of teaching at Oxford from 1096."
+  },
+  {
+   "id": "c-harvard",
+   "category": "history",
+   "statement": "Harvard University was founded before calculus was developed.",
+   "answer": true,
+   "note": "Harvard was chartered in 1636; Newton and Leibniz worked in the 1660s to 1680s."
+  },
+  {
+   "id": "c-fax",
+   "category": "history",
+   "statement": "A working fax machine was patented before the American Civil War began.",
+   "answer": true,
+   "note": "Alexander Bain patented an electric printing telegraph in 1843."
+  },
+  {
+   "id": "c-nintendo",
+   "category": "history",
+   "statement": "Nintendo was founded before the Ottoman Empire ended.",
+   "answer": true,
+   "note": "Nintendo began in 1889 as a playing card maker; the Ottoman Empire ended in 1922."
+  },
+  {
+   "id": "c-annefrank",
+   "category": "history",
+   "statement": "Anne Frank and Martin Luther King Jr. were born in the same year.",
+   "answer": true,
+   "note": "Both were born in 1929."
+  },
+  {
+   "id": "c-napoleon",
+   "category": "history",
+   "statement": "Napoleon Bonaparte was unusually short for a Frenchman of his era.",
+   "answer": false,
+   "note": "He was about 1.68 m, close to average. The myth comes from differing inch measures and British caricature."
+  },
+  {
+   "id": "c-hundredyears",
+   "category": "history",
+   "statement": "The Hundred Years' War lasted more than one hundred years.",
+   "answer": true,
+   "note": "1337 to 1453, about 116 years."
+  },
+  {
+   "id": "c-euro",
+   "category": "history",
+   "statement": "Euro banknotes and coins entered circulation before the year 2000.",
+   "answer": false,
+   "note": "The euro existed electronically from 1999, but cash arrived in January 2002."
+  },
+  {
+   "id": "c-greatwall",
+   "category": "history",
+   "statement": "The Great Wall of China is visible to the unaided eye from the Moon.",
+   "answer": false,
+   "note": "It is far too narrow. It is hard to pick out even from low Earth orbit."
+  },
+  {
+   "id": "c-cards",
+   "category": "mathematics",
+   "statement": "There are more distinct orderings of a standard 52-card deck than there are atoms in the observable universe.",
+   "answer": false,
+   "note": "52 factorial is about 8 x 10^67. Atoms in the observable universe are about 10^80."
+  },
+  {
+   "id": "c-googol",
+   "category": "mathematics",
+   "statement": "A googol is larger than the number of atoms in the observable universe.",
+   "answer": true,
+   "note": "A googol is 10^100, against roughly 10^80 atoms."
+  },
+  {
+   "id": "c-chess",
+   "category": "mathematics",
+   "statement": "The number of possible chess games exceeds the number of atoms in the observable universe.",
+   "answer": true,
+   "note": "The Shannon number is estimated near 10^120."
+  },
+  {
+   "id": "c-nines",
+   "category": "mathematics",
+   "statement": "The repeating decimal 0.999... is exactly equal to 1.",
+   "answer": true,
+   "note": "They are two notations for the same real number, provable several ways."
+  },
+  {
+   "id": "c-goldbach",
+   "category": "mathematics",
+   "statement": "It has been proven that every even number greater than two is the sum of two primes.",
+   "answer": false,
+   "note": "Goldbach's conjecture is verified far into the large numbers but remains unproven."
+  },
+  {
+   "id": "c-primes",
+   "category": "mathematics",
+   "statement": "There are infinitely many prime numbers.",
+   "answer": true,
+   "note": "Proved by Euclid."
+  },
+  {
+   "id": "c-pi",
+   "category": "mathematics",
+   "statement": "Pi has been proven to be irrational.",
+   "answer": true,
+   "note": "Lambert proved it in 1761."
+  },
+  {
+   "id": "c-monty",
+   "category": "mathematics",
+   "statement": "In the Monty Hall problem, switching doors wins two-thirds of the time.",
+   "answer": true,
+   "note": "Given the standard rules, switching wins whenever the first pick was wrong, which is two times in three."
+  },
+  {
+   "id": "c-atomsglass",
+   "category": "mathematics",
+   "statement": "There are more atoms in a glass of water than there are glassfuls of water in all the Earth's oceans.",
+   "answer": true,
+   "note": "About 10^25 atoms in a glass, against roughly 10^22 glassfuls of ocean."
+  },
+  {
+   "id": "c-amazon-oxygen",
+   "category": "biology",
+   "statement": "The Amazon rainforest supplies about twenty percent of the world's oxygen.",
+   "answer": false,
+   "note": "A mature forest consumes nearly as much oxygen as it produces. Its net contribution is close to zero; most atmospheric oxygen came from ocean plankton over geological time."
+  },
+  {
+   "id": "c-sydney",
+   "category": "geography",
+   "statement": "Sydney is the capital of Australia.",
+   "answer": false,
+   "note": "Canberra is, chosen as a compromise between Sydney and Melbourne."
+  },
+  {
+   "id": "c-sun-yellow",
+   "category": "physics",
+   "statement": "Seen from space, the Sun appears yellow.",
+   "answer": false,
+   "note": "It is white. Atmospheric scattering removes blue light and makes it look yellow from the ground."
+  },
+  {
+   "id": "c-chameleon",
+   "category": "biology",
+   "statement": "Chameleons change colour mainly to blend in with their surroundings.",
+   "answer": false,
+   "note": "Colour change is driven mostly by temperature regulation and social signalling."
+  },
+  {
+   "id": "c-penny",
+   "category": "physics",
+   "statement": "A penny dropped from the top of the Empire State Building would kill a person it hit on the street.",
+   "answer": false,
+   "note": "Its terminal velocity is low and its shape unstable. It would sting."
+  },
+  {
+   "id": "c-vikings",
+   "category": "history",
+   "statement": "Viking warriors wore horned helmets in battle.",
+   "answer": false,
+   "note": "No horned helmet has been found in a Viking grave. The image comes from a 19th-century opera design."
+  },
+  {
+   "id": "c-einstein",
+   "category": "history",
+   "statement": "Albert Einstein failed mathematics as a schoolboy.",
+   "answer": false,
+   "note": "He had mastered calculus by fifteen. He did fail an entrance exam that covered non-scientific subjects."
+  },
+  {
+   "id": "c-tonguemap",
+   "category": "biology",
+   "statement": "Different regions of the tongue are dedicated to detecting different basic tastes.",
+   "answer": false,
+   "note": "The tongue map came from a mistranslated 1901 paper. All taste types are detected across the tongue."
+  },
+  {
+   "id": "c-fuji",
+   "category": "geography",
+   "statement": "Mount Fuji is the highest mountain in Asia.",
+   "answer": false,
+   "note": "Fuji is about 3,776 m. Everest is about 8,849 m."
+  },
+  {
+   "id": "c-alcohol",
+   "category": "biology",
+   "statement": "Drinking alcohol raises the body's core temperature in cold conditions.",
+   "answer": false,
+   "note": "It dilates surface blood vessels, which feels warm while accelerating heat loss."
+  },
+  {
+   "id": "c-camel",
+   "category": "biology",
+   "statement": "A camel's hump stores water.",
+   "answer": false,
+   "note": "The hump stores fat, which is a reserve of energy."
+  },
+  {
+   "id": "c-nobel-math",
+   "category": "history",
+   "statement": "The Nobel Prizes include a category for mathematics.",
+   "answer": false,
+   "note": "There is no mathematics Nobel. The Fields Medal and Abel Prize fill that role."
+  },
+  {
+   "id": "c-brazil",
+   "category": "geography",
+   "statement": "The official language of Brazil is Spanish.",
+   "answer": false,
+   "note": "It is Portuguese, a result of the 1494 Treaty of Tordesillas."
+  }
+ ],
+ "fermi": [
+  {
+   "id": "f-tuners",
+   "prompt": "How many piano tuners work in Chicago?",
+   "unit": "tuners",
+   "low": 30,
+   "high": 600,
+   "reference": [
+    "Chicago metro population: about 9 million, so roughly 3 million households.",
+    "Say 1 household in 50 owns a piano: about 60,000 household pianos.",
+    "Add institutional pianos in schools, churches, bars and halls: call it 10,000 more, so 70,000.",
+    "A piano in use gets tuned about once a year: 70,000 tunings a year.",
+    "A tuner does 3 to 4 a day, so 800 to 1,000 a year with travel.",
+    "70,000 / 900 is roughly 80 full-time tuners."
+   ],
+   "answer": "About 80 to 200. Trade directories list a few hundred, many of them part time."
+  },
+  {
+   "id": "f-heartbeats",
+   "prompt": "How many times does a human heart beat in an average lifetime?",
+   "unit": "beats",
+   "low": 1000000000,
+   "high": 10000000000,
+   "reference": [
+    "Resting rate is about 70 per minute; average 75 across the day to allow for activity.",
+    "75 x 60 = 4,500 per hour.",
+    "4,500 x 24 = about 108,000 per day.",
+    "108,000 x 365 = about 39 million per year.",
+    "At 75 years: 39 million x 75 = about 3 billion."
+   ],
+   "answer": "Roughly 2.5 to 3 billion. Most mammals land within a factor of a few of 1 billion."
+  },
+  {
+   "id": "f-breaths",
+   "prompt": "How many breaths does a person take in a lifetime?",
+   "unit": "breaths",
+   "low": 100000000,
+   "high": 2000000000,
+   "reference": [
+    "Resting respiration is about 14 per minute; call the daily average 16.",
+    "16 x 60 x 24 = about 23,000 breaths per day.",
+    "23,000 x 365 = about 8.4 million per year.",
+    "Over 75 years: 8.4 million x 75 = about 630 million.",
+    "Childhood rates are higher, which nudges the figure up."
+   ],
+   "answer": "Roughly 600 to 700 million."
+  },
+  {
+   "id": "f-golfballs",
+   "prompt": "How many golf balls fit inside a standard school bus?",
+   "unit": "golf balls",
+   "low": 100000,
+   "high": 2000000,
+   "reference": [
+    "Bus interior: about 12 m long, 2.4 m wide, 2 m tall = 58 cubic metres.",
+    "Subtract seats, wheel wells and engine housing: call the usable space 50 cubic metres.",
+    "A golf ball is 4.27 cm across, so its own volume is about 4.1 x 10^-5 cubic metres.",
+    "Random packing of spheres fills about 64 percent of space, so each ball claims 6.4 x 10^-5 cubic metres.",
+    "50 / 6.4 x 10^-5 = about 780,000."
+   ],
+   "answer": "Roughly 500,000 to 900,000. The packing fraction is the step most people forget."
+  },
+  {
+   "id": "f-cells",
+   "prompt": "How many cells are there in the human body?",
+   "unit": "cells",
+   "low": 1000000000000,
+   "high": 1000000000000000,
+   "reference": [
+    "Do not average over cell types: one type dominates the count.",
+    "Red blood cells run about 5 million per microlitre of blood.",
+    "Blood volume is about 5 litres, which is 5 million microlitres.",
+    "5 x 10^6 x 5 x 10^6 = 2.5 x 10^13 red blood cells alone.",
+    "Red cells are roughly 80 percent of all cells by number, so the total is around 3 x 10^13.",
+    "Cross-check by mass: 70 kg at about 1 nanogram per generic cell would give 7 x 10^13, the same order."
+   ],
+   "answer": "About 3 x 10^13, or 30 trillion."
+  },
+  {
+   "id": "f-hairs",
+   "prompt": "How many hairs are on a typical human head?",
+   "unit": "hairs",
+   "low": 20000,
+   "high": 500000,
+   "reference": [
+    "The haired scalp is roughly a cap 30 cm across, so about 700 square centimetres.",
+    "Follicle density on the scalp is about 150 to 200 per square centimetre.",
+    "700 x 170 = about 120,000."
+   ],
+   "answer": "Roughly 100,000 to 150,000. Blond hair runs denser and finer, red hair sparser and thicker."
+  },
+  {
+   "id": "f-sand",
+   "prompt": "How many grains of sand are on all the beaches of Earth?",
+   "unit": "grains",
+   "low": 100000000000000000,
+   "high": 1000000000000000000000,
+   "reference": [
+    "A medium grain is about 0.5 mm across, so about 6 x 10^-11 cubic metres; allow for packing gaps and call it 10^-10 cubic metres each.",
+    "That gives about 10^10 grains per cubic metre of sand.",
+    "World coastline is roughly 350,000 km; say a fifth of it is sandy beach, so 70,000 km, or 7 x 10^7 metres.",
+    "Take a beach cross-section 50 m wide and 5 m deep: 250 square metres.",
+    "Volume = 7 x 10^7 x 250 = 1.75 x 10^10 cubic metres.",
+    "Grains = 1.75 x 10^10 x 10^10 = about 2 x 10^20."
+   ],
+   "answer": "Around 10^19 to 10^20. Fewer than the stars in the observable universe, which is the usual point of the comparison."
+  },
+  {
+   "id": "f-trees",
+   "prompt": "How many trees are there on Earth?",
+   "unit": "trees",
+   "low": 100000000000,
+   "high": 30000000000000,
+   "reference": [
+    "Global forest area is about 4 billion hectares, which is 4 x 10^13 square metres.",
+    "Tree density in forest varies widely; take 500 stems per hectare as a middling figure.",
+    "4 x 10^9 hectares x 500 = 2 x 10^12 trees in forests.",
+    "Add savanna, orchards, parks and street trees: call it half again.",
+    "Total around 3 x 10^12."
+   ],
+   "answer": "About 3 trillion. The 2015 Crowther survey put it at 3.04 trillion, which surprised people by being far higher than earlier guesses."
+  },
+  {
+   "id": "f-seconds",
+   "prompt": "How many seconds have elapsed since the year 1 AD?",
+   "unit": "seconds",
+   "low": 10000000000,
+   "high": 1000000000000,
+   "reference": [
+    "Elapsed years: about 2,025.",
+    "Seconds in a year: 365.25 x 24 x 3,600 = about 3.16 x 10^7.",
+    "A useful thing to memorise: pi x 10^7 seconds is close to one year.",
+    "2,025 x 3.16 x 10^7 = about 6.4 x 10^10."
+   ],
+   "answer": "About 6.4 x 10^10, or 64 billion."
+  },
+  {
+   "id": "f-cloud",
+   "prompt": "How much does a typical fair-weather cumulus cloud weigh?",
+   "unit": "kilograms",
+   "low": 10000,
+   "high": 10000000,
+   "reference": [
+    "Take a cumulus roughly 1 km on each side: 10^9 cubic metres.",
+    "Liquid water content in such a cloud is about 0.5 grams per cubic metre.",
+    "10^9 x 0.5 g = 5 x 10^8 grams = 5 x 10^5 kilograms.",
+    "That is around 500 tonnes of water, held up by rising air."
+   ],
+   "answer": "About 500,000 kg. The mass is real; the droplets are just too small to fall fast."
+  },
+  {
+   "id": "f-vessels",
+   "prompt": "What is the total length of all the blood vessels in one human body?",
+   "unit": "kilometres",
+   "low": 10000,
+   "high": 300000,
+   "reference": [
+    "Capillaries dominate the total length; arteries and veins are negligible by comparison.",
+    "Estimates of capillary count run from 10^10 to 10^11.",
+    "Each capillary is roughly 0.5 to 1 mm long.",
+    "Take 4 x 10^10 capillaries at 1 mm: 4 x 10^7 metres = 40,000 km.",
+    "The commonly quoted 100,000 km figure assumes a capillary count near 10^11."
+   ],
+   "answer": "Order of 10^4 to 10^5 km. Enough to wrap the equator at least once."
+  },
+  {
+   "id": "f-pizza",
+   "prompt": "How many pizzas are sold in the United States in one year?",
+   "unit": "pizzas",
+   "low": 300000000,
+   "high": 10000000000,
+   "reference": [
+    "US population is about 335 million.",
+    "Say the average person eats pizza once every two weeks: 26 servings a year.",
+    "One pizza feeds about three people, so 335 million x 26 / 3 = about 2.9 billion pizzas.",
+    "Cross-check from the other side: the US pizza industry turns over roughly 46 billion dollars at maybe 15 dollars a pizza, which is about 3 billion.",
+    "Two independent routes agreeing is the strongest signal a Fermi estimate can give you."
+   ],
+   "answer": "About 3 billion."
+  },
+  {
+   "id": "f-gasoline",
+   "prompt": "How many litres of petrol do passenger cars in the United States burn in a year?",
+   "unit": "litres",
+   "low": 100000000000,
+   "high": 2000000000000,
+   "reference": [
+    "Light vehicles in regular use: about 250 million.",
+    "Average annual distance: about 19,000 km, which is 12,000 miles.",
+    "Fuel economy averages about 10 litres per 100 km, which is roughly 24 miles per gallon.",
+    "250 x 10^6 x 19,000 x 0.10 = 4.75 x 10^11 litres."
+   ],
+   "answer": "About 5 x 10^11 litres, or roughly 130 billion US gallons."
+  },
+  {
+   "id": "f-words",
+   "prompt": "How many words does a person speak in a lifetime?",
+   "unit": "words",
+   "low": 100000000,
+   "high": 3000000000,
+   "reference": [
+    "Recording studies put daily speech at about 16,000 words for both men and women.",
+    "16,000 x 365 = about 5.8 million words a year.",
+    "Assume 72 years of talking after early childhood.",
+    "5.8 x 10^6 x 72 = about 4 x 10^8."
+   ],
+   "answer": "Around 400 million. The often-repeated claim that women speak three times as many words as men did not survive measurement."
+  },
+  {
+   "id": "f-windows",
+   "prompt": "How many windows are there in New York City?",
+   "unit": "windows",
+   "low": 5000000,
+   "high": 500000000,
+   "reference": [
+    "NYC has about 3.5 million housing units.",
+    "A typical apartment has about 5 windows: 17.5 million residential windows.",
+    "Commercial, institutional and industrial buildings add perhaps another 50 percent.",
+    "Total around 25 to 30 million.",
+    "The classic interview trap here is to start from the population instead of from housing units."
+   ],
+   "answer": "Order of 10^7, somewhere near 25 million."
+  },
+  {
+   "id": "f-ants",
+   "prompt": "How many individual ants are alive on Earth right now?",
+   "unit": "ants",
+   "low": 1000000000000000,
+   "high": 100000000000000000,
+   "reference": [
+    "Earth's land area is about 1.3 x 10^14 square metres.",
+    "Much of it is desert, ice or bare rock; call the ant-supporting area 10^14 square metres.",
+    "Ground surveys find on the order of 100 ants per square metre in productive habitat, far fewer elsewhere.",
+    "Take a weighted average near 150 per square metre over the supporting area.",
+    "1.5 x 10^2 x 10^14 = about 1.5 x 10^16."
+   ],
+   "answer": "About 2 x 10^16, or 20 quadrillion. Their combined mass is comparable to that of all wild birds and mammals together."
+  },
+  {
+   "id": "f-lightning",
+   "prompt": "How much energy is released by a single lightning bolt, in joules?",
+   "unit": "joules",
+   "low": 100000000,
+   "high": 100000000000,
+   "reference": [
+    "Charge transferred in a typical flash is about 5 coulombs.",
+    "The potential difference between cloud and ground is on the order of 10^8 volts.",
+    "Energy = charge x voltage = 5 x 10^8 joules.",
+    "Cross-check: that is about 140 kilowatt-hours, roughly what a house uses in a week."
+   ],
+   "answer": "Order of 10^9 joules. Most of it leaves as heat, light and sound, not as usable electricity."
+  }
+ ]
+}

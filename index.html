@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>thinking-app</title>
+<meta name="description" content="A daily practice in critical thinking, mental arithmetic, and reasoning under uncertainty.">
+<meta name="theme-color" content="#E2E5DE">
+<meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="thinking">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar" id="topbar">
+  <h1 class="wordmark">thinking</h1>
+  <nav class="tabs" aria-label="Sections">
+    <button class="tab" data-goto="home" aria-current="page">today</button>
+    <button class="tab" data-goto="positions">positions</button>
+    <button class="tab" data-goto="metrics">record</button>
+    <button class="tab" data-goto="settings">settings</button>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ══════════════════════════ HOME ══════════════════════════ -->
+<section class="view" id="view-home" aria-label="Today">
+  <div class="plate">
+    <p class="overline" id="home-cycle">cycle 1</p>
+    <h2 class="display" id="home-type">argument</h2>
+    <p class="lede" id="home-blurb"></p>
+    <dl class="specsheet">
+      <div><dt>duration</dt><dd id="home-duration">10:00</dd></div>
+      <div><dt>completed</dt><dd id="home-completed">0</dd></div>
+      <div><dt>next ramp</dt><dd id="home-ramp">6 sessions</dd></div>
+    </dl>
+    <button class="btn btn-primary" id="btn-begin">Begin</button>
+    <p class="fineprint" id="home-note"></p>
+  </div>
+
+  <div class="plate plate-quiet" id="home-recent" hidden>
+    <p class="overline">recent</p>
+    <ul class="loglist" id="home-log"></ul>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SESSION ══════════════════════════ -->
+<section class="view" id="view-session" aria-label="Session in progress" hidden>
+
+  <div class="timer" id="timer">
+    <svg class="arc" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+      <circle class="arc-track" cx="60" cy="60" r="54"></circle>
+      <circle class="arc-fill"  cx="60" cy="60" r="54" id="arc-fill"></circle>
+    </svg>
+    <div class="arc-centre">
+      <span class="arc-label" id="timer-label">argument</span>
+      <span class="arc-readout" id="timer-readout" hidden>60</span>
+    </div>
+    <p class="visually-hidden" id="timer-sr" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- ARGUMENT -->
+  <div class="stage" id="stage-argument" hidden>
+    <div class="stage-read" id="arg-read">
+      <p class="overline" id="arg-attrib"></p>
+      <div class="passage" id="arg-passage"></div>
+      <p class="fineprint"><a id="arg-source" href="#" target="_blank" rel="noopener">source text</a></p>
+      <button class="btn" id="btn-arg-done-reading">I have read it</button>
+    </div>
+
+    <div class="stage-work" id="arg-work" hidden>
+      <p class="overline" id="arg-progress">question 1</p>
+      <blockquote class="prompt" id="arg-question"></blockquote>
+      <label class="visually-hidden" for="arg-answer">Your response</label>
+      <textarea id="arg-answer" rows="8" placeholder="Write your response."></textarea>
+      <div class="row">
+        <button class="btn btn-primary" id="btn-arg-submit">Submit</button>
+        <button class="btn btn-ghost" id="btn-arg-reread">Re-read passage</button>
+      </div>
+      <p class="status" id="arg-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- MATH -->
+  <div class="stage" id="stage-math" hidden>
+    <p class="overline" id="math-meta">level 3</p>
+    <p class="problem" id="math-problem">&nbsp;</p>
+    <form id="math-form" autocomplete="off">
+      <label class="visually-hidden" for="math-answer">Answer</label>
+      <input id="math-answer" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="answer">
+      <button class="btn btn-primary" type="submit">Enter</button>
+    </form>
+    <p class="verdict" id="math-verdict" role="status" aria-live="polite">&nbsp;</p>
+    <p class="fineprint" id="math-tally"></p>
+  </div>
+
+  <!-- REASONING -->
+  <div class="stage" id="stage-reasoning" hidden>
+
+    <!-- calibration -->
+    <div id="cal-block" hidden>
+      <p class="overline" id="cal-meta">calibration</p>
+      <blockquote class="prompt" id="cal-statement"></blockquote>
+      <div class="row row-split">
+        <button class="btn btn-choice" data-tf="true">True</button>
+        <button class="btn btn-choice" data-tf="false">False</button>
+      </div>
+      <div id="cal-conf" hidden>
+        <p class="overline">how sure are you</p>
+        <div class="confgrid" id="cal-confgrid"></div>
+      </div>
+      <div class="reveal" id="cal-reveal" hidden>
+        <p class="verdict" id="cal-verdict"></p>
+        <p class="note" id="cal-note"></p>
+        <button class="btn btn-primary" id="btn-cal-next">Next</button>
+      </div>
+    </div>
+
+    <!-- fermi -->
+    <div id="fermi-block" hidden>
+      <p class="overline">estimation &mdash; no lookups</p>
+      <blockquote class="prompt" id="fermi-prompt"></blockquote>
+      <div id="fermi-work">
+        <label class="lbl" for="fermi-decomp">Break it into steps you can estimate</label>
+        <textarea id="fermi-decomp" rows="9" placeholder="One step per line. Multiply at the end."></textarea>
+        <label class="lbl" for="fermi-number">Your figure</label>
+        <input id="fermi-number" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 8e5 or 800000">
+        <button class="btn btn-primary" id="btn-fermi-submit">Commit and compare</button>
+      </div>
+      <div class="reveal" id="fermi-reveal" hidden>
+        <p class="verdict" id="fermi-verdict"></p>
+        <p class="overline">reference decomposition</p>
+        <ol class="steps" id="fermi-steps"></ol>
+        <p class="note" id="fermi-answer"></p>
+        <button class="btn" id="btn-fermi-next">Next prompt</button>
+      </div>
+    </div>
+
+    <!-- base rate -->
+    <div id="base-block" hidden>
+      <p class="overline">base rates</p>
+      <blockquote class="prompt" id="base-prompt"></blockquote>
+      <form id="base-form" autocomplete="off">
+        <label class="lbl" for="base-answer">Your answer, as a percentage</label>
+        <input id="base-answer" type="text" inputmode="decimal" placeholder="%">
+        <button class="btn btn-primary" type="submit">Commit</button>
+      </form>
+      <div class="reveal" id="base-reveal" hidden>
+        <p class="verdict" id="base-verdict"></p>
+        <ol class="steps" id="base-steps"></ol>
+        <button class="btn" id="btn-base-next">Next problem</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-foot">
+    <button class="btn btn-ghost btn-small" id="btn-abandon">Abandon session</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SESSION END ══════════════════════════ -->
+<section class="view" id="view-end" aria-label="Session complete" hidden>
+  <div class="plate">
+    <p class="overline">session closed</p>
+    <h2 class="display" id="end-type">argument</h2>
+    <dl class="specsheet" id="end-stats"></dl>
+    <button class="btn btn-primary" data-goto="home">Done</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════ POSITIONS ══════════════════════════ -->
+<section class="view" id="view-positions" aria-label="Positions" hidden>
+  <div class="plate">
+    <p class="overline">position file</p>
+    <p class="lede">Convictions in your own words. Every revision is kept.</p>
+    <button class="btn btn-primary" id="btn-pos-new">Write a new position</button>
+  </div>
+
+  <div class="plate" id="pos-editor" hidden>
+    <label class="lbl" for="pos-title">Title</label>
+    <input id="pos-title" type="text" placeholder="What is this position about?">
+    <label class="lbl" for="pos-text">Position</label>
+    <textarea id="pos-text" rows="12" placeholder="State it plainly. Say what would change your mind."></textarea>
+    <div class="row">
+      <button class="btn btn-primary" id="btn-pos-save">Save</button>
+      <button class="btn btn-ghost" id="btn-pos-cancel">Cancel</button>
+    </div>
+    <p class="status" id="pos-status" role="status" aria-live="polite"></p>
+  </div>
+
+  <div id="pos-list"></div>
+</section>
+
+<!-- ══════════════════════════ METRICS ══════════════════════════ -->
+<section class="view" id="view-metrics" aria-label="Record" hidden>
+  <div class="plate">
+    <p class="overline">session length</p>
+    <div class="chart" id="chart-length"></div>
+    <p class="fineprint" id="metrics-length-note"></p>
+  </div>
+
+  <div class="plate">
+    <p class="overline">calibration</p>
+    <p class="bigstat"><span id="brier-score">&mdash;</span><small>mean Brier score</small></p>
+    <div class="chart" id="chart-calibration"></div>
+    <p class="fineprint">The diagonal is perfect calibration. A point below it means overconfidence at that level.</p>
+    <table class="tbl" id="cal-table"></table>
+  </div>
+
+  <div class="plate">
+    <p class="overline">arithmetic</p>
+    <dl class="specsheet" id="math-stats"></dl>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SETTINGS ══════════════════════════ -->
+<section class="view" id="view-settings" aria-label="Settings" hidden>
+  <div class="plate">
+    <p class="overline">live interrogation</p>
+    <p class="lede">Optional. Without a key the bundled questions are used, which is a complete session on its own.</p>
+    <label class="lbl" for="set-key">Anthropic API key</label>
+    <input id="set-key" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-...">
+    <label class="lbl" for="set-model">Model</label>
+    <input id="set-model" type="text" autocomplete="off" spellcheck="false" placeholder="claude-haiku-4-5">
+    <div class="row">
+      <button class="btn btn-primary" id="btn-set-save">Save</button>
+      <button class="btn btn-ghost" id="btn-set-test">Test connection</button>
+    </div>
+    <p class="status" id="set-status" role="status" aria-live="polite"></p>
+    <p class="fineprint">
+      The key is held in this browser's localStorage and sent only to api.anthropic.com.
+      Get one at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>,
+      which bills separately from a Claude.ai subscription.
+    </p>
+    <p class="fineprint">
+      <strong>claude-haiku-4-5</strong> is the default: roughly a penny per argument day.
+      <strong>claude-sonnet-5</strong> costs about three times that and presses harder.
+      Only argument days ever call the API.
+    </p>
+  </div>
+
+  <div class="plate">
+    <p class="overline">your data</p>
+    <p class="lede">Everything lives in this browser. Nothing is synced.</p>
+    <div class="row">
+      <button class="btn" id="btn-export">Export JSON</button>
+      <button class="btn" id="btn-import">Import JSON</button>
+    </div>
+    <input type="file" id="file-import" accept="application/json,.json" hidden>
+    <p class="status" id="data-status" role="status" aria-live="polite"></p>
+  </div>
+
+  <div class="plate plate-quiet">
+    <p class="overline">danger</p>
+    <button class="btn btn-danger" id="btn-reset">Erase everything</button>
+    <p class="fineprint">Export first. This cannot be undone.</p>
+  </div>
+</section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
