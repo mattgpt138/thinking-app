@@ -1,0 +1,242 @@
+[
+ {
+  "id": "p-lying",
+  "domain": "ethics",
+  "proposition": "It is sometimes right to lie to someone for their own good.",
+  "cheap": "Pointing at one emergency and stopping there. The hard part is stating the rule that lets you do it here and not everywhere."
+ },
+ {
+  "id": "p-punishment",
+  "domain": "ethics",
+  "proposition": "Punishment is justified only by its future effects, never by desert.",
+  "cheap": "Saying revenge is primitive. That is a sentiment, not an argument, and it does not address the intuition that the guilty deserve something."
+ },
+ {
+  "id": "p-charity",
+  "domain": "ethics",
+  "proposition": "You are as obliged to a stranger dying far away as to one dying in front of you.",
+  "cheap": "Asserting that distance is morally arbitrary and leaving it there. The objection is that obligations track relationships, and you have to meet it."
+ },
+ {
+  "id": "p-animals",
+  "domain": "ethics",
+  "proposition": "The interests of an animal count the same as the equivalent interests of a human.",
+  "cheap": "Comparing intelligence. That argument cuts against you the moment you apply it between humans."
+ },
+ {
+  "id": "p-inheritance",
+  "domain": "ethics",
+  "proposition": "Large inheritances should not be permitted.",
+  "cheap": "Calling it unearned. Most advantages are unearned, including talent, so you need more than that."
+ },
+ {
+  "id": "p-free-speech-limits",
+  "domain": "ethics",
+  "proposition": "A society should tolerate speech it believes to be false and harmful.",
+  "cheap": "Quoting Mill and stopping. You have to answer the case where the speech demonstrably causes the harm."
+ },
+ {
+  "id": "p-honesty-relationships",
+  "domain": "ethics",
+  "proposition": "Complete honesty with the people closest to you is a mistake.",
+  "cheap": "Citing one white lie about a haircut. The hard version concerns things that matter."
+ },
+ {
+  "id": "p-duty-country",
+  "domain": "ethics",
+  "proposition": "You owe nothing in particular to the country you happened to be born in.",
+  "cheap": "Saying borders are arbitrary. Families are arbitrary too, and few think that dissolves the obligation."
+ },
+ {
+  "id": "p-moral-luck",
+  "domain": "ethics",
+  "proposition": "A drunk driver who kills someone is no more blameworthy than one who gets home safely.",
+  "cheap": "Saying the outcome was luck. Our whole legal and moral practice disagrees, and you must explain why it is wrong rather than merely inconsistent."
+ },
+ {
+  "id": "p-future-people",
+  "domain": "ethics",
+  "proposition": "People who do not yet exist have claims on us now.",
+  "cheap": "Gesturing at the climate. That assumes what you are trying to prove."
+ },
+ {
+  "id": "p-god-belief",
+  "domain": "epistemology",
+  "proposition": "Believing something without sufficient evidence is always wrong.",
+  "cheap": "Quoting Clifford's shipowner. James answered it directly and you have to answer him."
+ },
+ {
+  "id": "p-expert-deference",
+  "domain": "epistemology",
+  "proposition": "On a technical question outside your competence you should defer to expert consensus even when the argument against it seems good to you.",
+  "cheap": "Listing cases where experts were right. You need to handle the cases where they were wrong and the dissenters were right."
+ },
+ {
+  "id": "p-intuition",
+  "domain": "epistemology",
+  "proposition": "Moral intuitions are evidence, not just feelings to be explained away.",
+  "cheap": "Saying everyone shares them. Plenty of discarded intuitions were widely shared."
+ },
+ {
+  "id": "p-science-limits",
+  "domain": "epistemology",
+  "proposition": "There are truths that science is in principle unable to establish.",
+  "cheap": "Naming consciousness and stopping. That is a hard problem, not a proof of impossibility."
+ },
+ {
+  "id": "p-testimony",
+  "domain": "epistemology",
+  "proposition": "Most of what you know, you know only because someone told you.",
+  "cheap": "Listing facts you were taught. The interesting question is whether that counts as knowing."
+ },
+ {
+  "id": "p-certainty",
+  "domain": "epistemology",
+  "proposition": "You should hold no belief with complete certainty.",
+  "cheap": "Saying we have been wrong before. Apply the claim to itself and see what happens."
+ },
+ {
+  "id": "p-democracy-competence",
+  "domain": "politics",
+  "proposition": "Democracy is justified by something other than the quality of its decisions.",
+  "cheap": "Saying voting feels fair. If the outcomes were consistently terrible, would you still say it?"
+ },
+ {
+  "id": "p-representation",
+  "domain": "politics",
+  "proposition": "A representative should vote their own judgment rather than their constituents' wishes.",
+  "cheap": "Quoting Burke. State why the voters should accept it, in their terms."
+ },
+ {
+  "id": "p-inequality",
+  "domain": "politics",
+  "proposition": "Inequality of outcome matters in itself, not only because of what it does to the badly off.",
+  "cheap": "Saying it feels unfair. Levelling down makes nobody better off, so you have to say why it is still an improvement."
+ },
+ {
+  "id": "p-paternalism",
+  "domain": "politics",
+  "proposition": "The state may sometimes stop competent adults from harming only themselves.",
+  "cheap": "Naming seatbelts. Mill's answer is that this concerns others too, so pick a purer case."
+ },
+ {
+  "id": "p-borders",
+  "domain": "politics",
+  "proposition": "A country has the right to exclude people who want to move there.",
+  "cheap": "Appealing to sovereignty. That restates the claim rather than defending it."
+ },
+ {
+  "id": "p-voting-duty",
+  "domain": "politics",
+  "proposition": "There is no duty to vote, because a single vote never decides anything.",
+  "cheap": "The arithmetic alone. The obvious reply is that the same reasoning excuses everyone."
+ },
+ {
+  "id": "p-tradition",
+  "domain": "politics",
+  "proposition": "A practice surviving a long time is evidence that it is worth keeping.",
+  "cheap": "Calling it wisdom. Slavery survived a long time too."
+ },
+ {
+  "id": "p-revolution",
+  "domain": "politics",
+  "proposition": "There are circumstances in which political violence is justified.",
+  "cheap": "Naming an obvious tyranny. The hard part is the rule that stops it justifying far more."
+ },
+ {
+  "id": "p-work",
+  "domain": "life",
+  "proposition": "Most people would be worse off, not better, if they did not have to work.",
+  "cheap": "Citing lottery winners. Selection effects ruin that evidence."
+ },
+ {
+  "id": "p-happiness",
+  "domain": "life",
+  "proposition": "A life of contentment is not obviously better than a difficult life spent on something that mattered.",
+  "cheap": "Asserting that meaning beats pleasure. Say what makes meaning good if not, ultimately, how it feels."
+ },
+ {
+  "id": "p-ambition",
+  "domain": "life",
+  "proposition": "Ambition does more harm than good to the person who has it.",
+  "cheap": "Pointing at unhappy successful people. Survivorship works both ways."
+ },
+ {
+  "id": "p-consistency",
+  "domain": "life",
+  "proposition": "Changing your mind often is a sign of good thinking, not weak conviction.",
+  "cheap": "Praising open-mindedness. Someone who updates on every argument they hear is not thinking well either."
+ },
+ {
+  "id": "p-privacy",
+  "domain": "life",
+  "proposition": "If you have done nothing wrong you have nothing to fear from surveillance.",
+  "cheap": "This is the proposition most people reject on sight. Build the strongest version anyway, then see what actually defeats it."
+ },
+ {
+  "id": "p-solitude",
+  "domain": "life",
+  "proposition": "Long periods alone are necessary for serious thought.",
+  "cheap": "Listing solitary geniuses. Selection again, and plenty of thinking happens in argument."
+ },
+ {
+  "id": "p-reading",
+  "domain": "life",
+  "proposition": "Reading widely is overrated compared with reading a few things repeatedly.",
+  "cheap": "Saying depth beats breadth. Say how you would know which few things before you have read widely."
+ },
+ {
+  "id": "p-advice",
+  "domain": "life",
+  "proposition": "Advice from people who succeeded is nearly worthless.",
+  "cheap": "Naming survivorship bias and stopping. If it were worthless, apprenticeship would not work."
+ },
+ {
+  "id": "p-art-judgment",
+  "domain": "aesthetics",
+  "proposition": "Some works of art are objectively better than others.",
+  "cheap": "Appealing to consensus. Consensus has been wrong, and it varies by era."
+ },
+ {
+  "id": "p-difficulty",
+  "domain": "aesthetics",
+  "proposition": "Difficulty in a work of art is usually a defect rather than a virtue.",
+  "cheap": "Calling it pretentious. That is an accusation about people, not a claim about works."
+ },
+ {
+  "id": "p-intent",
+  "domain": "aesthetics",
+  "proposition": "What the author meant is irrelevant to what the work means.",
+  "cheap": "Asserting the intentional fallacy as settled. It is not."
+ },
+ {
+  "id": "p-technology-attention",
+  "domain": "modern",
+  "proposition": "Modern communication technology has made people worse at sustained thought.",
+  "cheap": "Citing your own distraction. Every generation has said this about the new medium, and you must answer that."
+ },
+ {
+  "id": "p-ai-thinking",
+  "domain": "modern",
+  "proposition": "A machine that produces good reasoning is doing something that deserves the name thinking.",
+  "cheap": "Arguing from outputs alone. The Chinese Room is waiting for you."
+ },
+ {
+  "id": "p-specialisation",
+  "domain": "modern",
+  "proposition": "Deep specialisation has cost us more than it has gained.",
+  "cheap": "Romanticising the polymath. Modern medicine is not the work of generalists."
+ },
+ {
+  "id": "p-progress",
+  "domain": "modern",
+  "proposition": "Life is not obviously better now than a century ago.",
+  "cheap": "Naming anxiety and loneliness. You have to face the mortality and poverty figures directly."
+ },
+ {
+  "id": "p-meritocracy",
+  "domain": "modern",
+  "proposition": "Meritocracy is a worse organising principle than it looks.",
+  "cheap": "Saying merit is partly luck. Now say what should replace it, and why that is better."
+ }
+]

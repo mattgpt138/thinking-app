@@ -1,0 +1,29 @@
+- generic [active] [ref=f8e1]:
+  - link "Skip to content" [ref=f8e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f8e3]:
+    - heading "thinking" [level=1] [ref=f8e4]
+    - navigation "Sections" [ref=f8e5]:
+      - button "today" [ref=f8e6] [cursor=pointer]
+      - button "review" [ref=f8e7] [cursor=pointer]
+      - button "positions" [ref=f8e8] [cursor=pointer]
+      - button "record" [ref=f8e9] [cursor=pointer]
+      - button "settings" [ref=f8e10] [cursor=pointer]
+  - main [ref=f8e11]:
+    - region "Today" [ref=f8e12]:
+      - generic [ref=f8e13]:
+        - paragraph [ref=f8e14]: cycle 14
+        - heading "calibration" [level=2] [ref=f8e15]
+        - paragraph [ref=f8e16]: A statement, true or false, and how sure you are. The point is not to be right. It is to know how right you are.
+        - generic [ref=f8e17]:
+          - generic [ref=f8e18]:
+            - term [ref=f8e19]: duration
+            - definition [ref=f8e20]: 10:00
+          - generic [ref=f8e21]:
+            - term [ref=f8e22]: completed
+            - definition [ref=f8e23]: "0"
+          - generic [ref=f8e24]:
+            - term [ref=f8e25]: next ramp
+            - definition [ref=f8e26]: 6 sessions
+        - button "Begin" [ref=f8e28] [cursor=pointer]
+        - paragraph [ref=f8e29]: 395 of 395 statements still unseen.

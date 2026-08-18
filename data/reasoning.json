@@ -489,6 +489,2281 @@
    "statement": "The official language of Brazil is Spanish.",
    "answer": false,
    "note": "It is Portuguese, a result of the 1494 Treaty of Tordesillas."
+  },
+  {
+   "id": "c-nile-north",
+   "category": "geography",
+   "statement": "The Nile flows northward.",
+   "answer": true,
+   "note": "It rises near the equator and empties into the Mediterranean."
+  },
+  {
+   "id": "c-africa-hemi4",
+   "category": "geography",
+   "statement": "Africa is the only continent lying in all four hemispheres.",
+   "answer": true,
+   "note": "The equator and the prime meridian both cross it."
+  },
+  {
+   "id": "c-greenland-aus",
+   "category": "geography",
+   "statement": "Greenland is larger than Australia.",
+   "answer": false,
+   "note": "Greenland is about 2.2 million km2; Australia is about 7.7 million. Map projections exaggerate Greenland."
+  },
+  {
+   "id": "c-atacama",
+   "category": "geography",
+   "statement": "The Atacama is the driest non-polar desert on Earth.",
+   "answer": true,
+   "note": "Some weather stations there have never recorded rain."
+  },
+  {
+   "id": "c-baikal",
+   "category": "geography",
+   "statement": "Lake Baikal holds more fresh water than any other lake.",
+   "answer": true,
+   "note": "Roughly a fifth of the world's unfrozen surface fresh water, because it is extremely deep."
+  },
+  {
+   "id": "c-mariana",
+   "category": "geography",
+   "statement": "The Mariana Trench is deeper than Mount Everest is tall.",
+   "answer": true,
+   "note": "About 10,900 m down against 8,849 m up."
+  },
+  {
+   "id": "c-everest-growing",
+   "category": "geography",
+   "statement": "Mount Everest is getting taller.",
+   "answer": true,
+   "note": "The Indian plate is still colliding with Asia, lifting it a few millimetres a year."
+  },
+  {
+   "id": "c-sahara-green",
+   "category": "geography",
+   "statement": "The Sahara was covered in grassland and lakes within the last ten thousand years.",
+   "answer": true,
+   "note": "The African Humid Period ended roughly 5,000 years ago."
+  },
+  {
+   "id": "c-antarctica-desert",
+   "category": "geography",
+   "statement": "Antarctica is the largest desert on Earth.",
+   "answer": true,
+   "note": "A desert is defined by precipitation, not heat, and almost none falls there."
+  },
+  {
+   "id": "c-turkey-only",
+   "category": "geography",
+   "statement": "Turkey is the only country that spans two continents.",
+   "answer": false,
+   "note": "Russia, Kazakhstan, Egypt, Georgia and others do too."
+  },
+  {
+   "id": "c-deadsea-lake",
+   "category": "geography",
+   "statement": "The Dead Sea is a lake rather than a sea.",
+   "answer": true,
+   "note": "It is landlocked, fed by the Jordan, with no outlet."
+  },
+  {
+   "id": "c-norway-russia",
+   "category": "geography",
+   "statement": "Norway shares a land border with Russia.",
+   "answer": true,
+   "note": "About 200 km in the far north."
+  },
+  {
+   "id": "c-kili-glacier",
+   "category": "geography",
+   "statement": "Mount Kilimanjaro has glaciers despite standing near the equator.",
+   "answer": true,
+   "note": "Altitude beats latitude, though they are retreating fast."
+  },
+  {
+   "id": "c-iceland-mosq",
+   "category": "geography",
+   "statement": "Iceland has no native mosquitoes.",
+   "answer": true,
+   "note": "One of very few inhabited places on Earth where none are established."
+  },
+  {
+   "id": "c-caspian",
+   "category": "geography",
+   "statement": "The Caspian Sea is the largest inland body of water on Earth.",
+   "answer": true,
+   "note": "About 371,000 km2, larger than Germany."
+  },
+  {
+   "id": "c-alaska-east",
+   "category": "geography",
+   "statement": "Alaska is the easternmost state of the United States as well as the westernmost.",
+   "answer": true,
+   "note": "The Aleutian chain crosses the 180th meridian into the eastern hemisphere."
+  },
+  {
+   "id": "c-africa-countries",
+   "category": "geography",
+   "statement": "Africa contains more countries than any other continent.",
+   "answer": true,
+   "note": "Fifty-four, against forty-four or so in Europe depending on the count."
+  },
+  {
+   "id": "c-bolivia-coast",
+   "category": "geography",
+   "statement": "Bolivia has no coastline.",
+   "answer": true,
+   "note": "It lost its Pacific coast to Chile in the War of the Pacific."
+  },
+  {
+   "id": "c-switzerland-med",
+   "category": "geography",
+   "statement": "Switzerland has a short Mediterranean coastline.",
+   "answer": false,
+   "note": "It is entirely landlocked."
+  },
+  {
+   "id": "c-elbrus",
+   "category": "geography",
+   "statement": "The highest mountain in Europe is Mount Elbrus, not Mont Blanc.",
+   "answer": true,
+   "note": "Elbrus in Russia is 5,642 m; Mont Blanc is 4,808 m."
+  },
+  {
+   "id": "c-equator-kenya",
+   "category": "geography",
+   "statement": "The equator passes through Kenya.",
+   "answer": true,
+   "note": "It crosses the country a little north of Nairobi."
+  },
+  {
+   "id": "c-panama-east",
+   "category": "geography",
+   "statement": "A ship passing through the Panama Canal from the Atlantic to the Pacific travels east.",
+   "answer": true,
+   "note": "The isthmus curves, so the Pacific entrance sits southeast of the Atlantic one."
+  },
+  {
+   "id": "c-rhine-med",
+   "category": "geography",
+   "statement": "The Rhine empties into the Mediterranean.",
+   "answer": false,
+   "note": "It flows into the North Sea through the Netherlands."
+  },
+  {
+   "id": "c-deathvalley",
+   "category": "geography",
+   "statement": "The highest air temperature ever officially recorded on Earth was measured in Death Valley.",
+   "answer": true,
+   "note": "56.7 C at Furnace Creek in 1913."
+  },
+  {
+   "id": "c-antarctica-perm",
+   "category": "geography",
+   "statement": "Antarctica has no permanent human population.",
+   "answer": true,
+   "note": "Research staff rotate; nobody lives there indefinitely."
+  },
+  {
+   "id": "c-sahara-usa",
+   "category": "geography",
+   "statement": "The Sahara covers a greater area than the contiguous United States.",
+   "answer": true,
+   "note": "About 9.2 million km2 against 8.1 million."
+  },
+  {
+   "id": "c-sudan-pyramids",
+   "category": "geography",
+   "statement": "Sudan has more pyramids than Egypt.",
+   "answer": true,
+   "note": "Around 200 Nubian pyramids, roughly double the Egyptian count, though they are smaller."
+  },
+  {
+   "id": "c-andes-longest",
+   "category": "geography",
+   "statement": "The Andes form the longest continental mountain range on Earth.",
+   "answer": true,
+   "note": "About 7,000 km down the western edge of South America."
+  },
+  {
+   "id": "c-lesotho",
+   "category": "geography",
+   "statement": "There is a country entirely surrounded by South Africa.",
+   "answer": true,
+   "note": "Lesotho."
+  },
+  {
+   "id": "c-nz-east",
+   "category": "geography",
+   "statement": "New Zealand lies east of Australia.",
+   "answer": true,
+   "note": "Roughly 2,000 km across the Tasman Sea."
+  },
+  {
+   "id": "c-vatican-italy",
+   "category": "geography",
+   "statement": "Vatican City is entirely surrounded by Italy.",
+   "answer": true,
+   "note": "It sits inside Rome."
+  },
+  {
+   "id": "c-amazon-volume",
+   "category": "geography",
+   "statement": "The Amazon discharges more water than the next several largest rivers combined.",
+   "answer": true,
+   "note": "About a fifth of all river water reaching the oceans."
+  },
+  {
+   "id": "c-uk-england",
+   "category": "geography",
+   "statement": "England, Scotland, Wales and Northern Ireland are all part of the United Kingdom.",
+   "answer": true,
+   "note": "The Republic of Ireland is not."
+  },
+  {
+   "id": "c-madagascar-africa",
+   "category": "geography",
+   "statement": "Madagascar is the largest island in Africa.",
+   "answer": true,
+   "note": "Fourth largest in the world."
+  },
+  {
+   "id": "c-nordic-capital",
+   "category": "geography",
+   "statement": "Oslo is the capital of Sweden.",
+   "answer": false,
+   "note": "Oslo is Norway's capital. Sweden's is Stockholm."
+  },
+  {
+   "id": "c-china-borders",
+   "category": "geography",
+   "statement": "China borders more countries than any other nation.",
+   "answer": false,
+   "note": "China and Russia each border fourteen; neither is alone at the top."
+  },
+  {
+   "id": "c-mount-fuji-active",
+   "category": "geography",
+   "statement": "Mount Fuji is an active volcano.",
+   "answer": true,
+   "note": "It last erupted in 1707 and is still classified as active."
+  },
+  {
+   "id": "c-siberia-size",
+   "category": "geography",
+   "statement": "Siberia makes up more than half of Russia's land area.",
+   "answer": true,
+   "note": "About three quarters of it, holding a small fraction of the population."
+  },
+  {
+   "id": "c-tibet-plateau",
+   "category": "geography",
+   "statement": "The Tibetan Plateau is the highest and largest plateau in the world.",
+   "answer": true,
+   "note": "Averaging over 4,500 m, which is why it is called the roof of the world."
+  },
+  {
+   "id": "c-suez-locks",
+   "category": "geography",
+   "statement": "The Suez Canal has no locks.",
+   "answer": true,
+   "note": "The Mediterranean and Red Sea are close enough in level that none are needed."
+  },
+  {
+   "id": "c-monaco-size",
+   "category": "geography",
+   "statement": "Monaco is the second smallest country in the world.",
+   "answer": true,
+   "note": "After Vatican City, at about 2 km2."
+  },
+  {
+   "id": "c-great-lakes",
+   "category": "geography",
+   "statement": "The Great Lakes hold about a fifth of the world's surface fresh water.",
+   "answer": true,
+   "note": "Roughly 21 percent."
+  },
+  {
+   "id": "c-nile-longest",
+   "category": "geography",
+   "statement": "It is settled that the Nile is the longest river in the world.",
+   "answer": false,
+   "note": "Whether the Nile or the Amazon is longer depends on where you place the Amazon's source, and remains disputed."
+  },
+  {
+   "id": "c-arctic-continent",
+   "category": "geography",
+   "statement": "The Arctic is a continent.",
+   "answer": false,
+   "note": "It is ocean covered by sea ice. Antarctica is the continent."
+  },
+  {
+   "id": "c-istanbul-capital",
+   "category": "geography",
+   "statement": "Istanbul is the capital of Turkey.",
+   "answer": false,
+   "note": "Ankara has been since 1923."
+  },
+  {
+   "id": "c-us-canada-border",
+   "category": "geography",
+   "statement": "The United States and Canada share the longest international land border in the world.",
+   "answer": true,
+   "note": "About 8,900 km including Alaska."
+  },
+  {
+   "id": "c-hawaii-growing",
+   "category": "geography",
+   "statement": "The Hawaiian islands are still being formed by volcanic activity.",
+   "answer": true,
+   "note": "The Big Island is actively growing, and a new seamount is building offshore."
+  },
+  {
+   "id": "c-sea-level-uniform",
+   "category": "geography",
+   "statement": "Sea level is the same height everywhere on Earth.",
+   "answer": false,
+   "note": "Gravity, currents and winds make it vary by tens of metres."
+  },
+  {
+   "id": "c-nile-egypt-only",
+   "category": "geography",
+   "statement": "The Nile flows through Egypt alone.",
+   "answer": false,
+   "note": "It passes through eleven countries."
+  },
+  {
+   "id": "c-himalaya-young",
+   "category": "geography",
+   "statement": "The Himalayas are geologically young compared with the Appalachians.",
+   "answer": true,
+   "note": "Around 50 million years against several hundred million."
+  },
+  {
+   "id": "c-seasons-distance",
+   "category": "physics",
+   "statement": "Earth's seasons are caused by its distance from the Sun changing through the year.",
+   "answer": false,
+   "note": "They are caused by axial tilt. Earth is closest to the Sun in January."
+  },
+  {
+   "id": "c-space-cold",
+   "category": "physics",
+   "statement": "An astronaut exposed to space would freeze almost instantly.",
+   "answer": false,
+   "note": "A vacuum is a poor conductor. Heat is lost slowly by radiation; suffocation comes first."
+  },
+  {
+   "id": "c-gravity-none",
+   "category": "physics",
+   "statement": "There is no gravity on the International Space Station.",
+   "answer": false,
+   "note": "Gravity there is about 90 percent of that at the surface. The station is in continuous free fall."
+  },
+  {
+   "id": "c-sun-burning",
+   "category": "physics",
+   "statement": "The Sun produces energy by burning.",
+   "answer": false,
+   "note": "It fuses hydrogen into helium. Combustion would exhaust it in a few thousand years."
+  },
+  {
+   "id": "c-lightning-cloud",
+   "category": "physics",
+   "statement": "Lightning travels only from cloud to ground.",
+   "answer": false,
+   "note": "Most lightning stays within or between clouds."
+  },
+  {
+   "id": "c-sound-vacuum",
+   "category": "physics",
+   "statement": "Sound cannot travel through a vacuum.",
+   "answer": true,
+   "note": "It needs a medium to carry the pressure wave."
+  },
+  {
+   "id": "c-light-fastest",
+   "category": "physics",
+   "statement": "Nothing carrying information can travel faster than light in a vacuum.",
+   "answer": true,
+   "note": "A cornerstone of relativity."
+  },
+  {
+   "id": "c-microwave-inside-out",
+   "category": "physics",
+   "statement": "Microwave ovens cook food from the inside out.",
+   "answer": false,
+   "note": "They heat the outer centimetre or two directly; the rest warms by conduction."
+  },
+  {
+   "id": "c-gold-density",
+   "category": "physics",
+   "statement": "Gold is denser than lead.",
+   "answer": true,
+   "note": "About 19.3 against 11.3 grams per cubic centimetre."
+  },
+  {
+   "id": "c-water-expands",
+   "category": "physics",
+   "statement": "Water expands when it freezes.",
+   "answer": true,
+   "note": "Which is why ice floats and pipes burst."
+  },
+  {
+   "id": "c-glass-recycle",
+   "category": "physics",
+   "statement": "Glass can be recycled indefinitely without losing quality.",
+   "answer": true,
+   "note": "Unlike paper or most plastics."
+  },
+  {
+   "id": "c-hot-water-freeze",
+   "category": "physics",
+   "statement": "Under some conditions hot water can freeze faster than cold water.",
+   "answer": true,
+   "note": "The Mpemba effect. It is real but the mechanism is still argued over."
+  },
+  {
+   "id": "c-mercury-closest-hot",
+   "category": "physics",
+   "statement": "Mercury is the closest planet to the Sun and therefore the hottest.",
+   "answer": false,
+   "note": "It is closest, but Venus is hotter because of its atmosphere."
+  },
+  {
+   "id": "c-moon-dark-side",
+   "category": "physics",
+   "statement": "One side of the Moon never receives sunlight.",
+   "answer": false,
+   "note": "The far side gets as much sunlight as the near side. It is never visible from Earth, which is a different thing."
+  },
+  {
+   "id": "c-pluto-planet",
+   "category": "physics",
+   "statement": "Pluto is classified as a dwarf planet.",
+   "answer": true,
+   "note": "Reclassified in 2006 because it has not cleared its orbital neighbourhood."
+  },
+  {
+   "id": "c-jupiter-mass",
+   "category": "physics",
+   "statement": "Jupiter is more massive than all the other planets combined.",
+   "answer": true,
+   "note": "By roughly a factor of two and a half."
+  },
+  {
+   "id": "c-stars-twinkle",
+   "category": "physics",
+   "statement": "Stars twinkle because of turbulence in Earth's atmosphere.",
+   "answer": true,
+   "note": "Seen from space they do not twinkle."
+  },
+  {
+   "id": "c-black-hole-suck",
+   "category": "physics",
+   "statement": "A black hole would pull in objects that a star of the same mass would not.",
+   "answer": false,
+   "note": "Its gravity at a given distance depends only on mass. Replace the Sun with an equal-mass black hole and the orbits are unchanged."
+  },
+  {
+   "id": "c-diamond-coal",
+   "category": "physics",
+   "statement": "Diamonds form from coal.",
+   "answer": false,
+   "note": "Almost all natural diamonds predate land plants entirely."
+  },
+  {
+   "id": "c-helium-shortage",
+   "category": "physics",
+   "statement": "Helium is a finite resource on Earth that escapes to space once released.",
+   "answer": true,
+   "note": "It is light enough to leave the atmosphere permanently."
+  },
+  {
+   "id": "c-copper-conduct",
+   "category": "physics",
+   "statement": "Silver conducts electricity better than copper.",
+   "answer": true,
+   "note": "Silver is the best conductor of any metal; copper is used because it is far cheaper."
+  },
+  {
+   "id": "c-absolute-zero",
+   "category": "physics",
+   "statement": "Absolute zero has never been reached.",
+   "answer": true,
+   "note": "Laboratories have come within billionths of a degree, but it cannot be reached."
+  },
+  {
+   "id": "c-uranium-natural",
+   "category": "physics",
+   "statement": "Uranium occurs naturally in ordinary rock and seawater.",
+   "answer": true,
+   "note": "In small concentrations almost everywhere."
+  },
+  {
+   "id": "c-rust-oxygen",
+   "category": "physics",
+   "statement": "Iron cannot rust without both oxygen and water.",
+   "answer": true,
+   "note": "Which is why it does not rust in dry air or in oxygen-free water."
+  },
+  {
+   "id": "c-steel-alloy",
+   "category": "physics",
+   "statement": "Steel is an alloy of iron and carbon.",
+   "answer": true,
+   "note": "Usually under 2 percent carbon."
+  },
+  {
+   "id": "c-lightning-hotter-sun",
+   "category": "physics",
+   "statement": "A lightning bolt is hotter than the surface of the Sun.",
+   "answer": true,
+   "note": "Around 30,000 K against roughly 5,800 K."
+  },
+  {
+   "id": "c-metal-cold",
+   "category": "physics",
+   "statement": "Metal feels colder than wood at the same temperature because it conducts heat away from your hand faster.",
+   "answer": true,
+   "note": "Your skin senses heat flow, not temperature."
+  },
+  {
+   "id": "c-lead-pencil",
+   "category": "physics",
+   "statement": "Pencil leads contain lead.",
+   "answer": false,
+   "note": "They are graphite and clay. The name is a historical mistake."
+  },
+  {
+   "id": "c-atom-empty",
+   "category": "physics",
+   "statement": "An atom is mostly empty space.",
+   "answer": true,
+   "note": "The nucleus holds nearly all the mass in a tiny fraction of the volume."
+  },
+  {
+   "id": "c-nuclear-waste-glow",
+   "category": "physics",
+   "statement": "Spent nuclear fuel glows green.",
+   "answer": false,
+   "note": "Cherenkov radiation in a cooling pool is blue, and unshielded fuel does not glow visibly."
+  },
+  {
+   "id": "c-radio-waves-light",
+   "category": "physics",
+   "statement": "Radio waves are a form of light.",
+   "answer": true,
+   "note": "Both are electromagnetic radiation; they differ only in wavelength."
+  },
+  {
+   "id": "c-oil-dinosaurs",
+   "category": "physics",
+   "statement": "Crude oil formed mainly from dinosaurs.",
+   "answer": false,
+   "note": "Mostly from marine plankton and algae."
+  },
+  {
+   "id": "c-tides-moon-only",
+   "category": "physics",
+   "statement": "Tides are caused by the Moon alone.",
+   "answer": false,
+   "note": "The Sun contributes roughly half as much; the two align at spring tides."
+  },
+  {
+   "id": "c-earth-sphere",
+   "category": "physics",
+   "statement": "The Earth is slightly wider across the equator than pole to pole.",
+   "answer": true,
+   "note": "About 43 km wider, because it is spinning."
+  },
+  {
+   "id": "c-sun-white",
+   "category": "physics",
+   "statement": "The Sun emits more green light than any other single wavelength.",
+   "answer": true,
+   "note": "Its peak output is in the green, though the mix reads as white."
+  },
+  {
+   "id": "c-titanium-strong",
+   "category": "physics",
+   "statement": "Titanium is stronger than steel by weight.",
+   "answer": true,
+   "note": "Its strength-to-density ratio is higher, though many steels are stronger in absolute terms."
+  },
+  {
+   "id": "c-superconduct-room",
+   "category": "physics",
+   "statement": "A superconductor that works at room temperature and normal pressure has been confirmed.",
+   "answer": false,
+   "note": "Several claims have been made and none have survived replication."
+  },
+  {
+   "id": "c-neutrino-through",
+   "category": "physics",
+   "statement": "Neutrinos pass through the entire Earth almost without interacting.",
+   "answer": true,
+   "note": "Trillions pass through you every second."
+  },
+  {
+   "id": "c-vacuum-suck",
+   "category": "physics",
+   "statement": "A vacuum pulls objects towards it.",
+   "answer": false,
+   "note": "There is nothing there to pull. Surrounding pressure pushes them in."
+  },
+  {
+   "id": "c-plasma-common",
+   "category": "physics",
+   "statement": "Plasma is the most common state of ordinary matter in the universe.",
+   "answer": true,
+   "note": "Stars are plasma, and stars hold most of the visible matter."
+  },
+  {
+   "id": "c-gyroscope-nav",
+   "category": "physics",
+   "statement": "Aircraft can navigate without any external signal using inertial guidance.",
+   "answer": true,
+   "note": "Accelerometers and gyroscopes track motion from a known start point."
+  },
+  {
+   "id": "c-half-life-change",
+   "category": "physics",
+   "statement": "The half-life of a radioactive isotope can be changed by heating it.",
+   "answer": false,
+   "note": "It is essentially fixed, unaffected by temperature, pressure or chemistry."
+  },
+  {
+   "id": "c-electricity-speed",
+   "category": "physics",
+   "statement": "Individual electrons move through a wire at close to the speed of light.",
+   "answer": false,
+   "note": "They drift at millimetres per second. The signal travels fast, not the electrons."
+  },
+  {
+   "id": "c-oxygen-fire",
+   "category": "physics",
+   "statement": "Oxygen itself burns.",
+   "answer": false,
+   "note": "It does not burn. It is the oxidiser that lets other things burn."
+  },
+  {
+   "id": "c-antimatter-real",
+   "category": "physics",
+   "statement": "Antimatter has been produced in laboratories.",
+   "answer": true,
+   "note": "Antiprotons and even anti-hydrogen atoms have been made and trapped."
+  },
+  {
+   "id": "c-water-conducts-heart",
+   "category": "physics",
+   "statement": "Distilled water is a poorer conductor of electricity than tap water.",
+   "answer": true,
+   "note": "Tap water carries dissolved ions; distilled water does not."
+  },
+  {
+   "id": "c-moon-receding",
+   "category": "physics",
+   "statement": "The Moon is moving away from the Earth.",
+   "answer": true,
+   "note": "About 3.8 cm a year, measured by laser ranging."
+  },
+  {
+   "id": "c-gps-relativity",
+   "category": "physics",
+   "statement": "GPS satellites must correct for relativistic effects to stay accurate.",
+   "answer": true,
+   "note": "Without it, positions would drift by kilometres a day."
+  },
+  {
+   "id": "c-sound-speed-temp",
+   "category": "physics",
+   "statement": "Sound travels faster in warm air than in cold air.",
+   "answer": true,
+   "note": "Speed rises with temperature."
+  },
+  {
+   "id": "c-rainbow-circle",
+   "category": "physics",
+   "statement": "A rainbow is actually a full circle.",
+   "answer": true,
+   "note": "The ground cuts off the lower half; from an aircraft you can see the whole ring."
+  },
+  {
+   "id": "c-north-pole-magnet",
+   "category": "physics",
+   "statement": "The Earth's magnetic north pole is, in magnetic terms, a south pole.",
+   "answer": true,
+   "note": "Opposite poles attract, which is why a compass needle's north end points there."
+  },
+  {
+   "id": "c-alcohol-boil",
+   "category": "physics",
+   "statement": "Alcohol boils at a lower temperature than water.",
+   "answer": true,
+   "note": "Ethanol boils at about 78 C."
+  },
+  {
+   "id": "c-helium-voice",
+   "category": "physics",
+   "statement": "Helium raises the pitch of your voice.",
+   "answer": false,
+   "note": "It does not change pitch. It changes the resonance of the vocal tract, altering timbre."
+  },
+  {
+   "id": "c-thunder-light",
+   "category": "physics",
+   "statement": "You can estimate a storm's distance in kilometres by dividing the seconds between flash and thunder by three.",
+   "answer": true,
+   "note": "Sound covers roughly a kilometre every three seconds."
+  },
+  {
+   "id": "c-fingernails-death",
+   "category": "biology",
+   "statement": "Fingernails and hair keep growing after death.",
+   "answer": false,
+   "note": "The skin retracts as it dehydrates, which makes them look longer."
+  },
+  {
+   "id": "c-taste-buds-life",
+   "category": "biology",
+   "statement": "Taste buds are replaced roughly every two weeks.",
+   "answer": true,
+   "note": "They regenerate continuously through life."
+  },
+  {
+   "id": "c-liver-regenerate",
+   "category": "biology",
+   "statement": "The liver can regrow after a large part of it is removed.",
+   "answer": true,
+   "note": "The only human internal organ with that capacity."
+  },
+  {
+   "id": "c-appendix-useless",
+   "category": "biology",
+   "statement": "The appendix is now thought to have a function.",
+   "answer": true,
+   "note": "Evidence points to a reservoir of gut bacteria and a role in immunity."
+  },
+  {
+   "id": "c-swallow-spiders",
+   "category": "biology",
+   "statement": "The average person swallows several spiders a year while asleep.",
+   "answer": false,
+   "note": "Invented as an example of a claim people repeat without checking. There is no evidence for it."
+  },
+  {
+   "id": "c-tongue-strongest",
+   "category": "biology",
+   "statement": "The tongue is the strongest muscle in the human body.",
+   "answer": false,
+   "note": "It is not a single muscle and is not the strongest by any standard measure."
+  },
+  {
+   "id": "c-sharks-swim",
+   "category": "biology",
+   "statement": "Sharks must keep swimming or they die.",
+   "answer": false,
+   "note": "Some species must, but many can pump water over their gills while resting."
+  },
+  {
+   "id": "c-elephant-jump",
+   "category": "biology",
+   "statement": "Elephants cannot jump.",
+   "answer": true,
+   "note": "Their leg structure and weight make it impossible."
+  },
+  {
+   "id": "c-octopus-blue-blood",
+   "category": "biology",
+   "statement": "Octopus blood is blue.",
+   "answer": true,
+   "note": "It uses copper-based haemocyanin rather than iron-based haemoglobin."
+  },
+  {
+   "id": "c-cockroach-head",
+   "category": "biology",
+   "statement": "A cockroach can survive for a time without its head.",
+   "answer": true,
+   "note": "It breathes through body openings and dies of thirst rather than instantly."
+  },
+  {
+   "id": "c-honey-spoil",
+   "category": "biology",
+   "statement": "Honey does not spoil.",
+   "answer": true,
+   "note": "Edible honey has been recovered from ancient tombs."
+  },
+  {
+   "id": "c-penguins-north",
+   "category": "biology",
+   "statement": "No penguin species lives in the Arctic.",
+   "answer": true,
+   "note": "All wild penguins live in the southern hemisphere."
+  },
+  {
+   "id": "c-bananas-berries",
+   "category": "biology",
+   "statement": "Botanically, a banana is a berry.",
+   "answer": true,
+   "note": "A strawberry is not."
+  },
+  {
+   "id": "c-peanut-nut",
+   "category": "biology",
+   "statement": "A peanut is not a nut.",
+   "answer": true,
+   "note": "It is a legume, related to peas and beans."
+  },
+  {
+   "id": "c-carrots-night-vision",
+   "category": "biology",
+   "statement": "Eating carrots improves night vision beyond correcting a deficiency.",
+   "answer": false,
+   "note": "A wartime propaganda story. Vitamin A prevents deficiency; excess does not sharpen sight."
+  },
+  {
+   "id": "c-sugar-hyper",
+   "category": "biology",
+   "statement": "Sugar makes children hyperactive.",
+   "answer": false,
+   "note": "Controlled trials find no effect. Parents' expectations shape what they report seeing."
+  },
+  {
+   "id": "c-cracking-knuckles",
+   "category": "biology",
+   "statement": "Cracking your knuckles causes arthritis.",
+   "answer": false,
+   "note": "Long-term studies find no association."
+  },
+  {
+   "id": "c-cold-weather-cold",
+   "category": "biology",
+   "statement": "Being cold and wet causes the common cold.",
+   "answer": false,
+   "note": "Colds are caused by viruses. Cold weather correlates because people crowd indoors."
+  },
+  {
+   "id": "c-vaccines-autism",
+   "category": "biology",
+   "statement": "Vaccines cause autism.",
+   "answer": false,
+   "note": "The original claim was fraudulent and retracted; very large studies find no link."
+  },
+  {
+   "id": "c-detox-diets",
+   "category": "biology",
+   "statement": "Healthy kidneys and a healthy liver remove waste without help from detox products.",
+   "answer": true,
+   "note": "That is their function."
+  },
+  {
+   "id": "c-eight-glasses",
+   "category": "biology",
+   "statement": "There is strong evidence that everyone needs eight glasses of water a day.",
+   "answer": false,
+   "note": "The figure has no solid basis; needs vary and food supplies much of it."
+  },
+  {
+   "id": "c-brain-cells-regrow",
+   "category": "biology",
+   "statement": "Adults grow no new brain cells at all.",
+   "answer": false,
+   "note": "Neurogenesis occurs at least in the hippocampus, though the extent is debated."
+  },
+  {
+   "id": "c-shave-thicker",
+   "category": "biology",
+   "statement": "Shaving makes hair grow back thicker.",
+   "answer": false,
+   "note": "The blunt cut end feels coarser. Growth rate and thickness are unchanged."
+  },
+  {
+   "id": "c-dogs-colourblind",
+   "category": "biology",
+   "statement": "Dogs see only in black and white.",
+   "answer": false,
+   "note": "They are dichromats: they see blues and yellows but confuse reds and greens."
+  },
+  {
+   "id": "c-fish-pain",
+   "category": "biology",
+   "statement": "Fish can feel pain.",
+   "answer": true,
+   "note": "They have nociceptors and show behavioural responses consistent with pain."
+  },
+  {
+   "id": "c-bees-flight",
+   "category": "biology",
+   "statement": "Science cannot explain how bumblebees fly.",
+   "answer": false,
+   "note": "It was explained decades ago. The old claim came from applying fixed-wing aerodynamics to a flapping wing."
+  },
+  {
+   "id": "c-hair-cell-dna",
+   "category": "biology",
+   "statement": "Every cell in your body contains the same DNA.",
+   "answer": false,
+   "note": "Red blood cells have no nucleus, and immune cells rearrange their DNA."
+  },
+  {
+   "id": "c-human-races-genetic",
+   "category": "biology",
+   "statement": "There is more genetic variation within human populations than between them.",
+   "answer": true,
+   "note": "A long-standing and repeatedly confirmed finding."
+  },
+  {
+   "id": "c-tomato-fruit",
+   "category": "biology",
+   "statement": "A tomato is botanically a fruit.",
+   "answer": true,
+   "note": "It develops from the flower's ovary and contains seeds."
+  },
+  {
+   "id": "c-mammal-eggs",
+   "category": "biology",
+   "statement": "Some mammals lay eggs.",
+   "answer": true,
+   "note": "Monotremes: the platypus and echidnas."
+  },
+  {
+   "id": "c-whale-fish",
+   "category": "biology",
+   "statement": "Whales are fish.",
+   "answer": false,
+   "note": "They are mammals: warm-blooded, air-breathing, and they nurse their young."
+  },
+  {
+   "id": "c-spider-insect",
+   "category": "biology",
+   "statement": "Spiders are insects.",
+   "answer": false,
+   "note": "They are arachnids: eight legs, two body segments, no antennae."
+  },
+  {
+   "id": "c-antibiotic-resistance",
+   "category": "biology",
+   "statement": "Bacteria can become resistant to antibiotics within a single human lifetime.",
+   "answer": true,
+   "note": "Resistance has emerged within years of a drug's introduction."
+  },
+  {
+   "id": "c-blood-types",
+   "category": "biology",
+   "statement": "People with type O negative blood are universal donors of red cells.",
+   "answer": true,
+   "note": "Their red cells carry neither A, B nor Rh D antigens."
+  },
+  {
+   "id": "c-spleen-life",
+   "category": "biology",
+   "statement": "A person can live a normal life without a spleen.",
+   "answer": true,
+   "note": "With a raised risk of certain infections, managed by vaccination."
+  },
+  {
+   "id": "c-heart-left",
+   "category": "biology",
+   "statement": "The human heart sits in the centre of the chest, tilted to the left.",
+   "answer": true,
+   "note": "It is roughly central, not on the left side as usually drawn."
+  },
+  {
+   "id": "c-lungs-equal",
+   "category": "biology",
+   "statement": "The two human lungs are not the same size.",
+   "answer": true,
+   "note": "The left is smaller, to make room for the heart."
+  },
+  {
+   "id": "c-bones-baby",
+   "category": "biology",
+   "statement": "Babies are born with more bones than adults have.",
+   "answer": true,
+   "note": "About 300, many of which fuse into the adult 206."
+  },
+  {
+   "id": "c-stomach-acid",
+   "category": "biology",
+   "statement": "Stomach acid is strong enough to dissolve metal.",
+   "answer": true,
+   "note": "It can corrode some metals; the stomach lining is replaced constantly to survive it."
+  },
+  {
+   "id": "c-goosebumps",
+   "category": "biology",
+   "statement": "Goosebumps are a leftover reflex from having more body hair.",
+   "answer": true,
+   "note": "The muscle raises hairs to trap air or look larger. It does little on bare skin."
+  },
+  {
+   "id": "c-yawning-contagious",
+   "category": "biology",
+   "statement": "Yawning is contagious in humans and in some other species.",
+   "answer": true,
+   "note": "Observed in chimpanzees and dogs too."
+  },
+  {
+   "id": "c-basic-tastes",
+   "category": "biology",
+   "statement": "Humans can distinguish more than five basic tastes.",
+   "answer": true,
+   "note": "Umami joined the classic four, and evidence for fat as a sixth is growing."
+  },
+  {
+   "id": "c-mosquito-deadliest",
+   "category": "biology",
+   "statement": "Mosquitoes kill more humans each year than any other animal.",
+   "answer": true,
+   "note": "Through malaria, dengue and other diseases they carry."
+  },
+  {
+   "id": "c-tree-rings",
+   "category": "biology",
+   "statement": "Counting tree rings gives a reliable age for most temperate trees.",
+   "answer": true,
+   "note": "One ring per growing season, which also records climate."
+  },
+  {
+   "id": "c-photosynthesis-oxygen",
+   "category": "biology",
+   "statement": "Plants consume oxygen as well as producing it.",
+   "answer": true,
+   "note": "They respire continuously; in daylight photosynthesis outpaces it."
+  },
+  {
+   "id": "c-cancer-single",
+   "category": "biology",
+   "statement": "Cancer is a single disease.",
+   "answer": false,
+   "note": "It is a large family of diseases with different causes, behaviour and treatment."
+  },
+  {
+   "id": "c-placebo-real",
+   "category": "biology",
+   "statement": "Placebos can produce measurable physiological effects.",
+   "answer": true,
+   "note": "Particularly for pain and nausea, though they do not shrink tumours."
+  },
+  {
+   "id": "c-gut-neurons",
+   "category": "biology",
+   "statement": "The human gut contains hundreds of millions of neurons.",
+   "answer": true,
+   "note": "The enteric nervous system, sometimes called the second brain."
+  },
+  {
+   "id": "c-immunity-sleep",
+   "category": "biology",
+   "statement": "Losing sleep measurably weakens the immune response.",
+   "answer": true,
+   "note": "Shown in vaccination and infection studies."
+  },
+  {
+   "id": "c-evolution-individuals",
+   "category": "biology",
+   "statement": "Individual organisms evolve during their lifetime.",
+   "answer": false,
+   "note": "Populations evolve across generations. Individuals develop; they do not evolve."
+  },
+  {
+   "id": "c-survival-fittest",
+   "category": "biology",
+   "statement": "In evolutionary terms, fitness means reproductive success rather than strength.",
+   "answer": true,
+   "note": "An organism that survives but never reproduces has zero fitness."
+  },
+  {
+   "id": "c-dna-percent-chimp",
+   "category": "biology",
+   "statement": "Humans share the majority of their DNA with chimpanzees.",
+   "answer": true,
+   "note": "Around 98 to 99 percent depending on how it is counted."
+  },
+  {
+   "id": "c-blue-eyes-recessive",
+   "category": "biology",
+   "statement": "Two blue-eyed parents can have a brown-eyed child.",
+   "answer": true,
+   "note": "Eye colour involves several genes, so it is uncommon but possible."
+  },
+  {
+   "id": "c-lightning-strike-twice-people",
+   "category": "biology",
+   "statement": "A person can be struck by lightning more than once.",
+   "answer": true,
+   "note": "One US park ranger was struck seven times."
+  },
+  {
+   "id": "c-columbus-flat",
+   "category": "history",
+   "statement": "Educated Europeans in Columbus's day believed the Earth was flat.",
+   "answer": false,
+   "note": "Its roundness had been accepted since antiquity. The dispute was over its size."
+  },
+  {
+   "id": "c-viking-america",
+   "category": "history",
+   "statement": "Europeans reached North America before Columbus.",
+   "answer": true,
+   "note": "Norse settlement at L'Anse aux Meadows is dated to around 1000 AD."
+  },
+  {
+   "id": "c-marie-antoinette",
+   "category": "history",
+   "statement": "Marie Antoinette said 'let them eat cake'.",
+   "answer": false,
+   "note": "The line appears in Rousseau before she arrived in France."
+  },
+  {
+   "id": "c-nero-fiddle",
+   "category": "history",
+   "statement": "Nero played the fiddle while Rome burned.",
+   "answer": false,
+   "note": "The fiddle did not exist. He was reportedly not even in Rome when the fire started."
+  },
+  {
+   "id": "c-napoleon-nose",
+   "category": "history",
+   "statement": "Napoleon's troops shot the nose off the Sphinx.",
+   "answer": false,
+   "note": "Drawings made before his campaign already show it missing."
+  },
+  {
+   "id": "c-witches-burned",
+   "category": "history",
+   "statement": "Those convicted in the Salem witch trials were burned at the stake.",
+   "answer": false,
+   "note": "They were hanged. One was pressed to death."
+  },
+  {
+   "id": "c-einstein-nobel-relativity",
+   "category": "history",
+   "statement": "Einstein won his Nobel Prize for relativity.",
+   "answer": false,
+   "note": "It was awarded for the photoelectric effect."
+  },
+  {
+   "id": "c-magellan-circumnavigate",
+   "category": "history",
+   "statement": "Magellan completed the first circumnavigation of the globe.",
+   "answer": false,
+   "note": "He was killed in the Philippines. His crew finished the voyage."
+  },
+  {
+   "id": "c-great-wall-continuous",
+   "category": "history",
+   "statement": "The Great Wall of China is one continuous wall.",
+   "answer": false,
+   "note": "It is many walls built by different dynasties, with gaps and parallel sections."
+  },
+  {
+   "id": "c-egyptian-slaves-pyramids",
+   "category": "history",
+   "statement": "The pyramids were built by slaves.",
+   "answer": false,
+   "note": "Evidence points to paid labourers who were housed, fed and buried nearby with honour."
+  },
+  {
+   "id": "c-medieval-lifespan",
+   "category": "history",
+   "statement": "Medieval people typically died in their thirties.",
+   "answer": false,
+   "note": "Average lifespan was dragged down by infant mortality. Those reaching adulthood often lived into their sixties."
+  },
+  {
+   "id": "c-vomitorium",
+   "category": "history",
+   "statement": "Romans built vomitoria as rooms for vomiting during feasts.",
+   "answer": false,
+   "note": "A vomitorium is a passage that empties an amphitheatre of its crowd."
+  },
+  {
+   "id": "c-iron-maiden",
+   "category": "history",
+   "statement": "The iron maiden was a medieval torture device.",
+   "answer": false,
+   "note": "It was assembled in the eighteenth century from unrelated pieces and presented as medieval."
+  },
+  {
+   "id": "c-chastity-belt",
+   "category": "history",
+   "statement": "Chastity belts were widely used by crusading knights.",
+   "answer": false,
+   "note": "Almost all surviving examples are later curiosities or fakes."
+  },
+  {
+   "id": "c-lincoln-slavery-start",
+   "category": "history",
+   "statement": "The Emancipation Proclamation freed all slaves in the United States.",
+   "answer": false,
+   "note": "It applied only to states in rebellion. The Thirteenth Amendment ended slavery."
+  },
+  {
+   "id": "c-hitler-election",
+   "category": "history",
+   "statement": "Hitler was elected chancellor by a majority of German voters.",
+   "answer": false,
+   "note": "He was appointed chancellor; the Nazis never won a free majority."
+  },
+  {
+   "id": "c-ww1-assassination",
+   "category": "history",
+   "statement": "The First World War began after the assassination of Archduke Franz Ferdinand.",
+   "answer": true,
+   "note": "In Sarajevo in June 1914."
+  },
+  {
+   "id": "c-berlin-wall-year",
+   "category": "history",
+   "statement": "The Berlin Wall fell in 1989.",
+   "answer": true,
+   "note": "In November of that year."
+  },
+  {
+   "id": "c-moon-landing-year",
+   "category": "history",
+   "statement": "The first Moon landing took place in 1969.",
+   "answer": true,
+   "note": "Apollo 11, July 1969."
+  },
+  {
+   "id": "c-printing-press-china",
+   "category": "history",
+   "statement": "Printing with movable type was invented in Europe.",
+   "answer": false,
+   "note": "It appeared in China centuries earlier. Gutenberg's press was independent and mechanised."
+  },
+  {
+   "id": "c-paper-china",
+   "category": "history",
+   "statement": "Paper was invented in China.",
+   "answer": true,
+   "note": "Around the second century AD."
+  },
+  {
+   "id": "c-gunpowder-china",
+   "category": "history",
+   "statement": "Gunpowder was invented in China.",
+   "answer": true,
+   "note": "By alchemists seeking an elixir of life."
+  },
+  {
+   "id": "c-arabic-numerals",
+   "category": "history",
+   "statement": "So-called Arabic numerals originated in India.",
+   "answer": true,
+   "note": "They reached Europe through Arabic scholarship, which is why the name stuck."
+  },
+  {
+   "id": "c-library-alexandria",
+   "category": "history",
+   "statement": "The Library of Alexandria was destroyed in a single fire.",
+   "answer": false,
+   "note": "It declined over centuries through several episodes of damage and neglect."
+  },
+  {
+   "id": "c-hundred-years-continuous",
+   "category": "history",
+   "statement": "The Hundred Years' War was fought continuously.",
+   "answer": false,
+   "note": "It was a series of conflicts with long truces between them."
+  },
+  {
+   "id": "c-magna-carta-democracy",
+   "category": "history",
+   "statement": "Magna Carta established democracy in England.",
+   "answer": false,
+   "note": "It constrained the king in favour of barons. Its democratic reading came much later."
+  },
+  {
+   "id": "c-guillotine-french",
+   "category": "history",
+   "statement": "The guillotine was invented in France.",
+   "answer": false,
+   "note": "Similar beheading machines were used earlier in Scotland, Ireland and Italy."
+  },
+  {
+   "id": "c-black-death-rats",
+   "category": "history",
+   "statement": "The Black Death is now agreed to have spread only through rat fleas.",
+   "answer": false,
+   "note": "Human ectoparasites and person-to-person transmission are increasingly thought to explain its speed."
+  },
+  {
+   "id": "c-spanish-flu-spain",
+   "category": "history",
+   "statement": "The 1918 influenza pandemic began in Spain.",
+   "answer": false,
+   "note": "Spain reported it freely as a neutral country, so the name stuck. Its origin is uncertain."
+  },
+  {
+   "id": "c-cleopatra-egyptian",
+   "category": "history",
+   "statement": "Cleopatra was ethnically Greek rather than Egyptian.",
+   "answer": true,
+   "note": "She came from the Ptolemaic dynasty founded by one of Alexander's generals."
+  },
+  {
+   "id": "c-alexander-undefeated",
+   "category": "history",
+   "statement": "Alexander the Great never lost a major battle.",
+   "answer": true,
+   "note": "He died at thirty-two having been undefeated in pitched battle."
+  },
+  {
+   "id": "c-rome-fall-date",
+   "category": "history",
+   "statement": "The Roman Empire ended in 476 AD.",
+   "answer": false,
+   "note": "The western half did. The eastern empire continued until 1453."
+  },
+  {
+   "id": "c-declaration-signed",
+   "category": "history",
+   "statement": "The Declaration of Independence was signed on 4 July 1776.",
+   "answer": false,
+   "note": "It was adopted that day; most delegates signed in August."
+  },
+  {
+   "id": "c-tea-party-tax",
+   "category": "history",
+   "statement": "The Boston Tea Party was a protest against a tax increase on tea.",
+   "answer": false,
+   "note": "The Tea Act lowered the price. The objection was to the principle of the tax and the monopoly."
+  },
+  {
+   "id": "c-slavery-britain",
+   "category": "history",
+   "statement": "Britain abolished the slave trade before it abolished slavery itself.",
+   "answer": true,
+   "note": "The trade in 1807, slavery in the empire in 1833."
+  },
+  {
+   "id": "c-women-vote-nz",
+   "category": "history",
+   "statement": "New Zealand was the first self-governing country to give women the vote.",
+   "answer": true,
+   "note": "In 1893."
+  },
+  {
+   "id": "c-titanic-unsinkable",
+   "category": "history",
+   "statement": "The Titanic's builders officially advertised it as unsinkable.",
+   "answer": false,
+   "note": "The claim was press language and hindsight, not an official slogan."
+  },
+  {
+   "id": "c-ww2-europe-first",
+   "category": "history",
+   "statement": "The Second World War in Europe ended before the war in the Pacific.",
+   "answer": true,
+   "note": "May 1945 against September 1945."
+  },
+  {
+   "id": "c-churchill-pm-ww2",
+   "category": "history",
+   "statement": "Churchill was prime minister for the whole of the Second World War.",
+   "answer": false,
+   "note": "Chamberlain held office until May 1940, and Churchill lost the 1945 election before Japan surrendered."
+  },
+  {
+   "id": "c-cold-war-shots",
+   "category": "history",
+   "statement": "The United States and the Soviet Union never fought each other directly in a declared war.",
+   "answer": true,
+   "note": "They fought through proxies instead."
+  },
+  {
+   "id": "c-apollo-computer",
+   "category": "history",
+   "statement": "The Apollo guidance computer had less processing power than a modern phone.",
+   "answer": true,
+   "note": "By an enormous margin."
+  },
+  {
+   "id": "c-internet-military",
+   "category": "history",
+   "statement": "The internet grew out of a military research network.",
+   "answer": true,
+   "note": "ARPANET, funded by the US Department of Defense."
+  },
+  {
+   "id": "c-www-internet-same",
+   "category": "history",
+   "statement": "The World Wide Web and the internet are the same thing.",
+   "answer": false,
+   "note": "The web is one service running on the internet, invented around twenty years later."
+  },
+  {
+   "id": "c-y2k-nothing",
+   "category": "history",
+   "statement": "The Y2K problem was a hoax that required no real work.",
+   "answer": false,
+   "note": "Enormous remediation effort preceded it, which is part of why little went wrong."
+  },
+  {
+   "id": "c-galileo-tower",
+   "category": "history",
+   "statement": "Galileo dropped balls from the Leaning Tower of Pisa to test gravity.",
+   "answer": false,
+   "note": "The story comes from a biographer. He argued the case with inclined planes and reasoning."
+  },
+  {
+   "id": "c-newton-apple",
+   "category": "history",
+   "statement": "Newton was struck on the head by a falling apple.",
+   "answer": false,
+   "note": "He described watching one fall. The blow to the head is embellishment."
+  },
+  {
+   "id": "c-darwin-eureka",
+   "category": "history",
+   "statement": "Darwin published his theory immediately after the Beagle voyage.",
+   "answer": false,
+   "note": "He waited about twenty years, publishing only when Wallace reached the same conclusion."
+  },
+  {
+   "id": "c-mozart-poor-grave",
+   "category": "history",
+   "statement": "Mozart died penniless and was buried in a pauper's grave.",
+   "answer": false,
+   "note": "He earned well and had a conventional middle-class burial for the time."
+  },
+  {
+   "id": "c-vangogh-one-painting",
+   "category": "history",
+   "statement": "Van Gogh sold only one painting in his lifetime.",
+   "answer": false,
+   "note": "Long repeated, but he sold and traded several works."
+  },
+  {
+   "id": "c-shakespeare-words",
+   "category": "history",
+   "statement": "Shakespeare invented every word first attested in his plays.",
+   "answer": false,
+   "note": "He is the first surviving record for many, which is not the same as inventing them."
+  },
+  {
+   "id": "c-bastille-prisoners",
+   "category": "history",
+   "statement": "The Bastille held only a handful of prisoners when it was stormed.",
+   "answer": true,
+   "note": "Seven."
+  },
+  {
+   "id": "c-pilgrims-religious",
+   "category": "history",
+   "statement": "The Mayflower pilgrims sought religious freedom for everyone.",
+   "answer": false,
+   "note": "They sought freedom to practise their own faith, and did not extend it to others."
+  },
+  {
+   "id": "c-electoral-popular",
+   "category": "history",
+   "statement": "A United States president can win office without winning the popular vote.",
+   "answer": true,
+   "note": "It has happened five times."
+  },
+  {
+   "id": "c-ussr-dissolve",
+   "category": "history",
+   "statement": "The Soviet Union dissolved in 1991.",
+   "answer": true,
+   "note": "In December of that year."
+  },
+  {
+   "id": "c-egypt-pyramid-tombs",
+   "category": "history",
+   "statement": "The Great Pyramid was the tallest structure made by humans for thousands of years.",
+   "answer": true,
+   "note": "It held that record for about 3,800 years."
+  },
+  {
+   "id": "c-prime-1",
+   "category": "mathematics",
+   "statement": "One is a prime number.",
+   "answer": false,
+   "note": "A prime has exactly two distinct divisors. One has a single divisor."
+  },
+  {
+   "id": "c-zero-even",
+   "category": "mathematics",
+   "statement": "Zero is an even number.",
+   "answer": true,
+   "note": "It is divisible by two with no remainder."
+  },
+  {
+   "id": "c-infinity-equal",
+   "category": "mathematics",
+   "statement": "All infinite sets are the same size.",
+   "answer": false,
+   "note": "The reals are strictly larger than the integers, as Cantor proved."
+  },
+  {
+   "id": "c-average-median",
+   "category": "mathematics",
+   "statement": "The mean and the median of a data set are always close together.",
+   "answer": false,
+   "note": "A single extreme value can move the mean far from the median."
+  },
+  {
+   "id": "c-percent-back",
+   "category": "mathematics",
+   "statement": "A 50 percent fall followed by a 50 percent rise returns you to where you started.",
+   "answer": false,
+   "note": "100 falls to 50, then rises to 75. Percentage changes do not cancel."
+  },
+  {
+   "id": "c-gamblers-fallacy",
+   "category": "mathematics",
+   "statement": "After a fair coin lands heads ten times, tails becomes more likely on the next toss.",
+   "answer": false,
+   "note": "The coin has no memory. It stays even."
+  },
+  {
+   "id": "c-birthday-paradox",
+   "category": "mathematics",
+   "statement": "In a room of 23 people, there is better than an even chance two share a birthday.",
+   "answer": true,
+   "note": "About 50.7 percent, because it counts pairs rather than matches to one person."
+  },
+  {
+   "id": "c-correlation-cause",
+   "category": "mathematics",
+   "statement": "A strong correlation between two variables establishes that one causes the other.",
+   "answer": false,
+   "note": "A third factor, reverse causation or chance can all produce it."
+  },
+  {
+   "id": "c-regression-mean",
+   "category": "mathematics",
+   "statement": "An exceptional result is likely to be followed by a more ordinary one, even with no intervention.",
+   "answer": true,
+   "note": "Regression to the mean, and it fools people into crediting the intervention."
+  },
+  {
+   "id": "c-sample-size",
+   "category": "mathematics",
+   "statement": "A small sample is more likely than a large one to produce an extreme average.",
+   "answer": true,
+   "note": "The law of small numbers. Small hospitals report both the highest and lowest rates."
+  },
+  {
+   "id": "c-pvalue-truth",
+   "category": "mathematics",
+   "statement": "A p-value of 0.05 means there is a 95 percent chance the hypothesis is true.",
+   "answer": false,
+   "note": "It is the probability of data this extreme if the null hypothesis were true. Quite different."
+  },
+  {
+   "id": "c-parallel-lines",
+   "category": "mathematics",
+   "statement": "Parallel lines never meet in any geometry.",
+   "answer": false,
+   "note": "On a sphere every pair of great circles intersects."
+  },
+  {
+   "id": "c-pi-repeat",
+   "category": "mathematics",
+   "statement": "The decimal expansion of pi eventually repeats.",
+   "answer": false,
+   "note": "It is irrational, so it never repeats."
+  },
+  {
+   "id": "c-square-root-negative",
+   "category": "mathematics",
+   "statement": "No real number squared gives a negative result.",
+   "answer": true,
+   "note": "Which is why the imaginary unit was introduced."
+  },
+  {
+   "id": "c-sum-odd-squares",
+   "category": "mathematics",
+   "statement": "The sum of the first n odd numbers is always a perfect square.",
+   "answer": true,
+   "note": "1, 4, 9, 16 and so on."
+  },
+  {
+   "id": "c-monty-stay",
+   "category": "mathematics",
+   "statement": "In the Monty Hall problem it makes no difference whether you switch.",
+   "answer": false,
+   "note": "Switching wins two times in three under the standard rules."
+  },
+  {
+   "id": "c-simpson-paradox",
+   "category": "mathematics",
+   "statement": "A treatment can appear better in every subgroup yet worse overall.",
+   "answer": true,
+   "note": "Simpson's paradox, which comes from unequal group sizes."
+  },
+  {
+   "id": "c-random-clumps",
+   "category": "mathematics",
+   "statement": "Truly random data tends to look more clustered than people expect.",
+   "answer": true,
+   "note": "People asked to fake randomness spread points out too evenly."
+  },
+  {
+   "id": "c-lottery-numbers",
+   "category": "mathematics",
+   "statement": "Choosing 1, 2, 3, 4, 5, 6 in a lottery is less likely to win than a scattered set.",
+   "answer": false,
+   "note": "Every combination is equally likely. It would just be shared with more people."
+  },
+  {
+   "id": "c-base-rate-neglect",
+   "category": "mathematics",
+   "statement": "A test that is 99 percent accurate gives a 99 percent chance of disease when positive.",
+   "answer": false,
+   "note": "That depends on how common the disease is. With a rare condition, most positives are false."
+  },
+  {
+   "id": "c-exponential-intuition",
+   "category": "mathematics",
+   "statement": "Folding a sheet of paper fifty times would make it thick enough to reach beyond the Moon.",
+   "answer": true,
+   "note": "Doubling fifty times gives an absurd figure, though the fold is physically impossible."
+  },
+  {
+   "id": "c-average-people-arms",
+   "category": "mathematics",
+   "statement": "Almost everyone has more than the average number of arms.",
+   "answer": true,
+   "note": "A few people have fewer than two, which drags the mean below two."
+  },
+  {
+   "id": "c-survivorship",
+   "category": "mathematics",
+   "statement": "Armour should be added where returning aircraft show the most bullet holes.",
+   "answer": false,
+   "note": "Wald's insight: those are the survivable hits. Armour belongs where survivors were not hit."
+  },
+  {
+   "id": "c-confidence-interval",
+   "category": "mathematics",
+   "statement": "A wider confidence interval indicates greater certainty.",
+   "answer": false,
+   "note": "It indicates less. Precision narrows the interval."
+  },
+  {
+   "id": "c-goodharts-law",
+   "category": "mathematics",
+   "statement": "When a measure becomes a target it tends to stop being a good measure.",
+   "answer": true,
+   "note": "Goodhart's law."
+  },
+  {
+   "id": "c-eskimo-snow",
+   "category": "language",
+   "statement": "Inuit languages have hundreds of unrelated words for snow.",
+   "answer": false,
+   "note": "They are polysynthetic, so they build compounds. The count is not remarkable."
+  },
+  {
+   "id": "c-english-most-speakers",
+   "category": "language",
+   "statement": "English has more native speakers than any other language.",
+   "answer": false,
+   "note": "Mandarin Chinese and Spanish both have more native speakers."
+  },
+  {
+   "id": "c-latin-dead",
+   "category": "language",
+   "statement": "Latin has no native speakers today.",
+   "answer": true,
+   "note": "It survives liturgically and academically, and evolved into the Romance languages."
+  },
+  {
+   "id": "c-shortest-sentence",
+   "category": "language",
+   "statement": "Every sentence in English requires a verb.",
+   "answer": true,
+   "note": "Even one-word imperatives such as 'Go' contain one."
+  },
+  {
+   "id": "c-double-negative",
+   "category": "language",
+   "statement": "Double negatives were once standard in English.",
+   "answer": false,
+   "note": "They were standard for centuries. Chaucer and Shakespeare both use them for emphasis."
+  },
+  {
+   "id": "c-split-infinitive",
+   "category": "language",
+   "statement": "The rule against splitting infinitives was borrowed from Latin grammar.",
+   "answer": true,
+   "note": "Latin infinitives are single words and cannot be split, so the rule never applied to English."
+  },
+  {
+   "id": "c-alphabet-order",
+   "category": "language",
+   "statement": "The order of the alphabet has a logical basis.",
+   "answer": false,
+   "note": "It is inherited from Phoenician with no systematic principle behind the sequence."
+  },
+  {
+   "id": "c-esperanto-native",
+   "category": "language",
+   "statement": "Some people speak Esperanto as a native language.",
+   "answer": true,
+   "note": "A small number raised in it from birth."
+  },
+  {
+   "id": "c-sign-language-universal",
+   "category": "language",
+   "statement": "Sign language is universal.",
+   "answer": false,
+   "note": "There are hundreds of distinct sign languages, mutually unintelligible."
+  },
+  {
+   "id": "c-chinese-alphabet",
+   "category": "language",
+   "statement": "Chinese is written with an alphabet.",
+   "answer": false,
+   "note": "It uses logographic characters representing morphemes, not an alphabet."
+  },
+  {
+   "id": "c-gdp-wellbeing",
+   "category": "economics",
+   "statement": "GDP measures a country's wellbeing.",
+   "answer": false,
+   "note": "It measures output. It counts a disaster's cleanup as growth and ignores unpaid work."
+  },
+  {
+   "id": "c-inflation-prices",
+   "category": "economics",
+   "statement": "Zero inflation means no prices are changing.",
+   "answer": false,
+   "note": "It means the basket average is flat. Individual prices still move in both directions."
+  },
+  {
+   "id": "c-minimum-wage-settled",
+   "category": "economics",
+   "statement": "Economists agree that raising the minimum wage always reduces employment.",
+   "answer": false,
+   "note": "The empirical literature is genuinely divided, which is unusual for a textbook prediction."
+  },
+  {
+   "id": "c-trade-deficit-debt",
+   "category": "economics",
+   "statement": "A trade deficit is the same thing as national debt.",
+   "answer": false,
+   "note": "One is a flow between countries, the other money owed by a government."
+  },
+  {
+   "id": "c-money-printing",
+   "category": "economics",
+   "statement": "Printing money always causes immediate inflation.",
+   "answer": false,
+   "note": "It depends on demand, capacity and expectations. Japan expanded its money supply for years with little inflation."
+  },
+  {
+   "id": "c-sunk-cost",
+   "category": "economics",
+   "statement": "Money already spent and unrecoverable should not affect the decision about what to do next.",
+   "answer": true,
+   "note": "The sunk cost fallacy is failing to ignore it."
+  },
+  {
+   "id": "c-opportunity-cost",
+   "category": "economics",
+   "statement": "The cost of a choice includes the best alternative given up.",
+   "answer": true,
+   "note": "Opportunity cost."
+  },
+  {
+   "id": "c-compound-interest",
+   "category": "economics",
+   "statement": "At 7 percent annual growth, money roughly doubles in ten years.",
+   "answer": true,
+   "note": "The rule of 72 gives about 10.3 years."
+  },
+  {
+   "id": "c-tax-bracket",
+   "category": "economics",
+   "statement": "Earning enough to enter a higher tax bracket can reduce your take-home pay.",
+   "answer": false,
+   "note": "Only income above the threshold is taxed at the higher rate."
+  },
+  {
+   "id": "c-insurance-profit",
+   "category": "economics",
+   "statement": "Insurance is a bad deal on average for the buyer.",
+   "answer": true,
+   "note": "It must be, or insurers would not exist. People buy it to avoid ruin, not to gain."
+  },
+  {
+   "id": "c-free-lunch",
+   "category": "economics",
+   "statement": "A market price reflects the value of a good to everyone who buys it.",
+   "answer": false,
+   "note": "It reflects the value to the marginal buyer. Everyone else values it at least that much."
+  },
+  {
+   "id": "c-automation-jobs",
+   "category": "economics",
+   "statement": "Automation has historically caused permanent mass unemployment.",
+   "answer": false,
+   "note": "It has destroyed particular jobs and created others. The transition costs are real and fall unevenly."
+  },
+  {
+   "id": "c-population-bomb",
+   "category": "economics",
+   "statement": "Global population growth is now slowing.",
+   "answer": true,
+   "note": "Fertility has fallen sharply almost everywhere; the debate is about when the peak comes."
+  },
+  {
+   "id": "c-poverty-rising",
+   "category": "economics",
+   "statement": "The share of the world living in extreme poverty has fallen sharply since 1990.",
+   "answer": true,
+   "note": "One of the largest changes of the period, and widely misperceived."
+  },
+  {
+   "id": "c-incognito-anonymous",
+   "category": "technology",
+   "statement": "Private browsing mode hides your activity from your internet provider.",
+   "answer": false,
+   "note": "It only stops the browser storing it locally. The network still sees the traffic."
+  },
+  {
+   "id": "c-deleting-file",
+   "category": "technology",
+   "statement": "Deleting a file removes its contents from the disk immediately.",
+   "answer": false,
+   "note": "It normally unlinks the entry. The data stays until overwritten."
+  },
+  {
+   "id": "c-mac-no-virus",
+   "category": "technology",
+   "statement": "Apple computers cannot get malware.",
+   "answer": false,
+   "note": "They are targeted less, not immune."
+  },
+  {
+   "id": "c-more-megapixels",
+   "category": "technology",
+   "statement": "More megapixels always means a better photograph.",
+   "answer": false,
+   "note": "Sensor size, lens quality and processing usually matter more."
+  },
+  {
+   "id": "c-phone-charge-overnight",
+   "category": "technology",
+   "statement": "Charging a modern phone overnight destroys the battery.",
+   "answer": false,
+   "note": "Charge controllers stop at full. Heat and time at high charge matter more."
+  },
+  {
+   "id": "c-magnet-erase-phone",
+   "category": "technology",
+   "statement": "A fridge magnet will erase a modern phone or credit card chip.",
+   "answer": false,
+   "note": "Chips and flash memory are unaffected. Old magnetic stripes were vulnerable."
+  },
+  {
+   "id": "c-quantum-faster",
+   "category": "technology",
+   "statement": "Quantum computers are simply faster at everything than ordinary computers.",
+   "answer": false,
+   "note": "They offer speedups for a narrow class of problems and are worse at most tasks."
+  },
+  {
+   "id": "c-password-length",
+   "category": "technology",
+   "statement": "A password's length matters more than its mixture of symbols.",
+   "answer": true,
+   "note": "Length increases the search space far faster than character variety."
+  },
+  {
+   "id": "c-vpn-anonymous",
+   "category": "technology",
+   "statement": "A VPN makes you anonymous online.",
+   "answer": false,
+   "note": "It moves trust to the VPN provider, which can still see and log your traffic."
+  },
+  {
+   "id": "c-open-source-insecure",
+   "category": "technology",
+   "statement": "Software whose source code is public is inherently less secure.",
+   "answer": false,
+   "note": "Visibility allows review. Security by obscurity is not considered sound."
+  },
+  {
+   "id": "c-bulls-charge",
+   "category": "biology",
+   "statement": "Bats are the only mammals capable of true sustained flight.",
+   "answer": true,
+   "note": "Others glide; only bats fly."
+  },
+  {
+   "id": "c-hair-grow-faster",
+   "category": "biology",
+   "statement": "Hair grows faster in summer than in winter.",
+   "answer": true,
+   "note": "Modestly, with warmth and circulation."
+  },
+  {
+   "id": "c-owl-head",
+   "category": "biology",
+   "statement": "Owls can rotate their heads a full 360 degrees.",
+   "answer": false,
+   "note": "About 270 degrees, which is remarkable but not a full turn."
+  },
+  {
+   "id": "c-camel-hump-water2",
+   "category": "biology",
+   "statement": "Ostriches bury their heads in the sand when frightened.",
+   "answer": false,
+   "note": "They lower their heads to the ground, which looks like burying from a distance."
+  },
+  {
+   "id": "c-lemming-suicide",
+   "category": "biology",
+   "statement": "Lemmings periodically throw themselves off cliffs in mass suicides.",
+   "answer": false,
+   "note": "A myth cemented by a 1958 Disney documentary that staged the scene."
+  },
+  {
+   "id": "c-goldfish-grow-tank",
+   "category": "biology",
+   "statement": "Touching a baby bird makes its mother reject it.",
+   "answer": false,
+   "note": "Most birds have a poor sense of smell and will not abandon a chick."
+  },
+  {
+   "id": "c-daddy-longlegs",
+   "category": "biology",
+   "statement": "Daddy longlegs are the most venomous spiders but cannot bite humans.",
+   "answer": false,
+   "note": "Neither half is true, and one common daddy longlegs is not a spider at all."
+  },
+  {
+   "id": "c-dog-years",
+   "category": "biology",
+   "statement": "One dog year equals exactly seven human years.",
+   "answer": false,
+   "note": "A rough rule at best. Dogs mature very fast early and the ratio varies hugely by breed."
+  },
+  {
+   "id": "c-chameleon-mood",
+   "category": "biology",
+   "statement": "Human blood is filtered by the kidneys many times a day.",
+   "answer": true,
+   "note": "The entire volume passes through roughly every half hour."
+  },
+  {
+   "id": "c-bird-migration",
+   "category": "biology",
+   "statement": "All birds migrate.",
+   "answer": false,
+   "note": "Many species are year-round residents."
+  },
+  {
+   "id": "c-fingerprints-unique",
+   "category": "biology",
+   "statement": "Identical twins have identical fingerprints.",
+   "answer": false,
+   "note": "They share DNA but fingerprints form partly at random in the womb."
+  },
+  {
+   "id": "c-alligator-crocodile",
+   "category": "biology",
+   "statement": "Alligators and crocodiles are the same animal.",
+   "answer": false,
+   "note": "Different families, distinguishable by snout shape and tooth arrangement."
+  },
+  {
+   "id": "c-mount-vitamins",
+   "category": "biology",
+   "statement": "Taking large doses of vitamin C prevents colds in the general population.",
+   "answer": false,
+   "note": "Trials show at most a small reduction in duration, not prevention."
+  },
+  {
+   "id": "c-organ-donor",
+   "category": "biology",
+   "statement": "A person can donate a kidney and live normally.",
+   "answer": true,
+   "note": "The remaining kidney compensates."
+  },
+  {
+   "id": "c-earth-core-solid",
+   "category": "physics",
+   "statement": "The Earth's inner core is solid despite being hotter than the outer core.",
+   "answer": true,
+   "note": "Immense pressure keeps it solid."
+  },
+  {
+   "id": "c-compass-true-north",
+   "category": "physics",
+   "statement": "A compass points to true north.",
+   "answer": false,
+   "note": "It points to magnetic north, which moves and differs from true north by a varying angle."
+  },
+  {
+   "id": "c-lightning-rubber-tyres",
+   "category": "physics",
+   "statement": "Rubber tyres protect a car's occupants from lightning.",
+   "answer": false,
+   "note": "The metal shell conducts the charge around them. The tyres are irrelevant."
+  },
+  {
+   "id": "c-microwave-radiation-danger",
+   "category": "physics",
+   "statement": "Microwave ovens make food radioactive.",
+   "answer": false,
+   "note": "They use non-ionising radiation, which cannot induce radioactivity."
+  },
+  {
+   "id": "c-space-silent",
+   "category": "physics",
+   "statement": "Explosions in space make no sound to a nearby observer.",
+   "answer": true,
+   "note": "There is no medium to carry it."
+  },
+  {
+   "id": "c-seasons-hemisphere",
+   "category": "physics",
+   "statement": "When it is summer in Europe it is winter in Australia.",
+   "answer": true,
+   "note": "Opposite hemispheres, opposite tilt towards the Sun."
+  },
+  {
+   "id": "c-water-drain-hemisphere",
+   "category": "physics",
+   "statement": "Aluminium was once more valuable than gold.",
+   "answer": true,
+   "note": "Before cheap smelting, it was a precious metal. The Washington Monument is capped with it."
+  },
+  {
+   "id": "c-mount-temp-altitude",
+   "category": "physics",
+   "statement": "Air temperature always falls with altitude.",
+   "answer": false,
+   "note": "Temperature inversions reverse it, and the stratosphere warms with height."
+  },
+  {
+   "id": "c-battery-memory",
+   "category": "physics",
+   "statement": "Modern lithium-ion batteries need to be fully discharged to avoid a memory effect.",
+   "answer": false,
+   "note": "That affected older nickel-cadmium cells. Full discharges shorten lithium-ion life."
+  },
+  {
+   "id": "c-fahrenheit-celsius",
+   "category": "physics",
+   "statement": "There is a temperature at which the Celsius and Fahrenheit scales read the same.",
+   "answer": true,
+   "note": "Minus 40."
+  },
+  {
+   "id": "c-continent-drift-speed",
+   "category": "physics",
+   "statement": "Continents move at roughly the speed fingernails grow.",
+   "answer": true,
+   "note": "A few centimetres a year."
+  },
+  {
+   "id": "c-gold-seawater",
+   "category": "physics",
+   "statement": "There is gold dissolved in seawater.",
+   "answer": true,
+   "note": "In concentrations far too low to extract profitably."
+  },
+  {
+   "id": "c-columbus-egg",
+   "category": "history",
+   "statement": "The Wright brothers were the first people to fly in any aircraft.",
+   "answer": false,
+   "note": "Balloons and gliders carried people long before. They achieved the first powered, controlled, sustained flight."
+  },
+  {
+   "id": "c-roman-concrete",
+   "category": "history",
+   "statement": "Some Roman concrete structures have lasted two thousand years.",
+   "answer": true,
+   "note": "Seawater concrete in particular grows stronger over time."
+  },
+  {
+   "id": "c-oldest-university",
+   "category": "history",
+   "statement": "Universities are a medieval European invention with no earlier parallels.",
+   "answer": false,
+   "note": "Institutions of higher learning existed earlier elsewhere, including al-Qarawiyyin in Fez."
+  },
+  {
+   "id": "c-caesar-emperor",
+   "category": "history",
+   "statement": "Julius Caesar was the first Roman emperor.",
+   "answer": false,
+   "note": "He was dictator. Augustus was the first emperor."
+  },
+  {
+   "id": "c-hundred-oldest-company",
+   "category": "history",
+   "statement": "The oldest continuously operating companies in the world are more than a thousand years old.",
+   "answer": true,
+   "note": "Several Japanese firms, including a hotel founded in the eighth century."
+  },
+  {
+   "id": "c-canada-burn-white-house",
+   "category": "history",
+   "statement": "British forces burned the White House during the War of 1812.",
+   "answer": true,
+   "note": "In 1814."
+  },
+  {
+   "id": "c-french-revolution-decade",
+   "category": "history",
+   "statement": "The French Revolution and the American Revolution overlapped in time.",
+   "answer": false,
+   "note": "The American ended in 1783; the French began in 1789."
+  },
+  {
+   "id": "c-morse-sos",
+   "category": "history",
+   "statement": "SOS was chosen because it stands for Save Our Souls.",
+   "answer": false,
+   "note": "It was chosen for its simple, unmistakable Morse pattern. The phrase came afterwards."
+  },
+  {
+   "id": "c-suffrage-first-us-state",
+   "category": "history",
+   "statement": "Women could vote in some US states before the national amendment passed.",
+   "answer": true,
+   "note": "Wyoming from 1869, decades before 1920."
+  },
+  {
+   "id": "c-first-computer-woman",
+   "category": "history",
+   "statement": "Ada Lovelace is credited with writing the first published algorithm intended for a machine.",
+   "answer": true,
+   "note": "For Babbage's Analytical Engine."
+  },
+  {
+   "id": "c-prohibition-alcohol-illegal",
+   "category": "history",
+   "statement": "Prohibition in the United States made drinking alcohol illegal.",
+   "answer": false,
+   "note": "It banned manufacture, sale and transport. Drinking and possession were not federally banned."
+  },
+  {
+   "id": "c-everest-first-climb",
+   "category": "history",
+   "statement": "Everest was first summited in the 1950s.",
+   "answer": true,
+   "note": "By Hillary and Tenzing in 1953."
+  },
+  {
+   "id": "c-decimal-money-uk",
+   "category": "history",
+   "statement": "Britain used a non-decimal currency within living memory.",
+   "answer": true,
+   "note": "Pounds, shillings and pence until 1971."
+  },
+  {
+   "id": "c-percent-of-percent",
+   "category": "mathematics",
+   "statement": "Ten percent of 40 is the same as 40 percent of 10.",
+   "answer": true,
+   "note": "Both are four. Percentages commute."
+  },
+  {
+   "id": "c-odds-probability",
+   "category": "mathematics",
+   "statement": "Odds of 3 to 1 against mean a probability of one third.",
+   "answer": false,
+   "note": "They mean one in four, or 25 percent."
+  },
+  {
+   "id": "c-median-half",
+   "category": "mathematics",
+   "statement": "Half of all drivers are below the median in driving skill by definition.",
+   "answer": true,
+   "note": "That is what a median is, which is why most people rating themselves above it cannot all be right."
+  },
+  {
+   "id": "c-dice-independent",
+   "category": "mathematics",
+   "statement": "Two dice are more likely to total 7 than any other number.",
+   "answer": true,
+   "note": "Six of the thirty-six combinations give seven."
+  },
+  {
+   "id": "c-negative-times",
+   "category": "mathematics",
+   "statement": "The product of two negative numbers is negative.",
+   "answer": false,
+   "note": "It is positive."
+  },
+  {
+   "id": "c-fraction-larger",
+   "category": "mathematics",
+   "statement": "A fraction with a larger denominator is always smaller.",
+   "answer": false,
+   "note": "Only if the numerators match. Three quarters exceeds one half."
+  },
+  {
+   "id": "c-normal-distribution",
+   "category": "mathematics",
+   "statement": "Most real-world data follows a normal distribution.",
+   "answer": false,
+   "note": "Income, city size and word frequency are all heavily skewed."
+  },
+  {
+   "id": "c-average-guess",
+   "category": "economics",
+   "statement": "Compound interest grows a sum in a straight line.",
+   "answer": false,
+   "note": "It grows exponentially, which is why intuition underestimates it badly."
+  },
+  {
+   "id": "c-stock-past",
+   "category": "economics",
+   "statement": "Past investment performance reliably predicts future returns.",
+   "answer": false,
+   "note": "Which is why the warning is legally required."
+  },
+  {
+   "id": "c-diversify",
+   "category": "economics",
+   "statement": "Holding many different assets reduces risk without necessarily reducing expected return.",
+   "answer": true,
+   "note": "The central result behind diversification."
+  },
+  {
+   "id": "c-black-friday-name",
+   "category": "technology",
+   "statement": "Deleting an app removes all the data a company holds about you.",
+   "answer": false,
+   "note": "It removes the local copy. Server-side records remain until deleted at the source."
+  },
+  {
+   "id": "c-cookies-track",
+   "category": "technology",
+   "statement": "Clearing cookies prevents all online tracking.",
+   "answer": false,
+   "note": "Device fingerprinting and account logins persist across cookie clears."
+  },
+  {
+   "id": "c-wifi-signal-bars",
+   "category": "technology",
+   "statement": "Signal bars indicate connection speed.",
+   "answer": false,
+   "note": "They indicate signal strength. A strong signal on a congested tower can still be slow."
+  },
+  {
+   "id": "c-encryption-backdoor",
+   "category": "technology",
+   "statement": "End-to-end encryption means the service provider cannot read the message contents.",
+   "answer": true,
+   "note": "That is what distinguishes it from encryption in transit."
   }
  ],
  "fermi": [

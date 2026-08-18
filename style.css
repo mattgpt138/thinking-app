@@ -623,3 +623,79 @@ input:focus, textarea:focus { border-color: var(--brass); }
   main { padding-top: 2rem; }
   .plate { padding: 1.5rem; }
 }
+
+/* ── drill stage: shared by logic, causal, numbers, calibration ─────── */
+
+.optiongrid {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.btn-option {
+  text-align: left;
+  line-height: 1.45;
+  padding: .8rem 1rem;
+  white-space: normal;
+}
+.btn-option.chosen {
+  border-color: var(--brass);
+  border-width: 2px;
+  padding: calc(.8rem - 1px) calc(1rem - 1px);
+}
+.btn-option[disabled] { opacity: .75; }
+
+#drill-entry { display: flex; gap: .625rem; margin-top: 1rem; }
+#drill-entry input { text-align: center; font-size: 1.125rem; }
+
+#drill-conf { margin-top: 1.5rem; }
+#drill-explain .steps { margin-top: .5rem; }
+
+#drill-followup {
+  border-top: 1px solid var(--rule);
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.reference {
+  border-left: 2px solid var(--brass);
+  padding-left: .875rem;
+  margin-top: 1rem;
+}
+
+/* ── steelman stage ─────────────────────────────────────────────────── */
+
+.warnoff {
+  border-left: 2px solid var(--oxblood);
+  padding-left: .875rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.25rem;
+}
+
+#steel-proposition {
+  font-size: 1.25rem;
+  border-left-color: var(--ink);
+}
+
+#steel-reply-text {
+  border-left-color: var(--oxblood);
+  font-size: 1.0625rem;
+}
+
+/* ── record: per-day-type table ─────────────────────────────────────── */
+
+.daygrid {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: .35rem 1rem;
+  font-size: .8125rem;
+  font-variant-numeric: tabular-nums;
+  margin-top: .5rem;
+}
+.daygrid > div {
+  padding: .35rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.daygrid .dg-type { color: var(--ink); }
+.daygrid .dg-num { text-align: right; color: var(--ink-soft); }

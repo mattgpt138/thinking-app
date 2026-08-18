@@ -8,11 +8,14 @@ npm. Everything you produce stays in your browser.
 
 ## The core mechanic
 
-Three day types rotate evenly:
+Seven day types rotate evenly, one per week each:
 
 ```
-argument → math → reasoning → argument → …
+argument → logic → steelman → math → causal → numbers → calibration → …
 ```
+
+Three of them are writing you defend under pressure. Four are generated,
+objectively scorable, and work with no network at all.
 
 The rotation is driven by a **cycle index that only increments when a session is
 completed**. Skipping a day does not skip a type. Abandoning a session leaves
@@ -65,29 +68,55 @@ you for showing up. Showing up is the baseline, not an achievement.
 
 ---
 
-## The three days
+## The seven days
 
 ### Argument
 
-One passage from `data/corpus.json`, read at your own pace, followed by
-interrogation questions one at a time with a box to write in.
+One passage from `data/corpus.json`, read at your own pace, then interrogated.
 
-- Passages are tracked as seen and will not repeat until the corpus is
-  exhausted, at which point the rotation starts again.
-- Two or three hand-written questions ship with every passage. The first opens
-  the session; the rest are the safety net.
-- With an API key set the session becomes a conversation. Every answer you write
-  gets a reply, and the whole thread is sent each time as a real alternating
-  exchange, so the model argues with the person it has been arguing with rather
-  than firing unrelated questions. Without a key, or if a call fails, it falls
-  back to the remaining bundled questions and then a bank of generic presses.
-- **Every third argument day** pulls one entry out of your position file:
-  *"Here's what you wrote. This passage bears on it. Revise or defend."* Your
-  answer is stored as a new revision of that position.
+- 53 passages, 24 works, transcribed verbatim from Project Gutenberg.
+- Passages do not repeat until the corpus is exhausted.
+- With a key the session is a conversation: every answer gets a reply that
+  engages with what you wrote, argues back, and then presses.
+- **Every third argument day** pulls an entry from your position file:
+  *"Here's what you wrote. This passage bears on it. Revise or defend."*
+
+### Logic
+
+Formal validity with the content stripped out. Six adaptive levels:
+
+| Level | Content |
+|-------|---------|
+| 1 | modus ponens and tollens against affirming the consequent and denying the antecedent |
+| 2 | contrapositive, converse and inverse |
+| 3 | negating "all", "some" and "none" |
+| 4 | categorical syllogisms |
+| 5 | necessary against sufficient conditions |
+| 6 | validity against soundness, and the Wason selection task |
+
+Subject terms and predicates are drawn at random, so the same form never
+arrives in the same clothes. Nothing here can be memorised, and none of it
+touches the network. Difficulty adapts on the last 10 at the current level.
+
+### Steelman
+
+You are handed a proposition and asked to build the strongest case **for** it,
+whatever you privately think. The lazy version of the argument is named up
+front so you cannot give it.
+
+- 40 contested propositions in `data/propositions.json`, across ethics,
+  epistemology, politics, aesthetics and modern life.
+- With a key it then tells you whether you built the strong case or the
+  convenient one, supplies the version you missed, and presses.
+- **Every third steelman day** turns your own position file against you: build
+  the case that would defeat something you actually believe.
+
+Every other day trains taking an argument apart. This is the only one that
+trains putting one together, which is the harder half.
 
 ### Math
 
-Locally generated, no network involved. Eight difficulty levels:
+Mental arithmetic, eight adaptive levels, generated locally.
 
 | Level | Content |
 |-------|---------|
@@ -98,43 +127,53 @@ Locally generated, no network involved. Eight difficulty levels:
 | 5 | fraction to decimal, division with remainder |
 | 6 | 3-digit × 1-digit, percent change |
 | 7 | squares, harder 2-digit products |
-| 8 | compound multi-step: successive percentages, weighted averages |
+| 8 | successive percentages, weighted averages |
 
-Difficulty adapts on a rolling window of the last 10 problems **at the current
-level**: above 85% accurate *and* fast enough moves you up; below 60% moves you
-down. Time per problem is recorded.
+Above 85% accurate *and* fast enough moves you up; below 60% moves you down.
 
-Division-with-remainder answers accept `7 r 3`, `7r3`, or `7 remainder 3`.
+### Causal
 
-### Reasoning
+Generated scenarios in five families: confounding, selection effects, reverse
+causation, regression to the mean, and Simpson's paradox with numbers that
+actually work out. Each has a scorable multiple choice and a written follow-up
+with a reference answer that stays shut until you commit.
 
-Rotates through three sub-modes, advancing one step per completed reasoning day.
+### Numbers
 
-**Calibration.** A binary factual statement. Pick True or False, then a
-confidence level from 50 / 60 / 70 / 80 / 90 / 95%. Scored with Brier:
+Quantities as they arrive in the wild, drawn from three pools:
+
+- **Statistical literacy** — relative against absolute risk, percentages
+  against percentage points, missing denominators, mean against median under
+  skew, P(A|B) confused with P(B|A), and the law of small numbers.
+- **Base rates** — diagnostic screening, the cab problem, two production
+  lines, description-fits-a-group. Randomised numbers every time.
+- **Fermi estimation** — 17 prompts with full reference decompositions and an
+  accepted order-of-magnitude band.
+
+### Calibration
+
+A statement, true or false, and how sure you are.
+
+- **395 statements**, split 52/48 true to false, across eight categories.
+- Drawn least-recently-seen first, so the gap between repeats is as long as
+  the bank allows. The number still unseen is shown on the day.
+- Scored with Brier (see below).
+
+### Where the confidence rating appears
+
+On calibration, logic and causal days. All three feed **one** calibration
+curve, tagged by source, so the record screen shows both the combined figure
+and how it breaks down. Knowing you are overconfident about syllogisms is
+worth more than knowing it about trivia, which is why it is attached to the
+reasoning as well as the recall.
 
 ```
-p     = confidence      if you answered True
-        1 − confidence  if you answered False
-brier = (p − actual)²        where actual is 1 if the statement is true, else 0
+p     = the probability you assigned to the answer you gave
+brier = (p − outcome)²        outcome is 1 if you were right, else 0
 ```
 
-Lower is better. 0.25 is what you score by saying 50% to everything. The record
-view plots your hit rate against your stated confidence; points below the
-diagonal mean overconfidence at that level.
-
-**Fermi.** An estimation prompt with no lookups allowed. You write a
-decomposition and commit to a figure, then a reference decomposition and the
-accepted order-of-magnitude band are revealed. Figures may be entered as
-`800000`, `800,000`, `8e5`, or `8 x 10^5`.
-
-**Base rate.** Conditional-probability problems generated fresh with randomised
-numbers, so nothing can be memorised. Four templates: diagnostic screening, the
-cab identification problem, two production lines, and a description-fits-a-group
-problem. Answers are graded within 2 percentage points or 5% relative,
-whichever is looser, and a full worked solution follows.
-
----
+Lower is better. 0.25 is what you score by saying 50% to everything. Points
+below the diagonal on the curve mean overconfidence at that level.
 
 ## Position file
 
@@ -168,11 +207,12 @@ The default behaviour of a language model asked to critique your reasoning is
 flattery, and flattery makes the whole exercise worthless. Two system prompts
 exist to fight it:
 
-- `INTERROGATION_SYSTEM_PROMPT` — used during argument days
-- `CHALLENGE_SYSTEM_PROMPT` — used by *Challenge this* on positions
-
 Both are at the **top of `app.js`**, in a clearly marked block, deliberately
 placed there so they are easy to find and tune.
+
+There are three: `INTERROGATION_SYSTEM_PROMPT` for argument days,
+`STEELMAN_SYSTEM_PROMPT` for steelman days, and `CHALLENGE_SYSTEM_PROMPT` for
+*Challenge this* on positions.
 
 `INTERROGATION_SYSTEM_PROMPT` requires three things of every reply, in order:
 
@@ -288,9 +328,10 @@ italic markup becomes `<em>`. The author's words are untouched.
 }
 ```
 
-70 calibration statements ship, **split exactly 35 true / 35 false** so that
+395 calibration statements ship, **split 207 true to 188 false** so that
 guessing one way cannot pay. Keep that balance when adding more, or the
-calibration curve stops meaning anything. `low` and `high` on a Fermi prompt
+calibration curve stops meaning anything. Every statement must be checkable:
+one wrong "fact" both teaches you something false and corrupts the score. `low` and `high` on a Fermi prompt
 bound the accepted order-of-magnitude band.
 
 ---
@@ -326,15 +367,19 @@ so the old cache is discarded.
 ## Files
 
 ```
-index.html              markup for every view
-style.css               the whole design
-app.js                  everything else; prompts are at the top
-data/corpus.json        53 passages
-data/reasoning.json     70 calibration statements, 17 Fermi prompts
-manifest.webmanifest    PWA metadata
-sw.js                   offline caching
-icons/                  app icons
+index.html                markup for every view
+style.css                 the whole design
+app.js                    everything else; the prompts are at the top
+data/corpus.json          53 passages
+data/reasoning.json       395 calibration statements, 17 Fermi prompts
+data/propositions.json    40 contested propositions for steelman day
+manifest.webmanifest      PWA metadata
+sw.js                     offline caching
+icons/                    app icons
 ```
+
+Logic, causal and numbers problems are generated in `app.js` rather than
+stored, which is what makes them unmemorisable.
 
 ## Design notes
 

@@ -110,63 +110,73 @@
     <p class="fineprint" id="math-tally"></p>
   </div>
 
-  <!-- REASONING -->
-  <div class="stage" id="stage-reasoning" hidden>
+  <!-- STEELMAN -->
+  <div class="stage" id="stage-steelman" hidden>
+    <p class="overline" id="steel-domain"></p>
+    <blockquote class="prompt" id="steel-proposition"></blockquote>
+    <p class="lede" id="steel-task"></p>
+    <p class="fineprint warnoff" id="steel-cheap"></p>
 
-    <!-- calibration -->
-    <div id="cal-block" hidden>
-      <p class="overline" id="cal-meta">calibration</p>
-      <blockquote class="prompt" id="cal-statement"></blockquote>
-      <div class="row row-split">
-        <button class="btn btn-choice" data-tf="true">True</button>
-        <button class="btn btn-choice" data-tf="false">False</button>
+    <div id="steel-build">
+      <label class="visually-hidden" for="steel-answer">Your case</label>
+      <textarea id="steel-answer" rows="12" placeholder="Build the case. Commit to it."></textarea>
+      <div class="row">
+        <button class="btn btn-primary" id="btn-steel-submit">Submit the case</button>
       </div>
-      <div id="cal-conf" hidden>
-        <p class="overline">how sure are you</p>
-        <div class="confgrid" id="cal-confgrid"></div>
+      <p class="status" id="steel-status" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="reveal" id="steel-reply" hidden>
+      <p class="overline">where it gives way</p>
+      <blockquote class="prompt" id="steel-reply-text"></blockquote>
+    </div>
+  </div>
+
+  <!-- DRILL: logic, causal, numbers, calibration all share this -->
+  <div class="stage" id="stage-drill" hidden>
+    <p class="overline" id="drill-label"></p>
+    <blockquote class="prompt" id="drill-prompt"></blockquote>
+
+    <div id="drill-workspace" hidden>
+      <label class="lbl" for="drill-work">Work it out here</label>
+      <textarea id="drill-work" rows="7"></textarea>
+    </div>
+
+    <div class="optiongrid" id="drill-options"></div>
+
+    <form id="drill-entry" autocomplete="off" hidden>
+      <label class="visually-hidden" for="drill-number">Your answer</label>
+      <input id="drill-number" type="text" inputmode="decimal" placeholder="your answer">
+      <button class="btn btn-primary" type="submit" id="drill-entry-submit">Commit</button>
+    </form>
+
+    <div id="drill-conf" hidden>
+      <p class="overline">how sure are you</p>
+      <div class="confgrid" id="drill-confgrid"></div>
+    </div>
+
+    <div class="reveal" id="drill-reveal" hidden>
+      <p class="verdict" id="drill-verdict"></p>
+      <div id="drill-explain"></div>
+
+      <div id="drill-followup" hidden>
+        <p class="overline">now in your own words</p>
+        <blockquote class="prompt" id="drill-followup-prompt"></blockquote>
+        <label class="visually-hidden" for="drill-followup-answer">Your answer</label>
+        <textarea id="drill-followup-answer" rows="6" placeholder="Commit before you look."></textarea>
+        <div class="row">
+          <button class="btn" id="btn-drill-reference">Show the reference answer</button>
+        </div>
+        <p class="status" id="drill-followup-status" role="status" aria-live="polite"></p>
+        <p class="note reference" id="drill-reference" hidden></p>
       </div>
-      <div class="reveal" id="cal-reveal" hidden>
-        <p class="verdict" id="cal-verdict"></p>
-        <p class="note" id="cal-note"></p>
-        <button class="btn btn-primary" id="btn-cal-next">Next</button>
+
+      <div class="row">
+        <button class="btn btn-primary" id="btn-drill-next">Next</button>
       </div>
     </div>
 
-    <!-- fermi -->
-    <div id="fermi-block" hidden>
-      <p class="overline">estimation &mdash; no lookups</p>
-      <blockquote class="prompt" id="fermi-prompt"></blockquote>
-      <div id="fermi-work">
-        <label class="lbl" for="fermi-decomp">Break it into steps you can estimate</label>
-        <textarea id="fermi-decomp" rows="9" placeholder="One step per line. Multiply at the end."></textarea>
-        <label class="lbl" for="fermi-number">Your figure</label>
-        <input id="fermi-number" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 8e5 or 800000">
-        <button class="btn btn-primary" id="btn-fermi-submit">Commit and compare</button>
-      </div>
-      <div class="reveal" id="fermi-reveal" hidden>
-        <p class="verdict" id="fermi-verdict"></p>
-        <p class="overline">reference decomposition</p>
-        <ol class="steps" id="fermi-steps"></ol>
-        <p class="note" id="fermi-answer"></p>
-        <button class="btn" id="btn-fermi-next">Next prompt</button>
-      </div>
-    </div>
-
-    <!-- base rate -->
-    <div id="base-block" hidden>
-      <p class="overline">base rates</p>
-      <blockquote class="prompt" id="base-prompt"></blockquote>
-      <form id="base-form" autocomplete="off">
-        <label class="lbl" for="base-answer">Your answer, as a percentage</label>
-        <input id="base-answer" type="text" inputmode="decimal" placeholder="%">
-        <button class="btn btn-primary" type="submit">Commit</button>
-      </form>
-      <div class="reveal" id="base-reveal" hidden>
-        <p class="verdict" id="base-verdict"></p>
-        <ol class="steps" id="base-steps"></ol>
-        <button class="btn" id="btn-base-next">Next problem</button>
-      </div>
-    </div>
+    <p class="fineprint" id="drill-remaining"></p>
   </div>
 
   <div class="stage-foot">
@@ -272,14 +282,15 @@
   <div class="plate">
     <p class="overline">calibration</p>
     <p class="bigstat"><span id="brier-score">&mdash;</span><small>mean Brier score</small></p>
+    <p class="fineprint" id="brier-sources"></p>
     <div class="chart" id="chart-calibration"></div>
     <p class="fineprint">The diagonal is perfect calibration. A point below it means overconfidence at that level.</p>
     <table class="tbl" id="cal-table"></table>
   </div>
 
   <div class="plate">
-    <p class="overline">arithmetic</p>
-    <dl class="specsheet" id="math-stats"></dl>
+    <p class="overline">by day type</p>
+    <div id="math-stats"></div>
   </div>
 </section>
 

@@ -10,7 +10,7 @@
    Bump CACHE_VERSION whenever a shell file or a data file changes.
    ═══════════════════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'thinking-app-v5';
+const CACHE_VERSION = 'thinking-app-v6';
 const SHELL_CACHE   = CACHE_VERSION + '-shell';
 const FONT_CACHE    = CACHE_VERSION + '-fonts';
 
@@ -22,6 +22,7 @@ const SHELL = [
   './manifest.webmanifest',
   './data/corpus.json',
   './data/reasoning.json',
+  './data/propositions.json',
   './icons/icon.svg',
   './icons/apple-touch-icon.png',
   './icons/icon-192.png',
