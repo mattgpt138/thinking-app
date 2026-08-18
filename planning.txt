@@ -4,6 +4,8 @@ Last Updated: 2026-08-18
 ================================================================================
 
 RECENT CHANGES (2026-08-18)
+  - Phase 9: live interrogation fixed and verified against real Sonnet 5
+  - Phase 8: browser regression suite added; it found three real bugs
   - Phase 7: a session now survives a reload; nothing written is lost
   - Phase 6: interface reworked for phones; bottom nav; calibration chart fixed
   - Phase 5: rotation rebuilt from 3 day types to 7 around critical thinking
@@ -176,16 +178,104 @@ PHASE 7 — A session survives a reload                          [7f9be52] DONE
   - Cleared on close, abandon, import and erase. Ignored after 12 hours.
     Corrupt data falls back to a normal start rather than failing to boot.
 
+PHASE 8 — A regression harness, and three bugs it found         [pending] DONE
+--------------------------------------------------------------------------------
+  Every check up to here was done by hand in a browser and thrown away, so
+  nothing caught a break. There is now a suite that runs in the browser with
+  no install and no build step: open test.html.
+
+  - It loads the real index.html markup and the real app.js rather than a
+    copy, so there is nothing to keep in step. The one concession in the app
+    is the last line: `if (!window.THINKING_APP_TEST) boot();`.
+  - Storage is faked for the run, so it can be opened on the live site without
+    eating a session. If the browser refuses the swap the run stops.
+  - Harness requests carry ?harness=1 and the service worker stands aside for
+    them. Without that the shell cache, which matches with ignoreSearch, would
+    have served yesterday's app.js and the run would have come up green
+    against code nobody was running.
+  - 158 tests over 21 groups. Generators are checked over 200 samples each,
+    and arithmetic answers are re-derived from the printed question.
+  - Proved it bites: four regressions planted in the browser were caught by
+    six tests.
+
+  Three real bugs, all found by writing the tests:
+
+  1. migrate() lost the scalars beside an array. Object.assign(base, s)
+     overwrote base.math before base.math was used as the defaults, so a file
+     carrying `math: { history: [] }` came back with no math.level, and the
+     next arithmetic day called MATH_LEVELS[undefined]. Arrays were guarded;
+     numbers and strings were not, including settings.model.
+  2. Reloading a calibration day landed on a dead screen. restoreLive called
+     nextDrill() straight out, but startDrill awaits loadReasoning() first.
+     After a reload the bank had not been fetched, so the day opened on
+     "Nothing available offline for this day." Resume now takes the same route
+     in, and stands in the day type if the saved record lost its mode.
+  3. Difficulty levels ping-ponged. The adapter read the last ten attempts at
+     the current level, so a demotion from 4 to 3 re-read the ten good answers
+     that earned the promotion and sent you straight back up. Attempts now
+     only count from when the level was last changed (math.levelSince and
+     logic.levelSince, defaulting to 0 for existing files).
+
+  Cache bumped to thinking-app-v9.
+
+PHASE 9 — The live interrogation, actually tested                [pending] DONE
+--------------------------------------------------------------------------------
+  Reported from the phone: the press-further questions do not react to what
+  you write, they just arrive in order.
+
+  Two separate causes, and the second had never been seen because the prompt
+  had only ever been tested against mocked responses.
+
+  1. No API key was stored on that device, so the app never called the API at
+     all. The home card said so; nothing inside a session did. Entered on the
+     phone at the end of this session, so argument day is live there now.
+  2. With a key, the call failed anyway. The model reasons before it answers
+     and that reasoning is billed against max_tokens. Every conversational
+     call site was sized for a model that did not reason: 700 tokens for an
+     interrogation, 800 for a steelman. The allowance went on the reasoning,
+     so the reply came back truncated mid-sentence or, often, with no text
+     block at all. callClaude read that as "empty response", swallowed it, and
+     fell back to the bundled questions. From the outside it looked exactly
+     like a fixed list of questions.
+
+  Fixed:
+  - REPLY_TOKENS (3000) and REASONING_EFFORT ('low') at the top of app.js;
+    every conversational call site uses them. API_TIMEOUT 25s -> 40s, since a
+    press takes about 8s early on and grows with the transcript.
+  - The connection test in Settings turns reasoning off; it only needs a 200.
+    Checked first that adaptive reasoning does not fire on a trivial ping, so
+    its 16-token budget was never actually broken.
+  - callClaude now says "the reply ran out of room before it was written"
+    rather than "empty response" when stop_reason is max_tokens.
+
+  Verified live against claude-sonnet-5, not mocks. A hedging answer got back
+  a reply that named the move ("an appeal to a hypothetical consensus"),
+  pointed out it committed the very error the passage warns against, and
+  closed on a dilemma. A second answer was restated and then pressed on its
+  weakest point. 8.0s and 10.5s. This is the first evidence that argument day
+  works as designed.
+
+  Also found and fixed while driving the real app: pressing "I have read it"
+  before the corpus arrived threw and left the session with nothing to ask.
+  The button is now shut until there is a question behind it, and
+  nextOfflineItem copes with a missing pool.
+
+  Key storage: .env.local holds the key, gitignored, mode 600. make-local-key.py
+  generates local-key.js from it, which app.js loads on localhost only. None of
+  it is deployed; the site is public, so a key shipped with it is published.
+  Three tests now guard that nothing the app serves carries a key.
+
+  166 tests, all green. Cache bumped to thinking-app-v10.
+
 --------------------------------------------------------------------------------
 BACKLOG — not started
 --------------------------------------------------------------------------------
-  - Verify the sharpened interrogation prompt against real Sonnet 5 output over
-    several argument days. It has only been tested against mocked responses.
   - Update rate metric: how often a position revision reverses rather than
     elaborates. Discussed in Phase 5 planning, not built.
   - Corpus expansion beyond 53 passages; schema and rules are documented in
     README so this is additive work.
   - Calibration bank cycles after roughly 33 weekly sessions. Grow it before
     then, keeping the true/false split near even.
-  - No automated test suite. All verification so far has been ad-hoc harnesses
-    driven through the browser in-session.
+  - Header nav wraps onto a second line on an iPhone, pushing "settings" below
+    the other four tabs and crowding the top of the page. Reported 2026-08-18
+    with a screenshot of the today view.

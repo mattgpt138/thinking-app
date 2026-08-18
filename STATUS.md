@@ -5,47 +5,46 @@ _Snapshot: 2026-08-18_
 ## Deployed
 
 - **Live:** https://mattgpt138.github.io/thinking-app/ (GitHub Pages, HTTPS)
-- **Repo:** github.com/mattgpt138/thinking-app (public, `main`)
-- **Cache version:** `thinking-app-v8` — bump in `sw.js` on any shell/data change
-- **Default model:** `claude-sonnet-5`. API optional; every path degrades to
-  bundled content and never blocks a session.
-- **Installed** to the user's iPhone home screen.
+- **Cache version:** `thinking-app-v10` — bump in `sw.js` on any shell/data change
+- **Model:** `claude-sonnet-5`. Key is now entered on the phone, so argument day
+  runs live there. Every path still degrades to bundled content offline.
+- **Tests:** open `test.html` through a web server. 166 tests, all green.
 
 ### Known issues
 
-- Interrogation prompt tested only against mocked API responses; unverified live.
+- Header nav wraps to a second line on an iPhone and crowds the top of the page.
+- Steelman day's live evaluation has only ever been checked against mocks.
 - Calibration bank (395) cycles after roughly 33 weekly sessions.
-- No automated test suite; verification is ad-hoc, in-browser.
 
 ## Last completed phase
 
-**Phase 7** — a session in progress now survives a reload; the passage is no
-longer consumed and nothing written is lost.
+**Phase 9** — live interrogation fixed and verified against real Sonnet 5. Calls
+were budgeted for a model that does not reason, so the allowance went on the
+reasoning and replies came back truncated or missing; the session then fell back
+to the fixed bundled questions. That was the "not personalized" complaint.
 
 ## Next priorities
 
-1. Run several real argument days with the live key and judge whether the
-   interrogation actually engages or drifts back to agreeable.
-2. Same for steelman day: does it find weak constructions or just praise them.
+1. Run steelman day live and judge whether it finds weak constructions or just
+   praises them. Same job Phase 9 did for argument day.
+2. Fix the header nav wrapping on a phone.
 3. Grow the calibration bank before it cycles; keep the true/false split even.
 4. Consider the update-rate metric (revisions that reverse vs elaborate).
-5. Add a minimal regression harness so the browser checks are repeatable.
 
 ## Pending user actions
 
-- None blocking. User was mid-testing the seven day types on device.
+- None blocking. Key is on the phone.
 - Reminder: **Export JSON** occasionally. iOS clears storage for unused web
   apps, and sessions/positions live only on the phone.
+- Local key: `.env.local` (gitignored); `python3 make-local-key.py` rebuilds
+  `local-key.js`, loaded on localhost only. Nothing deployed carries a key.
 
 ## Files modified this session
 
-- `index.html`
-- `style.css`
 - `app.js`
 - `sw.js`
-- `manifest.webmanifest`
+- `test.html`
+- `tests.js`
+- `make-local-key.py`
+- `.gitignore`
 - `README.md`
-- `data/corpus.json`
-- `data/reasoning.json`
-- `data/propositions.json`
-- `icons/` (svg, 192, 512, maskable-512, apple-touch-icon)
