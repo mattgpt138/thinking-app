@@ -43,11 +43,14 @@
     <h2 class="display" id="home-type">argument</h2>
     <p class="lede" id="home-blurb"></p>
     <dl class="specsheet">
-      <div><dt>duration</dt><dd id="home-duration">10:00</dd></div>
+      <div><dt id="label-duration">duration</dt><dd id="home-duration">10:00</dd></div>
       <div><dt>completed</dt><dd id="home-completed">0</dd></div>
-      <div><dt>next ramp</dt><dd id="home-ramp">6 sessions</dd></div>
+      <div><dt id="label-ramp">next ramp</dt><dd id="home-ramp">6 sessions</dd></div>
     </dl>
-    <button class="btn btn-primary" id="btn-begin">Begin</button>
+    <div class="row">
+      <button class="btn btn-primary" id="btn-begin">Begin</button>
+      <button class="btn" id="btn-review-today" hidden>Review today's session</button>
+    </div>
     <p class="fineprint" id="home-note"></p>
   </div>
 

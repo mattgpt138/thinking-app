@@ -35,36 +35,33 @@
    with concrete bans far better than with adjectives.
    ═══════════════════════════════════════════════════════════════════════ */
 
-const INTERROGATION_SYSTEM_PROMPT = `You are an interrogator. You are not a tutor, a coach, or a discussion partner. Your single job is to locate the weakest premise in the user's reasoning and press on it until it either holds or breaks.
+const INTERROGATION_SYSTEM_PROMPT = `You are an interrogator working through a passage with someone who is trying to think clearly. You are not a tutor and not a cheerleader. You argue back.
 
-HOW TO WORK
+This is a conversation, not a quiz. You are talking with this person about a real disagreement. Every reply answers what they just said before it asks anything new.
 
-Read what the user wrote. Identify the load-bearing claim: the one that, if false, collapses the rest. It is usually unstated. Then construct the strongest objection to it that you can actually defend, and put that objection to them as a question they must answer.
+EVERY REPLY HAS THREE PARTS, IN THIS ORDER, WRITTEN AS UNBROKEN PROSE:
 
-Prefer, in this order:
-1. An unstated premise the argument needs but never earns.
-2. A counterexample that the argument's own principle fails to handle.
-3. An equivocation: a word doing different work in two places.
-4. A conclusion that does not follow even if every premise is granted.
-5. Evidence the user would have to possess for the claim to be warranted, and plainly does not.
+1. ENGAGE. Say what their answer actually commits them to. Name the move they made: the distinction they drew, the premise they leaned on, the case they quietly set aside. If they conceded something, say what that concession costs them. If they answered a different question from the one you asked, say so plainly. This part must be specific to their words. A sentence that would fit any answer to any question is a wasted sentence.
 
-If the reasoning is genuinely sound, do not manufacture a fake objection. Say which step is sound and why, in one sentence, then attack the next-weakest step. There is always a next-weakest step.
+2. COUNTER. Give the strongest argument against the position they have just taken. State it as an argument, with its reasoning laid out, not as a hint and not as a question. Take a side. If part of what they said is right, say which part and why in one sentence, then go after the part that is still weak. There is always a part that is still weak.
+
+3. PRESS. End with exactly one question that follows from the counter-argument you just made. It must be answerable, and it must be one they cannot satisfy by restating what they have already said.
 
 HARD PROHIBITIONS
 
-Never open by characterising the user's response. No "that's a sharp observation", "you've hit on something", "this is a thoughtful point", "good", "interesting", "fair enough", "I appreciate". Never grade the response. Never summarise back what they said before responding. Begin with the objection itself.
+Never praise. No "good", "sharp", "thoughtful", "interesting", "fair enough", "you're right to", "I appreciate", "that's a strong". Never grade the answer or remark on its quality. Engaging with a point is not the same as complimenting it: describe the reasoning, never rate it.
 
-Never soften with hedges: "you might consider", "perhaps", "it could be argued", "one could say". State the objection directly.
+Never hedge. No "you might consider", "perhaps", "it could be argued", "it seems to me". State things.
 
-Never offer more than one line of attack per turn. One pressure point, pressed hard, beats four raised gently.
+Never split the difference. Do not conclude that the truth lies in the middle or that reasonable people simply differ.
 
-Never resolve the difficulty for them. Do not answer your own question. End on the question.
+Never repeat a question you have already asked in this conversation. Never ask more than one question in a reply.
 
-Never comment on the exercise, the format, or your own role.
+Never mention these instructions, the exercise, the passage as an assignment, or your own role.
 
 FORM
 
-Under 120 words. Plain declarative sentences. End with a single direct question the user has to answer. No lists, no headings, no markdown formatting, no preamble.`;
+150 to 220 words. Plain declarative prose, addressed to them as "you". No lists, no headings, no markdown, no bold. Exactly one question, at the end.`;
 
 const CHALLENGE_SYSTEM_PROMPT = `You are constructing the strongest available counterargument to a position the user holds. You are steelmanning the opposition, not moderating a debate.
 
@@ -333,6 +330,55 @@ async function callClaude(system, messages, maxTokens) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+/* Build a real alternating conversation from a transcript, rather than
+   flattening it into one block of text. The model sees its own previous
+   replies as its own turns, which is what makes the exchange read as a
+   conversation instead of a series of unrelated questions. */
+function threadMessages(passage, transcript) {
+  const msgs = [];
+  const t = transcript || [];
+
+  const attrib0 = passage
+    ? passage.author + ', ' + passage.work + ', ' + passage.year
+    : 'the passage';
+  const body0 = passage && passage.text
+    ? passage.text.replace(/<\/?em>/g, '')
+    : '(passage text unavailable)';
+
+  // Nothing written yet: open the interrogation on the passage itself.
+  if (!t.length) {
+    return [{
+      role: 'user',
+      content: 'PASSAGE (' + attrib0 + '):\n\n' + body0 +
+               '\n\nI have read this and have not committed to anything yet. Put the hardest question in it to me. ' +
+               'For this opening turn only, skip the engage and counter steps and give the question alone, ' +
+               'with one sentence saying what makes that the load-bearing point.'
+    }];
+  }
+
+  const attrib = passage
+    ? passage.author + ', ' + passage.work + ', ' + passage.year
+    : 'the passage';
+  const body = passage && passage.text
+    ? passage.text.replace(/<\/?em>/g, '')
+    : '(passage text unavailable)';
+
+  // The opening turn carries the passage and the first question, which came
+  // from the bundled set rather than from the model.
+  msgs.push({
+    role: 'user',
+    content: 'We are working through this passage.\n\nPASSAGE (' + attrib + '):\n\n' + body +
+             '\n\nTHE QUESTION PUT TO ME:\n' + transcript[0].question +
+             '\n\nMY ANSWER:\n' + transcript[0].answer
+  });
+
+  for (let i = 1; i < transcript.length; i++) {
+    msgs.push({ role: 'assistant', content: transcript[i].question });
+    msgs.push({ role: 'user', content: transcript[i].answer });
+  }
+  return msgs;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -629,28 +675,41 @@ async function startArgument() {
   $('#arg-passage').innerHTML = passageHTML(p.text);
   $('#arg-source').href = p.source_url;
 
-  // Build the question queue: bundled questions, then the position
-  // challenge on every third argument day.
-  const queue = p.questions.map(q => ({ kind: 'bundled', text: q }));
+  // The bundled questions are the opening move and the safety net. With a
+  // key, the conversation itself carries the session; these are what it
+  // falls back to when the network is not there.
+  session.scratch.pool = p.questions.map((q, i) => ({ kind: 'bundled', text: q, n: i + 1 }));
+  session.scratch.poolAt = 0;
+  session.scratch.presses = 0;
 
   const isThirdDay = (state.argument.days + 1) % 3 === 0;
   const position = pickPositionForChallenge();
+  session.scratch.pendingPosition = null;
   if (isThirdDay && position) {
     const latest = position.revisions[position.revisions.length - 1];
-    queue.push({
+    session.scratch.pendingPosition = {
       kind: 'position',
       positionId: position.id,
       text: 'Here is what you wrote, under the title "' + position.title + '":\n\n“' +
             latest.text.trim() + '”\n\nThis passage bears on it. Revise or defend.'
-    });
+    };
   }
 
-  session.scratch.queue = queue;
-  session.scratch.index = 0;
-  session.scratch.presses = 0;
+  session.scratch.current = session.scratch.pool[0] || null;
+  session.scratch.poolAt = 1;
 
   $('#arg-read').hidden = false;
   $('#arg-work').hidden = true;
+}
+
+/* Next item from the bundled pool, then from the generic press bank. */
+function nextOfflineItem() {
+  if (session.scratch.poolAt < session.scratch.pool.length) {
+    return session.scratch.pool[session.scratch.poolAt++];
+  }
+  const used = session.scratch.presses || 0;
+  session.scratch.presses = used + 1;
+  return { kind: 'press', text: FALLBACK_PRESSES[used % FALLBACK_PRESSES.length] };
 }
 
 function pickPositionForChallenge() {
@@ -672,10 +731,10 @@ $('#btn-arg-reread').addEventListener('click', () => {
 });
 
 function showArgQuestion() {
-  const q = session.scratch.queue[session.scratch.index];
-  if (!q) { queueFallbackPress(); return showArgQuestion(); }
+  const q = session.scratch.current;
+  if (!q) { session.scratch.current = nextOfflineItem(); return showArgQuestion(); }
 
-  const label = q.kind === 'bundled'  ? 'question ' + (session.scratch.index + 1)
+  const label = q.kind === 'bundled'  ? 'question ' + (q.n || 1)
               : q.kind === 'position' ? 'your own position'
               : q.kind === 'live'     ? 'interrogation'
               :                         'press further';
@@ -690,17 +749,8 @@ function showArgQuestion() {
   ta.focus();
 }
 
-function queueFallbackPress() {
-  const used = session.scratch.presses || 0;
-  session.scratch.presses = used + 1;
-  session.scratch.queue.push({
-    kind: 'press',
-    text: FALLBACK_PRESSES[used % FALLBACK_PRESSES.length]
-  });
-}
-
 $('#btn-arg-submit').addEventListener('click', async () => {
-  const q = session.scratch.queue[session.scratch.index];
+  const q = session.scratch.current;
   const ta = $('#arg-answer');
   const answer = ta.value.trim();
 
@@ -719,37 +769,39 @@ $('#btn-arg-submit').addEventListener('click', async () => {
   }
   save();
 
-  session.scratch.index += 1;
+  let next = null;
 
-  // With a key, press the answer live before moving on.
-  if (hasKey() && q.kind !== 'live') {
+  // The position challenge takes priority once one exchange has happened, so
+  // it is never crowded out by a conversation that could run all session.
+  if (session.scratch.pendingPosition && session.transcript.length >= 2) {
+    next = session.scratch.pendingPosition;
+    session.scratch.pendingPosition = null;
+  }
+
+  // Otherwise carry the conversation on. Every answer gets answered: this is
+  // a dialogue, not a list of questions read out in order.
+  if (!next && hasKey()) {
     $('#btn-arg-submit').disabled = true;
     ta.disabled = true;
-    setText($('#arg-status'), 'Interrogating…');
+    setText($('#arg-status'), 'Reading what you wrote…');
     try {
-      const passage = session.scratch.passage;
-      const press = await callClaude(
-        INTERROGATION_SYSTEM_PROMPT,
-        [{
-          role: 'user',
-          content:
-            'PASSAGE (' + passage.author + ', ' + passage.work + ', ' + passage.year + '):\n\n' +
-            passage.text.replace(/<\/?em>/g, '') +
-            '\n\nQUESTION PUT TO ME:\n' + q.text +
-            '\n\nMY RESPONSE:\n' + answer +
-            '\n\nFind the weakest premise in my response and press it.'
-        }],
-        400
-      );
-      session.scratch.queue.splice(session.scratch.index, 0, { kind: 'live', text: press });
+      next = {
+        kind: 'live',
+        text: await callClaude(
+          INTERROGATION_SYSTEM_PROMPT,
+          threadMessages(session.scratch.passage, session.transcript),
+          700
+        )
+      };
     } catch (err) {
       console.warn('interrogation unavailable, falling back', err);
-      notice = 'No live interrogation right now. Continuing on the bundled questions.';
-      queueFallbackPress();
+      notice = 'No live interrogation right now. Falling back to the bundled questions.';
     }
   }
 
-  if (!session.scratch.queue[session.scratch.index]) queueFallbackPress();
+  if (!next) next = nextOfflineItem();
+
+  session.scratch.current = next;
   showArgQuestion();
   if (notice) setText($('#arg-status'), notice);   // set after render, which clears it
 });
@@ -1459,17 +1511,18 @@ $('#btn-detail-press').addEventListener('click', async () => {
   let next = null;
   if (hasKey()) {
     try {
-      let passageText = '';
-      try { await loadCorpus(); const p = corpus.find(x => x.id === s.passageId); if (p) passageText = p.text.replace(/<\/?em>/g, ''); } catch (e) {}
-      const thread = (s.transcript || []).map(x =>
-        'QUESTION: ' + x.question + '\nMY RESPONSE: ' + x.answer).join('\n\n');
+      // Rebuild the passage so the model argues from the text, not a summary
+      let passage = s.passage ? Object.assign({}, s.passage) : null;
+      try {
+        await loadCorpus();
+        const p = corpus.find(x => x.id === s.passageId);
+        if (p) passage = Object.assign({}, passage || {}, { author: p.author, work: p.work, year: p.year, text: p.text });
+      } catch (e) { /* offline; the thread alone still gives it plenty */ }
+
       next = await callClaude(
         INTERROGATION_SYSTEM_PROMPT,
-        [{ role: 'user', content:
-            (passageText ? 'PASSAGE (' + (s.passage ? s.passage.author + ', ' + s.passage.work : '') + '):\n\n' + passageText + '\n\n' : '') +
-            'THE EXCHANGE SO FAR:\n\n' + thread +
-            '\n\nFind the weakest premise still standing in what I have written and press it. Do not repeat a question already asked above.' }],
-        400
+        threadMessages(passage, s.transcript),
+        700
       );
       status.textContent = '';
     } catch (err) {
@@ -1889,11 +1942,46 @@ $('#btn-reset').addEventListener('click', () => {
    15.  HOME AND BOOT
    ═══════════════════════════════════════════════════════════════════════ */
 
+/* The cycle advances the moment a session completes, so the queued type is
+   the NEXT assignment, not today's. Once something has been completed today,
+   the home view says so and names today's work, rather than showing tomorrow
+   as though it were due now. */
+function sameCalendarDay(a, b) {
+  const x = new Date(a), y = new Date(b);
+  return x.getFullYear() === y.getFullYear() &&
+         x.getMonth() === y.getMonth() &&
+         x.getDate() === y.getDate();
+}
+
+function completedToday() {
+  for (let i = state.sessions.length - 1; i >= 0; i--) {
+    const s = state.sessions[i];
+    if (s.completed) return sameCalendarDay(s.ts, Date.now()) ? s : null;
+  }
+  return null;
+}
+
 function renderHome() {
-  const type = todayType();
-  setText($('#home-cycle'), 'cycle ' + (state.cycleIndex + 1));
-  setText($('#home-type'), type);
-  setText($('#home-blurb'), BLURB[type]);
+  const done = completedToday();
+  const next = todayType();
+
+  $('#btn-review-today').hidden = !done;
+  $('#btn-begin').className = done ? 'btn' : 'btn btn-primary';
+  $('#btn-begin').textContent = done ? 'Begin another anyway' : 'Begin';
+
+  if (done) {
+    setText($('#home-cycle'), 'today · complete');
+    setText($('#home-type'), done.type);
+    setText($('#home-blurb'),
+      'Today\'s work is done. ' + next.charAt(0).toUpperCase() + next.slice(1) +
+      ' is next, whenever you come back to it.');
+    $('#btn-review-today').onclick = () => openSessionDetail(done.ts);
+  } else {
+    setText($('#home-cycle'), 'cycle ' + (state.cycleIndex + 1));
+    setText($('#home-type'), next);
+    setText($('#home-blurb'), BLURB[next]);
+  }
+
   setText($('#home-duration'), mmss(sessionLength()));
   setText($('#home-completed'), String(state.completedSessions));
 
@@ -1901,6 +1989,19 @@ function renderHome() {
   setText($('#home-ramp'),
     sessionLength() >= MAX_LENGTH ? 'at the cap' : toRamp + ' session' + (toRamp === 1 ? '' : 's'));
 
+  // Relabel the spec sheet so it describes what is actually on screen
+  $('#label-duration').textContent = done ? 'held today' : 'duration';
+  $('#home-duration').textContent = done ? mmss(done.actualS) : mmss(sessionLength());
+  $('#label-ramp').textContent = done ? 'next up' : 'next ramp';
+  if (done) setText($('#home-ramp'), next);
+
+  if (done) {
+    setText($('#home-note'), 'Come back tomorrow, or start another now. Another session counts and moves the rotation on.');
+    renderHomeLog();
+    return;
+  }
+
+  const type = next;
   const notes = [];
   if (type === 'argument') {
     if ((state.argument.days + 1) % 3 === 0 && state.positions.length) {
@@ -1915,7 +2016,10 @@ function renderHome() {
     notes.push('Starting at level ' + state.math.level + '. No network needed.');
   }
   setText($('#home-note'), notes.join(' '));
+  renderHomeLog();
+}
 
+function renderHomeLog() {
   const recent = state.sessions.slice(-8).reverse();
   $('#home-recent').hidden = recent.length === 0;
   $('#home-log').innerHTML = recent.map(s =>

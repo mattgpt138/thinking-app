@@ -426,6 +426,7 @@ input:focus, textarea:focus { border-color: var(--brass); }
   font-family: var(--serif);
   font-size: 1.125rem;
   line-height: 1.6;
+  white-space: pre-wrap;   /* live replies arrive as several paragraphs */
 }
 
 .problem {

@@ -18,6 +18,12 @@ The rotation is driven by a **cycle index that only increments when a session is
 completed**. Skipping a day does not skip a type. Abandoning a session leaves
 the index where it was, so the type you missed is the type you get next time.
 
+Because the index advances the moment a session completes, the queued type is
+the *next* assignment rather than today's. The **today** tab accounts for this:
+once anything has been completed on the current calendar day it shows that day's
+work as done, names what is next, and offers to reopen what you wrote. Starting
+another session anyway is still one tap away, and it counts.
+
 Session length starts at **10:00**, gains **60 seconds every 6 completed
 sessions**, and stops at **40:00**.
 
@@ -68,10 +74,13 @@ interrogation questions one at a time with a box to write in.
 
 - Passages are tracked as seen and will not repeat until the corpus is
   exhausted, at which point the rotation starts again.
-- Two or three hand-written questions ship with every passage.
-- With an API key set, each answer you give is pressed further by a live
-  adversarial follow-up. Without a key, a rotating bank of generic presses is
-  used instead.
+- Two or three hand-written questions ship with every passage. The first opens
+  the session; the rest are the safety net.
+- With an API key set the session becomes a conversation. Every answer you write
+  gets a reply, and the whole thread is sent each time as a real alternating
+  exchange, so the model argues with the person it has been arguing with rather
+  than firing unrelated questions. Without a key, or if a call fails, it falls
+  back to the remaining bundled questions and then a bank of generic presses.
 - **Every third argument day** pulls one entry out of your position file:
   *"Here's what you wrote. This passage bears on it. Revise or defend."* Your
   answer is stored as a new revision of that position.
@@ -163,10 +172,22 @@ exist to fight it:
 - `CHALLENGE_SYSTEM_PROMPT` — used by *Challenge this* on positions
 
 Both are at the **top of `app.js`**, in a clearly marked block, deliberately
-placed there so they are easy to find and tune. They work by banning specific
-behaviours (opening praise, hedging, summarising your answer back, resolving the
-difficulty for you) rather than by asking for adjectives like "critical". If
-responses start feeling agreeable again, sharpen the prohibitions.
+placed there so they are easy to find and tune.
+
+`INTERROGATION_SYSTEM_PROMPT` requires three things of every reply, in order:
+
+1. **Engage** — say what your answer commits you to, naming the actual move you
+   made. A sentence that would fit any answer is a wasted sentence.
+2. **Counter** — give the strongest argument against the position you just took,
+   stated as an argument with its reasoning, not as a hint.
+3. **Press** — one question that follows from that counter-argument.
+
+The prohibitions do the anti-flattery work: no praise, no grading the answer, no
+hedging, no splitting the difference, no repeating a question. The distinction
+that matters is between **engaging with a point and complimenting it**. An
+earlier version of this prompt banned both, and the result was a machine that
+asked disconnected questions and never argued back. If replies drift agreeable
+again, sharpen the prohibitions rather than the adjectives.
 
 ---
 

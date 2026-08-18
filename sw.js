@@ -10,7 +10,7 @@
    Bump CACHE_VERSION whenever a shell file or a data file changes.
    ═══════════════════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'thinking-app-v4';
+const CACHE_VERSION = 'thinking-app-v5';
 const SHELL_CACHE   = CACHE_VERSION + '-shell';
 const FONT_CACHE    = CACHE_VERSION + '-fonts';
 
