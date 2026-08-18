@@ -27,6 +27,7 @@
   <h1 class="wordmark">thinking</h1>
   <nav class="tabs" aria-label="Sections">
     <button class="tab" data-goto="home" aria-current="page">today</button>
+    <button class="tab" data-goto="review">review</button>
     <button class="tab" data-goto="positions">positions</button>
     <button class="tab" data-goto="metrics">record</button>
     <button class="tab" data-goto="settings">settings</button>
@@ -166,7 +167,11 @@
   </div>
 
   <div class="stage-foot">
-    <button class="btn btn-ghost btn-small" id="btn-abandon">Abandon session</button>
+    <p class="timeup" id="time-up-note" hidden>
+      Time is up. Finish the thought you are in, then close the session.
+      Nothing is lost either way.
+    </p>
+    <button class="btn btn-ghost btn-small" id="btn-close">Abandon session</button>
   </div>
 </section>
 
@@ -176,7 +181,57 @@
     <p class="overline">session closed</p>
     <h2 class="display" id="end-type">argument</h2>
     <dl class="specsheet" id="end-stats"></dl>
-    <button class="btn btn-primary" data-goto="home">Done</button>
+    <div class="row">
+      <button class="btn btn-primary" data-goto="home">Done</button>
+      <button class="btn" id="btn-end-review" hidden>Review this session</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ REVIEW ══════════════════════════ -->
+<section class="view" id="view-review" aria-label="Review" hidden>
+  <div class="plate">
+    <p class="overline">past sessions</p>
+    <p class="lede">
+      Everything you have written is kept, finished or not. Open any session to
+      read it back, or to keep pressing on it with no clock running.
+    </p>
+  </div>
+  <div id="review-list"></div>
+</section>
+
+<!-- ══════════════════════════ SESSION DETAIL ══════════════════════════ -->
+<section class="view" id="view-detail" aria-label="Session detail" hidden>
+  <button class="btn btn-ghost btn-small" id="btn-detail-back">Back to review</button>
+
+  <div class="plate">
+    <p class="overline" id="detail-when"></p>
+    <h2 class="display" id="detail-type"></h2>
+    <dl class="specsheet" id="detail-stats" hidden></dl>
+  </div>
+
+  <div class="plate" id="detail-passage-plate" hidden>
+    <p class="overline" id="detail-attrib"></p>
+    <div class="passage" id="detail-passage"></div>
+    <p class="fineprint"><a id="detail-source" href="#" target="_blank" rel="noopener">source text</a></p>
+  </div>
+
+  <div id="detail-transcript"></div>
+
+  <div class="plate" id="detail-continue" hidden>
+    <p class="overline">take it further</p>
+    <p class="lede">No timer here. Press as long as you like.</p>
+
+    <div id="detail-pending" hidden>
+      <blockquote class="prompt" id="detail-question"></blockquote>
+      <label class="visually-hidden" for="detail-answer">Your response</label>
+      <textarea id="detail-answer" rows="8" placeholder="Write your response."></textarea>
+    </div>
+
+    <div class="row">
+      <button class="btn btn-primary" id="btn-detail-press">Press me further</button>
+    </div>
+    <p class="status" id="detail-status" role="status" aria-live="polite"></p>
   </div>
 </section>
 

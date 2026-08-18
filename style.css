@@ -292,6 +292,11 @@ input:focus, textarea:focus { border-color: var(--brass); }
 
 .timer.final .arc-fill { stroke: var(--oxblood); }
 
+/* Time is up. The arc is complete and stays that way. Nothing counts up:
+   overtime is not a score, and a second clock would defeat the whole idea. */
+.timer.elapsed .arc-fill { stroke: var(--ink-soft); }
+.timer.elapsed .arc-label { color: var(--ink); }
+
 .arc-centre {
   position: absolute;
   inset: 0;
@@ -325,6 +330,80 @@ input:focus, textarea:focus { border-color: var(--brass); }
   border-top: 1px solid var(--rule);
   padding-top: 1rem;
   text-align: center;
+}
+
+.timeup {
+  margin: 0 0 1rem;
+  font-size: .8125rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-align: left;
+}
+
+/* ── review ──────────────────────────────────────────────────── */
+
+.reviewrow {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--raised);
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--brass);
+  border-radius: var(--radius);
+  padding: .875rem 1rem;
+  margin-bottom: .625rem;
+  cursor: pointer;
+  min-height: 44px;
+}
+.reviewrow:hover { background: #f2f4ef; }
+.reviewrow:active { transform: translateY(1px); }
+
+.reviewrow-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.reviewrow-type {
+  font-size: .875rem;
+  letter-spacing: .04em;
+}
+
+.reviewrow-time {
+  font-size: .75rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.reviewrow-detail {
+  display: block;
+  margin-top: .25rem;
+  font-size: .75rem;
+  color: var(--ink-soft);
+}
+
+#btn-detail-back { margin-bottom: var(--gap); }
+
+.exchange { border-left: 2px solid var(--rule); }
+
+.exchange .prompt {
+  border-left-width: 0;
+  padding-left: 0;
+  font-size: 1.0625rem;
+  color: var(--ink-soft);
+  margin-bottom: .875rem;
+}
+
+.exchange .answer {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  border-top: 1px solid var(--rule);
+  padding-top: .875rem;
 }
 
 /* passage: this is the one place that reads as a book */

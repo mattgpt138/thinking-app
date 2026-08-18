@@ -29,6 +29,28 @@ instead.
 This is the point of the app, not an omission. Clock-watching is the enemy of
 focus. Please do not "fix" it by adding a visible countdown.
 
+**The limit is soft.** When the time runs out the arc completes and a line
+appears saying so. Nothing closes, nothing is interrupted, and whatever you are
+typing is left alone. You finish the thought you are in and close the session
+yourself. Once the time has elapsed the session counts as completed however long
+you carry on past it, and the extra time is recorded honestly in the session
+length. Before the time is up the same button abandons instead.
+
+### Review
+
+Every session is kept, finished or not, and can be reopened from the **review**
+tab. An argument session reopens as what it was: the passage, every question put
+to you, and everything you wrote.
+
+From there you can keep going with no clock running. *Press me further* sends the
+passage and the whole thread back through the interrogation prompt and asks the
+next question; your answers are appended to the same transcript. Without a key,
+or if the call fails, it falls back to the bundled press bank, so the thread
+never dead-ends.
+
+Abandoning a session does not throw the writing away. It only means the session
+does not count towards the rotation.
+
 ### What is measured
 
 Two things, and only two: **session length over time** and **Brier calibration

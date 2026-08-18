@@ -246,13 +246,18 @@ function hasKey() {
    5.  ROUTING
    ═══════════════════════════════════════════════════════════════════════ */
 
-const VIEWS = ['home', 'session', 'end', 'positions', 'metrics', 'settings'];
+const VIEWS = ['home', 'session', 'end', 'review', 'detail', 'positions', 'metrics', 'settings'];
 let currentView = 'home';
 
 function go(view) {
   if (currentView === 'session' && view !== 'session' && session.running) {
-    if (!confirm('A session is running. Leaving abandons it. Continue?')) return;
-    abandonSession();
+    if (session.timeUp) {
+      endSession();               // the time was served; navigating away closes it properly
+      if (view === 'end') return; // endSession already routed there
+    } else {
+      if (!confirm('A session is running. Leaving abandons it. Anything you have written is kept. Continue?')) return;
+      abandonSession();
+    }
   }
   currentView = view;
   VIEWS.forEach(v => { $('#view-' + v).hidden = (v !== view); });
@@ -265,6 +270,7 @@ function go(view) {
   window.scrollTo(0, 0);
 
   if (view === 'home')      renderHome();
+  if (view === 'review')    renderReview();
   if (view === 'positions') renderPositions();
   if (view === 'metrics')   renderMetrics();
   if (view === 'settings')  renderSettings();
@@ -334,6 +340,12 @@ async function callClaude(system, messages, maxTokens) {
 
    The numeric readout stays hidden until the final minute. A thin arc
    fills instead. This is the point of the app, not an oversight.
+
+   The limit is SOFT. When time runs out the arc completes and the app says
+   so once, quietly. It does not close the session, interrupt you, or touch
+   what you are typing. You finish the thought you are in, then close the
+   session yourself. Once the time has elapsed the session counts as
+   completed, however long you carry on writing past it.
    ═══════════════════════════════════════════════════════════════════════ */
 
 const timer = {
@@ -341,13 +353,15 @@ const timer = {
   endAt: 0,
   handle: null,
   announced: false,
+  elapsed: false,
 
-  start(seconds, onEnd) {
+  start(seconds, onElapsed) {
     this.total = seconds;
     this.endAt = Date.now() + seconds * 1000;
-    this.onEnd = onEnd;
+    this.onElapsed = onElapsed;
     this.announced = false;
-    $('#timer').classList.remove('final');
+    this.elapsed = false;
+    $('#timer').classList.remove('final', 'elapsed');
     $('#timer-readout').hidden = true;
     $('#arc-fill').style.strokeDashoffset = ARC_LENGTH;
     clearInterval(this.handle);
@@ -364,7 +378,7 @@ const timer = {
     const done = clamp(1 - left / this.total, 0, 1);
     $('#arc-fill').style.strokeDashoffset = String(ARC_LENGTH * (1 - done));
 
-    if (left <= READOUT_AT) {
+    if (left <= READOUT_AT && !this.elapsed) {
       const readout = $('#timer-readout');
       readout.hidden = false;
       readout.textContent = String(Math.ceil(left));
@@ -375,9 +389,15 @@ const timer = {
       }
     }
 
-    if (left <= 0) {
-      this.stop();
-      if (this.onEnd) this.onEnd();
+    if (left <= 0 && !this.elapsed) {
+      this.elapsed = true;
+      this.stop();                        // the arc is full; nothing left to count
+      $('#timer').classList.remove('final');
+      $('#timer').classList.add('elapsed');
+      $('#timer-readout').hidden = true;
+      setText($('#timer-label'), 'time');
+      setText($('#timer-sr'), 'Time is up. Finish what you are writing, then close the session.');
+      if (this.onElapsed) this.onElapsed();
     }
   },
 
@@ -396,6 +416,7 @@ let reasoningData = null;
 
 const session = {
   running: false,
+  timeUp: false,
   type: null,
   planned: 0,
   startedAt: 0,
@@ -417,12 +438,36 @@ async function beginSession() {
   $('#stage-math').hidden      = type !== 'math';
   $('#stage-reasoning').hidden = type !== 'reasoning';
 
+  session.timeUp = false;
+  $('#time-up-note').hidden = true;
+  updateFootButton();
+
   go('session');
-  timer.start(session.planned, endSession);
+  timer.start(session.planned, onTimeElapsed);
 
   if (type === 'argument')  await startArgument();
   if (type === 'math')      startMath();
   if (type === 'reasoning') await startReasoning();
+}
+
+/* Time is up. Change nothing the user is touching: no modal, no focus
+   change, no clearing of the box they are typing in. Just mark the session
+   as complete-able and swap the foot button. */
+function onTimeElapsed() {
+  session.timeUp = true;
+  $('#time-up-note').hidden = false;
+  updateFootButton();
+}
+
+function updateFootButton() {
+  const btn = $('#btn-close');
+  if (session.timeUp) {
+    btn.textContent = 'Close session';
+    btn.className = 'btn btn-primary';
+  } else {
+    btn.textContent = 'Abandon session';
+    btn.className = 'btn btn-ghost btn-small';
+  }
 }
 
 function endSession() {
@@ -440,7 +485,11 @@ function endSession() {
   };
 
   if (session.type === 'argument') {
-    record.passageId = session.scratch.passage ? session.scratch.passage.id : null;
+    const p = session.scratch.passage;
+    record.passageId = p ? p.id : null;
+    // Snapshot the attribution so a review still reads correctly even if the
+    // corpus is edited later and the id no longer resolves.
+    if (p) record.passage = { id: p.id, author: p.author, work: p.work, year: p.year, source_url: p.source_url };
     record.transcript = session.transcript;
     state.argument.days += 1;
   }
@@ -467,13 +516,34 @@ function abandonSession() {
   if (!session.running) return;
   timer.stop();
   session.running = false;
-  state.sessions.push({
+
+  const record = {
     ts: session.startedAt,
     type: session.type,
     plannedS: session.planned,
     actualS: Math.round((Date.now() - session.startedAt) / 1000),
     completed: false
-  });
+  };
+
+  // An abandoned session still keeps whatever was written. It does not count
+  // towards the rotation, but the work is never thrown away.
+  if (session.type === 'argument') {
+    const p = session.scratch.passage;
+    record.passageId = p ? p.id : null;
+    if (p) record.passage = { id: p.id, author: p.author, work: p.work, year: p.year, source_url: p.source_url };
+    record.transcript = session.transcript;
+  }
+  if (session.type === 'math') {
+    record.attempted = session.scratch.attempted || 0;
+    record.correct = session.scratch.correct || 0;
+    record.endLevel = state.math.level;
+  }
+  if (session.type === 'reasoning') {
+    record.subMode = session.scratch.subMode;
+    record.items = session.scratch.items || 0;
+  }
+
+  state.sessions.push(record);
   writeNow();
 }
 
@@ -500,11 +570,20 @@ function showEnd(record) {
     .map(([k, v]) => '<div><dt>' + escapeHTML(k) + '</dt><dd>' + escapeHTML(v) + '</dd></div>')
     .join('');
 
+  // Offer the way back into what was just written, at the one moment it is
+  // most obviously wanted.
+  const btn = $('#btn-end-review');
+  btn.hidden = record.type !== 'argument';
+  btn.onclick = () => openSessionDetail(record.ts);
+
   go('end');
 }
 
-$('#btn-abandon').addEventListener('click', () => {
-  if (!confirm('Abandon this session? It will not count, and the rotation will not advance.')) return;
+/* One button, two meanings. Before the time is up it abandons; after, it
+   closes a session that has already earned its place in the rotation. */
+$('#btn-close').addEventListener('click', () => {
+  if (session.timeUp) { endSession(); return; }
+  if (!confirm('Abandon this session? It will not count and the rotation will not advance. Anything you have written is kept.')) return;
   abandonSession();
   go('home');
 });
@@ -1209,6 +1288,210 @@ $('#base-form').addEventListener('submit', e => {
 });
 
 $('#btn-base-next').addEventListener('click', () => { if (session.running) nextBaseRate(); });
+
+/* ═══════════════════════════════════════════════════════════════════════
+   11b.  REVIEW
+
+   Every session is kept, completed or not, and can be reopened. An argument
+   session reopens as the thing it was: the passage, every question, and
+   everything you wrote. From there you can keep going with no clock on it.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const KIND_LABEL = {
+  bundled: 'question',
+  live: 'interrogation',
+  press: 'press further',
+  position: 'your own position',
+  followup: 'taken further'
+};
+
+function renderReview() {
+  const host = $('#review-list');
+  host.innerHTML = '';
+
+  if (!state.sessions.length) {
+    host.innerHTML = '<div class="plate plate-quiet"><p class="fineprint">' +
+      'Nothing yet. Every session you run is kept here, finished or not.</p></div>';
+    return;
+  }
+
+  state.sessions.slice().reverse().forEach(s => {
+    const row = document.createElement('button');
+    row.className = 'reviewrow';
+    row.type = 'button';
+
+    let detail;
+    if (s.type === 'argument') {
+      const written = (s.transcript || []).filter(t => t.answer).length;
+      const who = s.passage ? s.passage.author : 'passage';
+      detail = who + ' · ' + written + ' response' + (written === 1 ? '' : 's');
+    } else if (s.type === 'math') {
+      detail = (s.correct || 0) + ' of ' + (s.attempted || 0) + ' correct · level ' + (s.endLevel || '?');
+    } else {
+      detail = (s.subMode || 'reasoning') + ' · ' + (s.items || 0) + ' items';
+    }
+
+    row.innerHTML =
+      '<span class="reviewrow-top"><span class="reviewrow-type"></span>' +
+      '<span class="reviewrow-time"></span></span>' +
+      '<span class="reviewrow-detail"></span>';
+    row.querySelector('.reviewrow-type').textContent = s.type + (s.completed ? '' : ' · unfinished');
+    row.querySelector('.reviewrow-time').textContent = mmss(s.actualS);
+    row.querySelector('.reviewrow-detail').textContent = stamp(s.ts) + ' — ' + detail;
+
+    row.addEventListener('click', () => openSessionDetail(s.ts));
+    host.appendChild(row);
+  });
+}
+
+let openSessionTs = null;
+
+async function openSessionDetail(ts) {
+  const s = state.sessions.find(x => x.ts === ts);
+  if (!s) return;
+  openSessionTs = ts;
+
+  setText($('#detail-type'), s.type + (s.completed ? '' : ' · unfinished'));
+  setText($('#detail-when'), stamp(s.ts) + ' · ' + mmss(s.actualS) + ' held');
+
+  const isArg = s.type === 'argument';
+  $('#detail-passage-plate').hidden = !isArg;
+  $('#detail-continue').hidden = !isArg;
+
+  // Summary rows for the non-writing days
+  const rows = [];
+  if (s.type === 'math') {
+    const pct = s.attempted ? Math.round(100 * s.correct / s.attempted) : 0;
+    rows.push(['problems', String(s.attempted || 0)], ['correct', (s.correct || 0) + ' (' + pct + '%)'],
+              ['level at close', String(s.endLevel || '—')]);
+  }
+  if (s.type === 'reasoning') {
+    rows.push(['mode', s.subMode || '—'], ['items', String(s.items || 0)]);
+  }
+  $('#detail-stats').innerHTML = rows
+    .map(([k, v]) => '<div><dt>' + escapeHTML(k) + '</dt><dd>' + escapeHTML(v) + '</dd></div>').join('');
+  $('#detail-stats').hidden = rows.length === 0;
+
+  if (isArg) {
+    const attrib = s.passage
+      ? s.passage.author + ' — ' + s.passage.work + ', ' + s.passage.year
+      : 'passage unavailable';
+    setText($('#detail-attrib'), attrib);
+    $('#detail-source').href = (s.passage && s.passage.source_url) || '#';
+    $('#detail-source').hidden = !(s.passage && s.passage.source_url);
+
+    // Resolve the passage text from the corpus by id
+    let text = '';
+    try {
+      await loadCorpus();
+      const p = corpus.find(x => x.id === s.passageId);
+      if (p) text = p.text;
+    } catch (e) { /* offline and uncached; the transcript still reads fine */ }
+    $('#detail-passage').innerHTML = text
+      ? passageHTML(text)
+      : '<p class="chart-empty">The passage text is not available offline. Your responses are below.</p>';
+  }
+
+  $('#detail-pending').hidden = true;
+  $('#detail-answer').value = '';
+  setText($('#detail-status'), '');
+  $('#detail-status').className = 'status';
+  $('#btn-detail-press').disabled = false;
+  $('#btn-detail-press').textContent = (s.transcript || []).length ? 'Press me further' : 'Start an interrogation';
+
+  renderTranscript(s);
+  go('detail');
+}
+
+function renderTranscript(s) {
+  const host = $('#detail-transcript');
+  host.innerHTML = '';
+  const t = s.transcript || [];
+
+  if (!t.length) {
+    if (s.type === 'argument') {
+      host.innerHTML = '<div class="plate plate-quiet"><p class="fineprint">' +
+        'Nothing was submitted in this session.</p></div>';
+    }
+    return;
+  }
+
+  t.forEach((entry, i) => {
+    const block = document.createElement('div');
+    block.className = 'plate exchange';
+    block.innerHTML =
+      '<p class="overline"></p>' +
+      '<blockquote class="prompt"></blockquote>' +
+      '<div class="answer"></div>';
+    block.querySelector('.overline').textContent =
+      (KIND_LABEL[entry.kind] || entry.kind) + ' · ' + (i + 1);
+    block.querySelector('.prompt').textContent = entry.question;
+    block.querySelector('.answer').textContent = entry.answer;
+    host.appendChild(block);
+  });
+}
+
+/* Continue an old session with no clock on it. Answers are appended to the
+   same transcript, so the thread stays whole. */
+$('#btn-detail-press').addEventListener('click', async () => {
+  const s = state.sessions.find(x => x.ts === openSessionTs);
+  if (!s) return;
+
+  const answer = $('#detail-answer').value.trim();
+  const status = $('#detail-status');
+  const pending = $('#detail-pending');
+  const question = pending.hidden ? null : $('#detail-question').textContent;
+
+  if (question) {
+    if (!answer) { status.className = 'status err'; status.textContent = 'Write something first.'; return; }
+    s.transcript = s.transcript || [];
+    s.transcript.push({ kind: 'followup', question: question, answer: answer, ts: Date.now() });
+    writeNow();
+    renderTranscript(s);
+    $('#detail-answer').value = '';
+    pending.hidden = true;
+  }
+
+  status.className = 'status';
+  status.textContent = hasKey() ? 'Interrogating…' : 'Choosing a press…';
+  $('#btn-detail-press').disabled = true;
+
+  let next = null;
+  if (hasKey()) {
+    try {
+      let passageText = '';
+      try { await loadCorpus(); const p = corpus.find(x => x.id === s.passageId); if (p) passageText = p.text.replace(/<\/?em>/g, ''); } catch (e) {}
+      const thread = (s.transcript || []).map(x =>
+        'QUESTION: ' + x.question + '\nMY RESPONSE: ' + x.answer).join('\n\n');
+      next = await callClaude(
+        INTERROGATION_SYSTEM_PROMPT,
+        [{ role: 'user', content:
+            (passageText ? 'PASSAGE (' + (s.passage ? s.passage.author + ', ' + s.passage.work : '') + '):\n\n' + passageText + '\n\n' : '') +
+            'THE EXCHANGE SO FAR:\n\n' + thread +
+            '\n\nFind the weakest premise still standing in what I have written and press it. Do not repeat a question already asked above.' }],
+        400
+      );
+      status.textContent = '';
+    } catch (err) {
+      status.className = 'status err';
+      status.textContent = 'Could not reach the API: ' + err.message + '. Using a bundled press.';
+    }
+  }
+
+  if (!next) {
+    const used = (s.transcript || []).filter(x => x.kind === 'press' || x.kind === 'followup').length;
+    next = FALLBACK_PRESSES[used % FALLBACK_PRESSES.length];
+    if (!hasKey()) status.textContent = '';
+  }
+
+  $('#detail-question').textContent = next;
+  pending.hidden = false;
+  $('#btn-detail-press').disabled = false;
+  $('#btn-detail-press').textContent = 'Submit and press further';
+  $('#detail-answer').focus();
+});
+
+$('#btn-detail-back').addEventListener('click', () => go('review'));
 
 /* ═══════════════════════════════════════════════════════════════════════
    12.  POSITIONS
