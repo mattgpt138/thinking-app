@@ -149,7 +149,18 @@ const RAMP_STEP   = 60;     // seconds added per increment
 const MAX_LENGTH  = 2400;   // seconds
 const READOUT_AT  = 60;     // reveal the numeric readout at this many seconds left
 const ARC_LENGTH  = 2 * Math.PI * 54;
-const API_TIMEOUT = 25000;  // ms; a session never waits longer than this
+const API_TIMEOUT = 40000;  // ms; a session never waits longer than this
+
+/* The model reasons before it answers, and that reasoning is billed against
+   max_tokens like any other output. Low keeps a press to about seven seconds
+   and still lands on the weak point; raise it to 'medium' or 'high' to trade
+   a few seconds for a harder look. */
+const REASONING_EFFORT = 'low';
+
+/* Enough room that the reasoning and the reply both fit. Sized for a model
+   that did not reason, the allowance went on the reasoning and the reply came
+   back cut off mid-sentence, or missing altogether. */
+const REPLY_TOKENS = 3000;
 
 const DEFAULT_MODEL = 'claude-sonnet-5';
 
@@ -180,8 +191,10 @@ function blankState() {
     completedSessions: 0,
     sessions: [],
     argument: { seen: [], days: 0 },
-    math: { level: 3, history: [] },
-    logic: { level: 2, history: [] },
+    // levelSince marks when the current level was arrived at. Attempts made
+    // before that belong to a level you are no longer on.
+    math: { level: 3, levelSince: 0, history: [] },
+    logic: { level: 2, levelSince: 0, history: [] },
     causal: { history: [] },
     numbers: { history: [], fermiSeen: [] },
     steelman: { seen: [], days: 0 },
@@ -209,15 +222,21 @@ function load() {
    never leaves the app in a half-built state. */
 function migrate(s) {
   const base = blankState();
-  const out = Object.assign(base, s);
-  out.argument  = Object.assign(base.argument,  s.argument  || {});
-  out.math      = Object.assign(base.math,      s.math      || {});
-  out.logic     = Object.assign(base.logic,     s.logic     || {});
-  out.causal    = Object.assign(base.causal,    s.causal    || {});
-  out.numbers   = Object.assign(base.numbers,   s.numbers   || {});
-  out.steelman  = Object.assign(base.steelman,  s.steelman  || {});
-  out.reasoning = Object.assign(base.reasoning, s.reasoning || {});
-  out.settings  = Object.assign(base.settings,  s.settings  || {});
+  const out = Object.assign({}, base, s);
+  // Each branch is merged onto a fresh copy of its defaults, not onto `base`,
+  // which the line above has already overwritten. Done the other way round, a
+  // file carrying `math: { history: [] }` and nothing else would come back
+  // with no math.level at all, and the next arithmetic day would have no
+  // generator to call.
+  const branch = k => Object.assign({}, base[k], s[k] || {});
+  out.argument  = branch('argument');
+  out.math      = branch('math');
+  out.logic     = branch('logic');
+  out.causal    = branch('causal');
+  out.numbers   = branch('numbers');
+  out.steelman  = branch('steelman');
+  out.reasoning = branch('reasoning');
+  out.settings  = branch('settings');
   if (!Array.isArray(out.sessions)) out.sessions = [];
   if (!Array.isArray(out.positions)) out.positions = [];
   if (!Array.isArray(out.argument.seen)) out.argument.seen = [];
@@ -364,7 +383,7 @@ document.addEventListener('click', e => {
    content. Nothing in a session is allowed to depend on the network.
    ═══════════════════════════════════════════════════════════════════════ */
 
-async function callClaude(system, messages, maxTokens) {
+async function callClaude(system, messages, maxTokens, opts) {
   if (!hasKey()) throw new Error('no key');
 
   const ctrl = new AbortController();
@@ -380,12 +399,13 @@ async function callClaude(system, messages, maxTokens) {
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
-      body: JSON.stringify({
+      body: JSON.stringify(Object.assign({
         model: (state.settings.model || DEFAULT_MODEL).trim(),
-        max_tokens: maxTokens || 400,
+        max_tokens: maxTokens || REPLY_TOKENS,
         system: system,
-        messages: messages
-      })
+        messages: messages,
+        output_config: { effort: REASONING_EFFORT }
+      }, opts || {}))
     });
 
     if (!res.ok) {
@@ -403,7 +423,14 @@ async function callClaude(system, messages, maxTokens) {
       .map(b => b.text)
       .join('\n')
       .trim();
-    if (!text) throw new Error('empty response');
+    if (!text) {
+      // The whole allowance went on reasoning and there was nothing left to
+      // answer with. Naming that is the difference between a bug you can find
+      // and a session that silently drops back to the bundled questions.
+      throw new Error(data.stop_reason === 'max_tokens'
+        ? 'the reply ran out of room before it was written'
+        : 'empty response');
+    }
     return text;
 
   } finally {
@@ -634,9 +661,26 @@ function restoreLive() {
   if (session.type === 'argument') restoreArgument();
   else if (session.type === 'math') nextMathProblem();
   else if (session.type === 'steelman') restoreSteelman();
-  else nextDrill();      // a fresh item: anything already answered was logged
+  else session.resuming = resumeDrill();
 
   return true;
+}
+
+/* A drill day comes back on a fresh item: anything already answered was
+   banked, and re-showing it would count it twice. It has to take the same
+   route in as startDrill, though. Calling nextDrill straight out of a reload
+   asks the calibration bank for a statement before the bank has been
+   fetched, and the day opens on an empty screen. */
+async function resumeDrill() {
+  const mode = session.scratch.mode || session.type;
+  session.scratch.mode = mode;
+  if (typeof session.scratch.items !== 'number') session.scratch.items = 0;
+  if (typeof session.scratch.correct !== 'number') session.scratch.correct = 0;
+
+  if (mode === 'calibration' || mode === 'numbers') {
+    try { await loadReasoning(); } catch (e) { /* generators still work offline */ }
+  }
+  if (session.running) nextDrill();
 }
 
 function restoreArgument() {
@@ -649,6 +693,8 @@ function restoreArgument() {
   const working = session.scratch.phase === 'work' && session.scratch.current;
   $('#arg-read').hidden = !!working;
   $('#arg-work').hidden = !working;
+  // A resumed session already has its questions, so reading is never blocked.
+  $('#btn-arg-done-reading').disabled = false;
   if (working) showArgQuestion();
 }
 
@@ -709,6 +755,12 @@ async function beginSession() {
 
   go('session');
   timer.start(session.planned, onTimeElapsed);
+
+  // The passage has to be fetched, and on a slow connection that takes longer
+  // than it takes to press the button underneath it. Clicking through before
+  // the questions arrive used to throw and leave the session with nothing to
+  // ask. startArgument opens it again once there is something behind it.
+  if (type === 'argument') $('#btn-arg-done-reading').disabled = true;
 
   if (type === 'argument') await startArgument();
   else if (type === 'math') startMath();
@@ -935,12 +987,20 @@ async function startArgument() {
 
   $('#arg-read').hidden = false;
   $('#arg-work').hidden = true;
+  // The passage is on screen and there is a question behind it, so moving on
+  // is now safe. See beginSession for why it was shut.
+  $('#btn-arg-done-reading').disabled = false;
 }
 
-/* Next item from the bundled pool, then from the generic press bank. */
+/* Next item from the bundled pool, then from the generic press bank. The
+   pool is missing only if the corpus never arrived, and a session still has
+   to have something to ask. */
 function nextOfflineItem() {
-  if (session.scratch.poolAt < session.scratch.pool.length) {
-    return session.scratch.pool[session.scratch.poolAt++];
+  const pool = session.scratch.pool || [];
+  const at = session.scratch.poolAt || 0;
+  if (at < pool.length) {
+    session.scratch.poolAt = at + 1;
+    return pool[at];
   }
   const used = session.scratch.presses || 0;
   session.scratch.presses = used + 1;
@@ -1029,7 +1089,7 @@ $('#btn-arg-submit').addEventListener('click', async () => {
         text: await callClaude(
           INTERROGATION_SYSTEM_PROMPT,
           threadMessages(session.scratch.passage, session.transcript),
-          700
+          REPLY_TOKENS
         )
       };
     } catch (err) {
@@ -1213,9 +1273,16 @@ $('#math-form').addEventListener('submit', e => {
   nextMathProblem();
 });
 
-/* Rolling window of the last 10 attempts at the current level. */
+/* Rolling window of the last 10 attempts at the current level, counting
+   only those made since the level was last changed. Without that cut-off a
+   demotion undoes itself: the ten quick answers that earned the promotion
+   are still the newest ten at the level below, so the next attempt reads
+   them again and sends you straight back up. */
 function adaptLevel() {
-  const window = state.math.history.filter(h => h.level === state.math.level).slice(-10);
+  const since = state.math.levelSince || 0;
+  const window = state.math.history
+    .filter(h => h.level === state.math.level && h.ts > since)
+    .slice(-10);
   if (window.length < 10) return;
 
   const accuracy = window.filter(h => h.correct).length / window.length;
@@ -1224,12 +1291,16 @@ function adaptLevel() {
   const fast = median <= LEVEL_TARGET_MS[state.math.level];
 
   if (accuracy > 0.85 && fast && state.math.level < 8) {
-    state.math.level += 1;
-    flashMath('level ' + state.math.level);
+    setMathLevel(state.math.level + 1);
   } else if (accuracy < 0.60 && state.math.level > 1) {
-    state.math.level -= 1;
-    flashMath('level ' + state.math.level);
+    setMathLevel(state.math.level - 1);
   }
+}
+
+function setMathLevel(level) {
+  state.math.level = level;
+  state.math.levelSince = Date.now();
+  flashMath('level ' + level);
 }
 
 function flashMath(msg) {
@@ -2275,15 +2346,20 @@ $('#btn-drill-next').addEventListener('click', () => {
 /* Logic is the only drill day with levels. Same rolling-window rule as
    arithmetic: accurate and quick moves you up, a bad run moves you down. */
 function adaptLogicLevel() {
-  const window = state.logic.history.filter(h => h.level === state.logic.level).slice(-10);
+  const since = state.logic.levelSince || 0;
+  const window = state.logic.history
+    .filter(h => h.level === state.logic.level && h.ts > since)
+    .slice(-10);
   if (window.length < 10) return;
   const accuracy = window.filter(h => h.correct).length / window.length;
   const times = window.map(h => h.ms).sort((a, b) => a - b);
   const median = times[Math.floor(times.length / 2)];
   if (accuracy > 0.85 && median <= LOGIC_TARGET_MS[state.logic.level] && state.logic.level < 6) {
     state.logic.level += 1;
+    state.logic.levelSince = Date.now();
   } else if (accuracy < 0.60 && state.logic.level > 1) {
     state.logic.level -= 1;
+    state.logic.levelSince = Date.now();
   }
 }
 /* ═══════════════════════════════════════════════════════════════════════
@@ -2409,7 +2485,7 @@ $('#btn-steel-submit').addEventListener('click', async () => {
         msgs.push({ role: 'assistant', content: session.transcript[i].question });
         msgs.push({ role: 'user', content: session.transcript[i].answer });
       }
-      reply = await callClaude(STEELMAN_SYSTEM_PROMPT, msgs, 800);
+      reply = await callClaude(STEELMAN_SYSTEM_PROMPT, msgs, REPLY_TOKENS);
       setText($('#steel-status'), '');
     } catch (err) {
       console.warn('steelman evaluation unavailable', err);
@@ -2619,7 +2695,7 @@ $('#btn-detail-press').addEventListener('click', async () => {
       next = await callClaude(
         INTERROGATION_SYSTEM_PROMPT,
         threadMessages(passage, s.transcript),
-        700
+        REPLY_TOKENS
       );
       status.textContent = '';
     } catch (err) {
@@ -2798,7 +2874,7 @@ function positionCard(p) {
         CHALLENGE_SYSTEM_PROMPT,
         [{ role: 'user', content: 'MY POSITION, titled "' + p.title + '":\n\n' + latest.text +
                                   '\n\nMake the strongest case against it.' }],
-        700
+        REPLY_TOKENS
       );
       p.challenges = p.challenges || [];
       p.challenges.push({ ts: Date.now(), text: text, againstRevision: p.revisions.length - 1 });
@@ -3011,7 +3087,9 @@ $('#btn-set-test').addEventListener('click', async () => {
   s.className = 'status';
   s.textContent = 'Testing…';
   try {
-    await callClaude('Reply with the single word: ready.', [{ role: 'user', content: 'ping' }], 16);
+    // Only needs a 200 back, so it stays cheap and skips the reasoning step.
+    await callClaude('Reply with the single word: ready.', [{ role: 'user', content: 'ping' }], 16,
+                     { thinking: { type: 'disabled' } });
     s.className = 'status';
     s.textContent = 'Connected using ' + state.settings.model + '.';
   } catch (err) {
@@ -3183,8 +3261,42 @@ function prefetchData() {
   loadReasoning().catch(() => {});
 }
 
+function isLocalhost() {
+  return ['localhost', '127.0.0.1', '::1'].indexOf(location.hostname) !== -1;
+}
+
+/* This machine only. `local-key.js` is gitignored and is never deployed: it
+   exists so that local work does not need the key typed into Settings every
+   time storage is cleared. On localhost the file is the source of truth, so
+   rotating the key in one place is enough. Delete the file to test the
+   no-key path.
+
+   Nothing here runs in production. The deployed app has no key of its own and
+   never will: it is a static site, so a key shipped with it would be a key
+   published. Each device is typed into once. */
+function loadLocalKey() {
+  if (!isLocalhost()) return;
+
+  const el = document.createElement('script');
+  el.src = 'local-key.js';
+  el.onerror = () => { /* no local key file, which is a normal way to work */ };
+  el.onload = () => {
+    const key = window.THINKING_APP_LOCAL_KEY;
+    if (!key || state.settings.apiKey === key) return;
+    state.settings.apiKey = key;
+    if (window.THINKING_APP_LOCAL_MODEL) state.settings.model = window.THINKING_APP_LOCAL_MODEL;
+    writeNow();
+    console.info('[thinking-app] key picked up from local-key.js; localhost only');
+    // The home card and the settings box both state whether a key is present.
+    if (currentView === 'home') renderHome();
+    if (currentView === 'settings') renderSettings();
+  };
+  document.head.appendChild(el);
+}
+
 function boot() {
   load();
+  loadLocalKey();
   watchDrafts();
   // A session interrupted by a reload picks up exactly where it was.
   if (!restoreLive()) go('home');
@@ -3193,7 +3305,7 @@ function boot() {
   // The service worker is skipped on localhost. Offline caching is the point
   // in production, but during local work it serves yesterday's files and you
   // spend an afternoon debugging code the browser is not running.
-  const isLocal = ['localhost', '127.0.0.1', '::1'].indexOf(location.hostname) !== -1;
+  const isLocal = isLocalhost();
   if ('serviceWorker' in navigator && !isLocal) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(err => console.warn('sw registration failed', err));
@@ -3205,4 +3317,6 @@ function boot() {
   }
 }
 
-boot();
+// The regression harness loads this file to exercise the functions directly
+// and drives the DOM itself, so it must not boot a real session on load.
+if (!window.THINKING_APP_TEST) boot();

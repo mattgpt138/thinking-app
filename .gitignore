@@ -1,2 +1,11 @@
 .DS_Store
 *.log
+.playwright-mcp/
+
+# Secrets. This repo is served publicly from GitHub Pages, so anything that
+# gets committed here is world-readable. Nothing below is ever committed.
+.env
+.env.*
+.secrets/
+*.key
+local-key.js

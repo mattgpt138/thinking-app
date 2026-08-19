@@ -247,6 +247,50 @@ again, sharpen the prohibitions rather than the adjectives.
 
 ---
 
+### Token budgets and reasoning
+
+The model reasons before it answers, and that reasoning is billed against
+`max_tokens` like any other output. Budgets sized for a model that did not
+reason spent the whole allowance on the reasoning: the reply came back cut off
+mid-sentence, or with no text at all, and the session silently fell back to the
+bundled questions.
+
+Two constants at the top of `app.js` control this:
+
+- `REPLY_TOKENS` (3000) — the budget for every conversational call. Big enough
+  that the reasoning and the reply both fit.
+- `REASONING_EFFORT` (`low`) — how hard the model thinks before replying. Low
+  keeps a press to about seven seconds and still lands on the weak point.
+  Raise it to `medium` or `high` to trade a few seconds for a harder look.
+
+`API_TIMEOUT` is 40 seconds, which leaves headroom: a press takes roughly eight
+seconds early in a session and grows with the length of the transcript.
+
+The connection test in Settings is the one call that turns reasoning off. It
+only needs a 200 back.
+
+---
+
+## Local work with a key
+
+`.env.local` holds the API key on this machine. It is gitignored, and so is the
+`local-key.js` generated from it:
+
+```sh
+python3 make-local-key.py     # reads .env.local, writes local-key.js
+```
+
+`app.js` loads `local-key.js` only when the page is on localhost, so local work
+does not need the key typed into Settings every time storage is cleared. Delete
+the file to test the no-key path.
+
+**None of this reaches the deployed app.** This is a static site served
+publicly from GitHub Pages, so a key shipped with it would be a key published.
+Each device gets its key by being typed into Settings once, where it lives in
+that device's own storage.
+
+---
+
 ## Your data
 
 Everything lives in `localStorage` under the key `thinking-app:v1`. Nothing is
@@ -380,6 +424,75 @@ so the old cache is discarded.
 
 ---
 
+## Tests
+
+Start a server as above and open `test.html`. It runs in the browser, needs no
+install step and no build, and works on the phone as well as the laptop. The
+summary line at the top is the whole result: green or a count of failures.
+
+```sh
+python3 -m http.server 8000
+# then open http://localhost:8000/test.html
+```
+
+`?filter=live` runs only the groups whose name contains that word, which is
+what you want while working on one area.
+
+### How it works
+
+The page fetches the real `index.html`, injects its body so that every
+`$('#id')` in `app.js` resolves, then loads the real `app.js` beside it. There
+is no second copy of the markup to keep in step, and nothing is stubbed except
+storage.
+
+`app.js` ends with `if (!window.THINKING_APP_TEST) boot();`, which is the only
+line in the app that exists for the tests. The test page sets that flag before
+loading it, so the app does not start a session underneath the run.
+
+Storage is replaced with an in-memory stand-in for the whole run and every test
+starts from a blank state, so opening `test.html` on the live site cannot eat a
+session. If the browser refuses the swap the run stops rather than risk it.
+
+Every request the harness makes carries `?harness=1`. The service worker matches
+its shell cache with `ignoreSearch`, so a timestamp alone would not get past it,
+and the tests would quietly run against yesterday's `app.js` and still come up
+green.
+
+### What is covered
+
+- The three data files: schema, unique ids, balanced `<em>` tags, the
+  true/false split in the calibration bank, Fermi bands the right way round.
+- Text and number helpers, including every form the answer matcher accepts.
+- The rotation, the session length ramp and its ceiling.
+- `migrate()`, which is what stands between an imported file and a crash.
+- A session surviving a reload: the passage, the phase, the transcript, the
+  half-typed sentence, the clock measured from the original start, the stale
+  cutoff, and corrupt data falling back to a normal start.
+- Every generator, checked over 200 samples each: shape, option indexes in
+  range, no repeated options, and for arithmetic the stated answer re-derived
+  from the stated question.
+- Scoring, including the Brier score, and which day a confidence rating is
+  logged against.
+- What comes next: no passage, proposition or calibration statement repeats
+  until its pool is used up.
+- The message thread sent to the API, which must alternate roles and never
+  carry an empty turn.
+- Routing, and that every render survives an empty state.
+- Difficulty adaptation in both directions, including its bounds.
+- The service worker's file list and the manifest.
+
+### Adding a test
+
+Put it inside a `group()` in `tests.js`. Two rules:
+
+1. No test may touch real saved data. Storage is faked and `reset()` runs
+   before every test; use `reload()` when the point is that memory is cleared
+   but storage is not.
+2. Anything generated is checked over many samples, not one. The whole point of
+   the generators is that the numbers change each time.
+
+---
+
 ## Files
 
 ```
@@ -391,6 +504,9 @@ data/reasoning.json       395 calibration statements, 17 Fermi prompts
 data/propositions.json    40 contested propositions for steelman day
 manifest.webmanifest      PWA metadata
 sw.js                     offline caching
+test.html                 the test runner; open it in a browser
+tests.js                  the tests themselves
+make-local-key.py         writes local-key.js from .env.local (no secret in it)
 icons/                    app icons
 ```
 

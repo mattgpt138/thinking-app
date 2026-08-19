@@ -10,7 +10,7 @@
    Bump CACHE_VERSION whenever a shell file or a data file changes.
    ═══════════════════════════════════════════════════════════════════════ */
 
-const CACHE_VERSION = 'thinking-app-v8';
+const CACHE_VERSION = 'thinking-app-v10';
 const SHELL_CACHE   = CACHE_VERSION + '-shell';
 const FONT_CACHE    = CACHE_VERSION + '-fonts';
 
@@ -76,6 +76,12 @@ self.addEventListener('fetch', event => {
 
   // Anything else off-origin is left alone.
   if (url.origin !== self.location.origin) return;
+
+  // The regression harness marks every request it makes. The shell cache
+  // matches with ignoreSearch, so a plain cache-busting query string does
+  // not get past it, and without this the tests would quietly run against
+  // yesterday's app.js and still come up green.
+  if (url.searchParams.has('harness')) return;
 
   // Navigations fall back to the cached shell so the app opens offline.
   if (req.mode === 'navigate') {

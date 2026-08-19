@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>thinking-app — regression tests</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --paper: #E2E5DE;
+    --ink: #1B1D19;
+    --dim: #5C6058;
+    --rule: #C7CBC0;
+    --pass: #2F6B3A;
+    --fail: #8C2F22;
+    --warn: #8A6A1E;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 1.5rem 1rem 4rem;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 15px/1.5 ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  }
+  .wrap { max-width: 60rem; margin: 0 auto; }
+  h1 { font-size: 1.25rem; letter-spacing: .12em; text-transform: lowercase; margin: 0 0 .25rem; }
+  .sub { color: var(--dim); margin: 0 0 1.25rem; font-size: .8rem; }
+
+  #t-summary {
+    border: 1px solid var(--rule);
+    padding: .75rem 1rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 2;
+  }
+  #t-summary.ok   { border-color: var(--pass); color: var(--pass); }
+  #t-summary.bad  { border-color: var(--fail); color: var(--fail); }
+
+  .bar { height: 6px; background: var(--rule); margin-top: .6rem; display: flex; }
+  .bar i { display: block; height: 100%; }
+  .bar .p { background: var(--pass); }
+  .bar .f { background: var(--fail); }
+
+  .group { margin: 0 0 1.5rem; }
+  .group > h2 {
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: .3rem;
+    margin: 0 0 .5rem;
+  }
+  .group > h2 .count { float: right; letter-spacing: 0; text-transform: none; }
+
+  .case { padding: .2rem 0 .2rem 1.5rem; position: relative; font-size: .84rem; }
+  .case::before { position: absolute; left: 0; top: .2rem; font-weight: 700; }
+  .case.pass::before { content: "ok"; color: var(--pass); }
+  .case.fail::before { content: "XX"; color: var(--fail); }
+  .case.fail { color: var(--fail); }
+  .case.skip::before { content: "--"; color: var(--dim); }
+  .case.skip { color: var(--dim); }
+  .case pre {
+    margin: .35rem 0 .6rem;
+    padding: .5rem .7rem;
+    background: rgba(0,0,0,.05);
+    border-left: 2px solid var(--fail);
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: .78rem;
+    color: var(--ink);
+  }
+  .note { color: var(--warn); font-size: .78rem; margin: 0 0 1rem; }
+  .hidden-host { position: absolute; left: -99999px; top: 0; width: 1px; height: 1px; overflow: hidden; }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>thinking-app regression tests</h1>
+  <p class="sub">
+    Loads the real <code>index.html</code> markup and the real <code>app.js</code>,
+    then exercises them. Nothing here touches your saved sessions.
+    Add <code>?filter=live</code> to run one group.
+  </p>
+
+  <div id="t-summary">loading…</div>
+  <div id="t-note"></div>
+  <div id="t-results"></div>
+</div>
+
+<!-- The real app markup is injected here so every $('#id') lookup resolves. -->
+<div class="hidden-host" id="t-host" aria-hidden="true"></div>
+
+<script>
+window.THINKING_APP_TEST = true;
+
+(function () {
+  const summary = document.getElementById('t-summary');
+  const noteBox = document.getElementById('t-note');
+  const host    = document.getElementById('t-host');
+
+  function fail(msg, err) {
+    summary.className = 'bad';
+    summary.textContent = msg;
+    if (err) {
+      const pre = document.createElement('pre');
+      pre.textContent = (err && err.stack) || String(err);
+      noteBox.appendChild(pre);
+    }
+  }
+
+  // Cache-bust everything. The service worker matches its shell cache with
+  // ignoreSearch, so a timestamp alone would not get past it; the `harness`
+  // flag is what tells it to stand aside. A stale app.js would make the whole
+  // run meaningless.
+  const bust = '?harness=1&t=' + Date.now();
+  window.__BUST = bust;
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src + bust;
+      s.onload = resolve;
+      s.onerror = () => reject(new Error('could not load ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function main() {
+    // The app registers listeners on real elements at load time, so the
+    // markup has to be in the document before app.js runs. Pulling it from
+    // index.html rather than copying it keeps the two from drifting apart.
+    summary.textContent = 'loading index.html…';
+    const res = await fetch('index.html' + bust);
+    if (!res.ok) throw new Error('index.html: ' + res.status + ' ' + res.statusText);
+    const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+    doc.querySelectorAll('script').forEach(s => s.remove());
+    host.innerHTML = doc.body.innerHTML;
+
+    summary.textContent = 'loading app.js…';
+    await loadScript('app.js');
+
+    summary.textContent = 'loading tests.js…';
+    await loadScript('tests.js');
+
+    if (typeof window.__runTests !== 'function') throw new Error('tests.js defined no runner');
+    await window.__runTests({
+      summary: summary,
+      note: noteBox,
+      results: document.getElementById('t-results'),
+      filter: new URLSearchParams(location.search).get('filter') || ''
+    });
+  }
+
+  main().catch(err => fail('the harness could not start: ' + err.message, err));
+
+  window.addEventListener('error', e => {
+    if (!/could not start/.test(summary.textContent)) return;
+    fail(summary.textContent, e.error || e.message);
+  });
+})();
+</script>
+
+</body>
+</html>
